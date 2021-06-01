@@ -1,0 +1,3231 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\begin_removed_modules
+eqs-within-sections
+figs-within-sections
+\end_removed_modules
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Practical Network Defense
+\end_layout
+
+\begin_layout Section
+Networking
+\end_layout
+
+\begin_layout Subsection
+The internet architecture
+\end_layout
+
+\begin_layout Standard
+The Internet architecture is in essence a network of networks with a hierarchica
+l structure.
+ A message from one host to another goes roughly from sender to Regional
+ ISP to Global ISP to Regional ISP to receiver.
+ The path into the Internet backbone could be wired or wireless.
+ The backbone itself consists of global Internet Service Providers (
+\series bold
+ISP
+\series default
+) and several regional ISPs that are all interconnected to provide a path
+ from sender to receiver.
+ Hosts are connected through communication links and information passes
+ through routers, switches and access points.
+ The communication links, regardless of whether they are wired or wireless,
+ are defined by a transmission rate and bandwidth.
+ Access networks are used to connect a host or Local Area Network (LAN)
+ to the Internet.
+ Routers connect local area networks, generate routing tables and forward
+ packets of data on their path from source to destination.
+ The Internet backbone is basically a group of routers interconnected by
+ optical fiber as well as DNS servers.
+ The network edge (or access networks) consists of hosts and the various
+ applications that are running in the network, as well as access links.
+ The network core is composed of edge routers that connect an organization/
+ ISP to the Internet, and these routers are typically interconnected with
+ fiber.
+ The access networks that are present may be either wired, or wireless,
+ communication links.
+\end_layout
+
+\begin_layout Subsubsection
+Internet standards
+\end_layout
+
+\begin_layout Standard
+Standards that control the use of the Internet and these standards are listed
+ in what are called Requests For Comments (
+\series bold
+RFC
+\series default
+) and the organization that oversees this business is the Internet Engineering
+ Task Force (
+\series bold
+IETF
+\series default
+).
+ 
+\end_layout
+
+\begin_layout Subsection
+Access networks
+\end_layout
+
+\begin_layout Standard
+An individual, home network or business network, e.g., local area network
+ (
+\series bold
+LAN
+\series default
+) can be considered a small network or subnet.
+ The Internet uses a 
+\series bold
+gateway
+\series default
+, also known as an 
+\series bold
+edge router
+\series default
+, as the vehicle for entrance into the hierarchical network.
+ The point-to-point access between a residence and an ISP can be obtained
+ in a variety of ways, such as dialup modem, a digital subscriber line (DSL),
+ a cable modem, fiber in the loop, broadband over a power line, and broadband
+ wireless such as a Wireless Metropolitan Area Network (WiMAX) or satellite.
+\end_layout
+
+\begin_layout Subsection
+The network core
+\end_layout
+
+\begin_layout Standard
+The core of the Internet is composed of a set of routers and fiber links.
+ The routers work together to determine the most efficient routing path
+ for a packet from source to destination.
+ A distributed algorithm is used that provides the flexibility to adapt
+ to changing conditions, and routing tables are generated and maintained
+ in real time.
+ The ISPs that form the network core interconnect multiple continents.
+ These ISPs are Global ISPs, also known as Tier-1 ISPs, whereas the Regional
+ ISPs are known as Tier-2 ISPs.
+\end_layout
+
+\begin_layout Standard
+The Tier-1 ISPs are interconnected at various access points called Internet
+ eXchange Points (
+\series bold
+IXP
+\series default
+).
+ At these various ISP locations, under bilateral and multilateral agreements,
+ the major ISPs agree to accept traffic from one another and route it to
+ its downstream destination without charge.
+ In addition, the major ISPs also have private agreements between one another
+ in locations where two or more carriers have switching points in close
+ proximity.
+ The IXP typically consists of a centralized Ethernet switching fabric,
+ together with all the supporting infrastructure that permits companies
+ to interconnect with one another.
+ Furthermore Tier-1 ISPs typically have backbones that cover the globe.
+ The regional ISPs work in conjunction with other Tier-1 and Tier-2 ISPs
+ to provide the service required by their customer base.
+\end_layout
+
+\begin_layout Subsection
+Circuit switching
+\end_layout
+
+\begin_layout Standard
+The information organized within the protocols must be switched as it travels
+ from source to destination.
+ The switching function is performed in one of two ways: Packet switching
+ or circuit switching.
+ In the former case, the header contains the source and destination IP addresses
+, and the delivery is best effort.
+ Thus, packets may be lost, corrupted or may be delivered out of order.
+ With circuit switching the end-to-end resources are reserved for the connection
+, i.e., the connection is established before any data is transferred.
+ Given the dedicated link bandwidth and switch circuit capacity, the performance
+ is guaranteed.
+ Because the resources are dedicated, there is no sharing.
+\end_layout
+
+\begin_layout Subsection
+Congestion and flow control
+\end_layout
+
+\begin_layout Standard
+Congestion is a natural consequence, which results when a source host sends
+ out more data than the network and destination host can digest.
+ This situation is even exacerbated by the fact that destination hosts can
+ range from servers with fast CPUs and highspeed links to smartphones with
+ low-power CPUs and slower links.
+ These situations can result in busy links and router/switch buffer overflow
+ due to finite buffer size.
+ Flow and congestion control attempts to alleviate this condition by throttling
+ back the output rate of the source host to relieve the congestion.
+ The symptoms of congestion that trigger the congestion control are packet
+ loss and delay, as well as buffer overflow.
+ Flow control is used to tell the source host how much information the destinati
+on host can digest.
+ The goal of this process is to optimize the throughput rate (bits/sec)
+ between source and destination without causing congestion.
+\end_layout
+
+\begin_layout Subsection
+The protocol stack
+\end_layout
+
+\begin_layout Standard
+A protocol defines the manner in which hosts talk to each other so that
+ messages are clearly understood.
+ It is this protocol, documented in a stack that is accomplished through
+ modularization, development and upgrades that support common web operations.
+ Modularization of the Internet is accomplished through layering.
+ As a result, the Internet is being developed by many people, and institutions
+ through a divide-and-conquer strategy.
+ There is strong interaction between layers in that each layer relies on
+ the services of the layer below and exports services to the layer above.
+ It is the interface between layers that defines the interaction, e.g., implementa
+tion details can be hidden and layers can change without affecting other
+ layers.
+\end_layout
+
+\begin_layout Subsubsection
+The TCP/IP stack
+\end_layout
+
+\begin_layout Standard
+When computers are connected within a network, guidelines must be established
+ that support their interaction.
+ The architecture that defines the network functionality is split into layers
+ that collectively form what is commonly known as a protocol stack.
+ Each layer of the stack may employ several protocols to implement the functiona
+lity of that particular layer.
+ In a natural progression up the stack, the physical layer deals with the
+ transmission of bits that are propagating over such media as copper, fiber
+ or radio.
+ The data link layer aggregates the bits, e.g., into a frame, and performs
+ the data transfer between neighboring network elements.
+ The network layer handles the routing of datagrams, in packet form, from
+ source to destination using routing protocols.
+ The transport layer performs the process-to-process communication using
+ segments, i.e., message transfer using for example (a) Transmission Control
+ Protocol (TCP) for reliable transport with overhead, (b) User Datagram
+ Protocol (UDP) for best effort delivery with little overhea.
+ Finally, the application layer, containing the message, supports the various
+ network applications, such as data transfer on the world wide web (HTTP),
+ or electronic mail (SMTP).
+\end_layout
+
+\begin_layout Subsubsection
+Packet headers
+\end_layout
+
+\begin_layout Standard
+Each layer in the stack, with the exception of the physical layer, has a
+ header.
+ These headers facilitate the communication of information and are analogous
+ to an envelope that contains both source and destination addresses.
+ The link layer has a header containing Media Access Control (
+\series bold
+MAC
+\series default
+) addresses, the network layer has a header containing Internet Protocol
+ (
+\series bold
+IP
+\series default
+) addresses and the transport layer has a header containing the port, i.e.,
+ service number.
+\end_layout
+
+\begin_layout Section
+IPv4 primer
+\end_layout
+
+\begin_layout Standard
+An 
+\series bold
+IPv4
+\series default
+ address is a 
+\begin_inset Formula $32\text{-bit}$
+\end_inset
+
+ identifier for a host or router interface.
+ Although the IPv4 address is listed for convenience as a 
+\begin_inset Formula $4\text{-byte}$
+\end_inset
+
+ decimal number, i.e.
+ 
+\begin_inset Formula $xxx.yyy.zzz.ttt$
+\end_inset
+
+, it is the corresponding binary number that is actually used in processing
+ an IP address.
+ An Ipv4 address is composed of a 
+\series bold
+network ID
+\series default
+, a 
+\series bold
+subnet ID
+\series default
+ and a 
+\series bold
+host ID
+\series default
+.
+ The 
+\series bold
+subnet part
+\series default
+ of the address contains both the network and subnet IDs, and the host part
+ of the address identifies the particular host within the subnet.
+ For example the Auburn University network address is 
+\begin_inset Formula $131.204.0.0/16$
+\end_inset
+
+, which has a 
+\begin_inset Formula $16\text{-bit}$
+\end_inset
+
+ prefix or network ID.
+ The addresses 
+\begin_inset Formula $131.204.0.0$
+\end_inset
+
+ and 
+\begin_inset Formula $131.204.255.255$
+\end_inset
+
+ are reserved for the 
+\series bold
+network
+\series default
+ and 
+\series bold
+broadcast
+\series default
+, respectively.
+ When both the subnet and host IDs are all one bit, the resulting address
+ represents the broadcast IP address for that network.
+ When both the subnet and host IDs are a zero bit, the resulting address
+ represents the network.
+ Auburn University owns and has the right to assign 
+\begin_inset Formula $2^{16}-2$
+\end_inset
+
+ interfaces to 
+\begin_inset Formula $131.204.0.0/16$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Classless Inter-Domain Routing
+\end_layout
+
+\begin_layout Standard
+In the early years, IPv4 network addresses were allocated using one of three
+ out of five classes, mostly from Class A, Class B, or Class C
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Class A
+\series default
+ with 
+\begin_inset Formula $24\text{-bits}$
+\end_inset
+
+ for host addresses, or 
+\begin_inset Formula $/8$
+\end_inset
+
+, ranging from 
+\begin_inset Formula $0.0.0.0\text{ to }127.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Class B
+\series default
+ with 
+\begin_inset Formula $16\text{-bits}$
+\end_inset
+
+ for host addresses, or 
+\begin_inset Formula $/16$
+\end_inset
+
+, ranging from 
+\begin_inset Formula $128.0.0.0\text{ to }191.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Class C
+\series default
+ with 
+\begin_inset Formula $8\text{-bits}$
+\end_inset
+
+ for host addresses, or 
+\begin_inset Formula $/24$
+\end_inset
+
+, ranging from 
+\begin_inset Formula $192.0.0.0\text{ to }223.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Class D.
+ For multicast, ranging from 
+\begin_inset Formula $224.0.0.0\text{ to }239.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Class E.
+ Experimental, ranging from 
+\begin_inset Formula $240.0.0.0\text{ to }255.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because network administrators could obtain a network address from only
+ one of these three classes, it made for a very inefficient method of allocating
+ addresses.
+ Most Class A and B networks had enormous numbers of unused addresses, while
+ most Class C networks had comparatively very few.
+ The IETF replaced this allocation method with Classless Inter-Domain Routing
+ (
+\series bold
+CIDR
+\series default
+).
+ Network addresses are no longer allocated based on one of three classes
+ and and the subnet part of the IP address can be of arbitrary length.
+ The CIDR address format is of the form 
+\begin_inset Formula $a.b.c.d/x$
+\end_inset
+
+, where x is the number of bits in the subnet part of the IP address or
+ the IP address prefix.
+ The subnet mask is another representation for specifying the number of
+ bits in the subnet part of the IP address or the IP address prefix.
+ A subnet mask contains all 
+\begin_inset Formula $1$
+\end_inset
+
+’s in the subnet portion and all 
+\begin_inset Formula $0$
+\end_inset
+
+’s in host part.
+\end_layout
+
+\begin_layout Subsection
+Non-routable addresses
+\end_layout
+
+\begin_layout Standard
+The Internet Assigned Numbers Authority (IANA) allocated three ranges of
+ addresses that are considered private IPv4 addresses.
+ These private network addresses can be assigned to devices in private networks
+ but are not routable in the global Internet.
+ A private IPv4 address must be translated to a public IPv4 address before
+ it can be forwarded by an Internet-facing router.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $10.0.0.0-10.255.255.255$
+\end_inset
+
+, with prefix 
+\begin_inset Formula $/8$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $172.16.0.0-172.31.255.255$
+\end_inset
+
+, with prefix 
+\begin_inset Formula $/12$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $192.168.0.0-192.168.255.255$
+\end_inset
+
+, with prefix 
+\begin_inset Formula $/16$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are also other special addresses that are used for particular purposes.
+ The addresses 
+\begin_inset Formula $127.0.0.0$
+\end_inset
+
+ through 
+\begin_inset Formula $127.255.255.255$
+\end_inset
+
+ (
+\begin_inset Formula $127/8$
+\end_inset
+
+ prefix) are used by local hosts for loopback purposes.
+ The adapter/NIC intercepts all loopback messages and returns them to the
+ sending application.
+ The address range from 
+\begin_inset Formula $0.0.0.0$
+\end_inset
+
+, i.e.
+ any IP address, through 
+\begin_inset Formula $0.255.255.255$
+\end_inset
+
+ should not be considered part of the normal Class A range.
+ The 
+\begin_inset Formula $0.x.x.x$
+\end_inset
+
+ addresses serve no particular purpose in the IP, and nodes that attempt
+ to use them will not be capable of communicating properly on the Internet.
+ The only use for 
+\begin_inset Formula $0.0.0.0$
+\end_inset
+
+ is the representation of any IP address for a default route.
+ Another reserved address block goes from 
+\begin_inset Formula $100.64.0.0\text{ through }100.127.255.255$
+\end_inset
+
+ (
+\begin_inset Formula $100.64/10$
+\end_inset
+
+ prefix) and it is allocated as a Shared Address Space to accommodate the
+ needs of Carrier- Grade NAT (CGN) devices.
+ Shared Address Space is distinct from private address space because it
+ is intended for use on Service Provider networks.
+\end_layout
+
+\begin_layout Subsection
+Network Address Translation
+\end_layout
+
+\begin_layout Standard
+The private/internal network uses private IP addresses provided by IETF,
+ and can change them for hosts/devices within this network without notifying
+ the world outside this network.
+ While IP addresses for hosts in the external network are unique and valid
+ in this environment as well as in private networks, the addresses for hosts
+ in the private network are unique only within this private network and
+ may not be valid in the external network.
+ The addresses used within a private network must not overlap with any external
+ addresses.
+ Traditional NAT is primarily used by sites using private addresses that
+ wish to allow outbound sessions from their site.
+ There are two variations to traditional NAT, namely 
+\series bold
+Basic NAT
+\series default
+ and Network Address Port Translation (
+\series bold
+NAPT
+\series default
+).
+\end_layout
+
+\begin_layout Subsubsection
+Basic NAT
+\end_layout
+
+\begin_layout Standard
+A block of external/public IP addresses is set aside for translating the
+ addresses of hosts within a private domain as they originate sessions to
+ the external domain.
+ In fact, translation occurs for both outbound and inbound packets.
+ For packets outbound from the private network, the source IP address and
+ related fields such as IP, TCP, UDP and ICMP header checksums are translated.
+ For inbound packets, the destination IP address and the checksums, as listed
+ above, are translated.
+ Basic NAT can be used to interconnect two IP networks that have incompatible
+ addressing.
+ However, multiple external/public IP addresses are difficult to obtain
+ due to the shortage of IPv4 addresses.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Network Address Port Translation
+\end_layout
+
+\begin_layout Standard
+The NAPT also translates transport identifiers, e.g.
+ TCP and UDP port numbers as well as ICMP query identifiers.
+ This permits the transport identifiers of a number of private hosts to
+ be multiplexed into the transport identifier of a single external/public
+ IP address.
+ The NAPT allows a set of hosts to share a single external address.
+ For most of the SOHO
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Small Office / Home Office.
+\end_layout
+
+\end_inset
+
+ routers, the private network usually relies on a single IP address, supplied
+ by the ISP to connect to the Internet, and can change ISPs without changing
+ the private IP addresses of the devices within the network, since these
+ devices inside the network are not explicitly addressable by the external
+ network.
+ This latter point is also a security advantage.
+ Note that NAPT can be combined with Basic NAT so that a pool of public
+ IP addresses can be used in conjunction with port translation.
+ The terms NAT and NAPT are used interchangeably in the literature, however
+ the RFCs use the term NAPT when port numbers are involved in translation.
+ Cisco refers to NAPT as PAT, i.e.
+ Port Address Translation.
+ 
+\end_layout
+
+\begin_layout Standard
+Theoretically, router processing should be limited to layer 3, but NAPT
+ violates the layer 3 limit.
+ The modification of the port number is a critical issue that must be considered
+ by application designers, e.g., with P2P applications.
+ In addition, security protocols such as IPsec must take care of the NAPT’s
+ modification.
+ Another consideration to be made is that by default, NAPT routers block
+ all incoming requests and only allow the response packets of outgoing requests
+ to pass through the NAPT router as a result of the available mapping entries.
+ This can be troublesome for applications which offer services like voice-over-I
+P (VoIP) and peer-to-peer (P2P), but can be solved by dynamically mapping/bindin
+g incoming requests through e.g.
+ Universal Plug and Play (UPnP).
+\end_layout
+
+\begin_layout Subsubsection
+Source NAT
+\end_layout
+
+\begin_layout Standard
+The SNAT changes the source address in IP header of a packet.
+ It may also change the source port in the TCP/UDP headers.
+ The typical usage is to change a private address/port into a public address/por
+t for packets leaving the internal network.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Masquerading
+\series default
+ is a special form of SNAT where the source address is unknown at the time
+ the rule is added to the NAT table.
+ This allows hosts with private address behind a firewall to access the
+ Internet when the external address is dynamically assigned.
+ Masquerading will modify the source IP address and port of the packet to
+ be the primary IP address assigned to the outgoing interface.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Destination NAT
+\end_layout
+
+\begin_layout Standard
+The DNAT, also called port-forwarding or virtual server, changes the destination
+ address in IP header of a packet.
+ It may also change the destination port in the TCP/UDP headers.
+ DNAT is typically used to redirect incoming packets with a destination
+ of a public address/port to a private IP address/port inside the internal
+ network.
+ According to the port accessed by the external interface, packets can be
+ forwarded torward different internal hosts, but the service appears to
+ be hosted by the firewall/router.
+\end_layout
+
+\begin_layout Subsubsection
+Problems with NAT
+\end_layout
+
+\begin_layout Standard
+At the very least, NAT means that our routers, application gateways, firewalls,
+ and other devices must perform extra processing to make NAT work, which
+ also causes latency.
+ The following are some of the major issues with NAT: 
+\end_layout
+
+\begin_layout Itemize
+checksum recalculations: When carrying TCP segments, modifying the IPv4
+ header also means the IPv4 checksum must be recalculated
+\end_layout
+
+\begin_layout Itemize
+ICMP manipulation: Many ICMP messages, such as the Destination Unreachable
+ message, embed in their payload the original IPv4 header that led to the
+ ICMP message being generated.
+ Because the original IPv4 address was translated by NAT, the NAT device
+ must translate these addresses as well
+\end_layout
+
+\begin_layout Itemize
+IPsec issues: NAT invites complications when using Internet Protocol Security
+ (IPsec) in transport mode.
+ If IPsec AH (Authentication Header) is used, the NAT translation breaks
+ the integrity check because the packet was modified during transport.
+ NAT modifies the TCP/UDP checksum, which causes the integrity check to
+ fail at the other end.
+ Therefore, NAT cannot be used with IPsec in transport mode.
+ Although it may work in tunnel mode, there can be issues in that case as
+ well.
+ 
+\end_layout
+
+\begin_layout Itemize
+breaking end-to-end reachability: NAT causes problems with one of the key
+ principles of the Internet: end-to-end reachability.
+ For most users, this has not been an issue as the Internet has been comprised
+ of mainly client/server networks.
+ NAT makes accessing a device with a private IPv4 address difficult.
+ Therefore, peer-to-peer, IoT, and many other types of services must provide
+ an intermediary device, a kind of server with a public IPv4 address that
+ both end devices can connect to - and that breaks pure end-to-end reachability.
+ There are methods such as port forwarding to allow direct access to a device
+ with a private IPv4 address, but they add another layer of complexity and
+ potential problems
+\end_layout
+
+\begin_layout Itemize
+performance: The process of having to translate addresses as packets leave
+ and re-enter a network creates delay
+\end_layout
+
+\begin_layout Section
+IPv6 primer
+\end_layout
+
+\begin_layout Subsection
+IPv4 address depletion
+\end_layout
+
+\begin_layout Standard
+The number of 
+\series bold
+IP
+\series default
+ addresses needed today far exceeds the world's population for several reasons.
+ First of all, IPv4 addresses are often allocated in groups of addresses,
+ as network addresses.
+ So, in most cases, you need a different IPv4 address wherever I go.
+ But a much larger reason we need so many more IP addresses is the number
+ of devices per person that are being connected to the Internet - and the
+ number of people who still need access to the Internet.
+ IPv4, with its 
+\begin_inset Formula $32\text{-bit}$
+\end_inset
+
+ address space, provides for 
+\begin_inset Formula $2^{32}$
+\end_inset
+
+ addresses.
+ In comparison, the 
+\begin_inset Formula $128\text{-bit}$
+\end_inset
+
+ IPv6 address space provides for 
+\begin_inset Formula $2^{128}$
+\end_inset
+
+ addresses.
+\end_layout
+
+\begin_layout Subsection
+IPv6 advantages
+\end_layout
+
+\begin_layout Subsubsection
+Access to IPv6-only customers
+\end_layout
+
+\begin_layout Standard
+There are places in the world that are IPv6-only.
+ In some areas of the world today, it is simply not possible to get an IPv4
+ address.
+ It is true that there are translation techniques that allow IPv4-only and
+ IPv6-only networks to communicate with each other, but they are not always
+ reliable, and they are often accompanied by degraded performance.
+ Also, any sort of translation mechanism makes it difficult to measure the
+ quality of the user experience and has the potential to break certain applicati
+ons.
+\end_layout
+
+\begin_layout Subsubsection
+Better performance
+\end_layout
+
+\begin_layout Standard
+Increased performance can be another benefit of transitioning to IPv6.
+ Many content providers are seeing substantial increases in performance
+ with IPv6.
+ Studies on why IPv6 may be faster than IPv4 are still incomplete.
+ However, the Internet Society (ISOC) has stated, “The reality is that connectio
+ns from users on IPv6 networks to services that run over IPv6 are going
+ to be faster than connections to services still on legacy IPv4 networks
+ that have to go through middleboxes such as NAT devices or application-layer
+ gateways (ALGs).”
+\end_layout
+
+\begin_layout Subsection
+IPv6 address terminology
+\end_layout
+
+\begin_layout Standard
+The following are a few terms which IPv6 uses: 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+prefix
+\series default
+, equivalent to the network portion of an IPv4 address
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+prefix length
+\series default
+, the number of most-significant or leftmost bits that define the prefix,
+ the network portion of the address.
+ This is equivalent to the subnet mask in IPv4.
+ IPv6 addresses are 128 bits, so the prefix length can be 
+\begin_inset Formula $/0$
+\end_inset
+
+ to 
+\begin_inset Formula $/128$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+interface ID
+\series default
+, equivalent to the host portion of an IPv4 address.
+ The term interface is used because an IP address (IPv4 or IPv6) is assigned
+ to an interface, and a device may have multiple interfaces
+\end_layout
+
+\begin_layout Subsection
+Representation of IPv6 Addresses
+\end_layout
+
+\begin_layout Standard
+IPv6 addresses are 
+\begin_inset Formula $128$
+\end_inset
+
+ bits in length and written as a string of hexadecimal digits.
+ Every 
+\begin_inset Formula $4$
+\end_inset
+
+ bits can be represented by a single hexadecimal digit.
+ The preferred form is 
+\begin_inset Formula $x:x:x:x:x:x:x:x$
+\end_inset
+
+, where each 
+\begin_inset Formula $x$
+\end_inset
+
+ is a 
+\begin_inset Formula $16\text{-bit}$
+\end_inset
+
+ section that can be represented using up to four hexadecimal digits, with
+ the sections separated by colons.
+ The result is eight 
+\begin_inset Formula $16\text{-bit}$
+\end_inset
+
+ sections, or hextets, for a total of 128 bits in the address.
+\end_layout
+
+\begin_layout Subsubsection
+Rule 1: omit leading 0s
+\end_layout
+
+\begin_layout Standard
+One way to shorten IPv6 addresses is to omit leading 
+\begin_inset Formula $0\text{s}$
+\end_inset
+
+ in any hextet.
+ This rule applies only to leading 
+\begin_inset Formula $0\text{s}$
+\end_inset
+
+ and not to trailing 
+\begin_inset Formula $0\text{s}$
+\end_inset
+
+; being able to omit both leading and trailing 
+\begin_inset Formula $0\text{s}$
+\end_inset
+
+ would cause the address to be ambiguous.
+\end_layout
+
+\begin_layout Subsubsection
+Rule 2: omit all-0s hextets 
+\end_layout
+
+\begin_layout Standard
+The second rule for shortening IPv6 addresses is that you can use a double
+ colon, 
+\begin_inset Formula $::$
+\end_inset
+
+, to represent any single, contiguous string of two or more hextets consisting
+ of all 
+\begin_inset Formula $0\text{s}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Combining Rule 1 and Rule 2 
+\end_layout
+
+\begin_layout Standard
+You can combine the two rules just discussed to reduce an address even further.
+ 
+\end_layout
+
+\begin_layout Subsection
+Prefix length notation
+\end_layout
+
+\begin_layout Standard
+IPv6 address prefixes can be represented much the same way that IPv4 address
+ prefixes are written in CIDR notation.
+ An IPv6 address prefix (the network portion of the address) is represented
+ using the format 
+\begin_inset Formula $\left\langle \text{ipv6-address/prefix-length}\right\rangle $
+\end_inset
+
+.
+ The prefix-length is a decimal value indicating the number of leftmost
+ contiguous bits of the address.
+ It identifies the prefix (that is, the network portion) of the address.
+ It is also used with unicast addresses to separate the prefix portion of
+ the address from the Interface ID.
+ Notice that common prefixes fall on a nibble boundary, a multiple of 4
+ bits, like 
+\begin_inset Formula $/32$
+\end_inset
+
+, 
+\begin_inset Formula $/48$
+\end_inset
+
+, 
+\begin_inset Formula $/52$
+\end_inset
+
+, 
+\begin_inset Formula $/56$
+\end_inset
+
+, 
+\begin_inset Formula $/60$
+\end_inset
+
+, and 
+\begin_inset Formula $/64$
+\end_inset
+
+.
+ Prefix lengths can also fall within a nibble - for example, 
+\begin_inset Formula $/61$
+\end_inset
+
+, 
+\begin_inset Formula $/62$
+\end_inset
+
+, or 
+\begin_inset Formula $/63$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Unicast address
+\end_layout
+
+\begin_layout Standard
+Uniquely identifies an interface on an IPv6 device.
+ A packet sent to a unicast address is received by the interface that is
+ assigned to that address.
+ Similar to IPv4, a source IPv6 addresses must be a unicast address.
+ There exist different types of unicast addresses
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+global unicast
+\series default
+: a routable address in the IPv6 Internet, similar to a public IPv4 address
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+link-local
+\series default
+: used only to communicate with devices on the same local link
+\end_layout
+
+\begin_layout Itemize
+loopback: an address not assigned to any physical interface that can be
+ used for a host to send an IPv6 packet to itself
+\end_layout
+
+\begin_layout Itemize
+unspecified address: used only as a source address and indicates the absence
+ of an IPv6 address
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+unique local
+\series default
+: similar to a private address in IPv4 (RFC 1918) and not intended to be
+ routable in the IPv6 Internet.
+ However, unlike RFC 1918 addresses, these addresses are not intended to
+ be statefully translated to a global unicast address
+\end_layout
+
+\begin_layout Itemize
+IPv4 embedded: an IPv6 address that carries an IPv4 address in the low-order
+ 
+\begin_inset Formula $32$
+\end_inset
+
+ bits of the address
+\end_layout
+
+\begin_layout Subsection
+Multicast address
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Multicast
+\series default
+ is a technique in which a device sends a single packet to multiple destinations
+ simultaneously (one-to-many).
+ An IPv6 multicast address defines a group of devices known as a multicast
+ group.
+ IPv6 multicast addresses use the prefix 
+\begin_inset Formula $ff00::/8$
+\end_inset
+
+, which is equivalent to the IPv4 multicast address 
+\begin_inset Formula $224.0.0.0/4$
+\end_inset
+
+.
+ A packet sent to a multicast group always has a unicast source address.
+ A multicast address can never be the source address.
+ Unlike IPv4, there is no broadcast address in IPv6.
+ Instead, IPv6 uses multicast, including an all-IPv6 devices well-known
+ multicast address and a solicited-node multicast address.
+ There are two types of predefined multicast addresses:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+well-known
+\series default
+ multicast addresses have the prefix 
+\begin_inset Formula $ff00::/12$
+\end_inset
+
+.
+ These are predefined or reserved multicast addresses for assigned groups
+ of devices, and are equivalent to IPv4 well-known multicast addresses in
+ the range 
+\begin_inset Formula $224.0.0.0$
+\end_inset
+
+ to 
+\begin_inset Formula $239.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+solicited-node
+\series default
+ multicast addresses are used as a more efficient approach to IPv4’s broadcast
+ address.
+ These are used in Layer 3-to-Layer 2 address resolution, similar to how
+ Address Resolution Protocol (ARP) is used in IPv4.
+ Solicited-node multicast addresses are automatically created using a special
+ mapping of the device’s unicast address with the solicited-node multicast
+ prefix 
+\begin_inset Formula $ff02:0:0:0:0:1:ff00::/104$
+\end_inset
+
+.
+ Solicited-node multicast addresses are automatically created for every
+ unicast address on a device
+\end_layout
+
+\begin_layout Subsection
+Anycast address
+\end_layout
+
+\begin_layout Standard
+An IPv6 anycast address is an address that can be assigned to more than
+ one interface (typically different devices).
+ In other words, multiple devices can have the same anycast address.
+ A packet sent to an anycast address is routed to the “nearest” interface
+ having that address, according to the router’s routing table.
+ There is no special prefix for an IPv6 anycast address.
+ An IPv6 anycast address uses the same address range as global unicast addresses.
+ Each participating device is configured to have the same anycast address.
+\end_layout
+
+\begin_layout Section
+IPv6 addressing
+\end_layout
+
+\begin_layout Subsection
+Link Local unicast address
+\end_layout
+
+\begin_layout Standard
+A link-local address is a unicast address that is confined to a single link,
+ a single subnet.
+ Link-local addresses only need to be unique on the link (subnet) and do
+ not need to be unique beyond the link.
+ Therefore, routers do not forward packets with a link-local address.
+ Devices can use Duplicate Address Detection (
+\series bold
+DAD
+\series default
+) to determine whether or not the link-local address is unique.
+ The range of the first hextet goes from 
+\begin_inset Formula $fe80$
+\end_inset
+
+ to 
+\begin_inset Formula $febf$
+\end_inset
+
+.
+ With IPv6, during startup the device automatically gives itself a link-local
+ address that is unique on that subnet.
+ It can then use this address to communicate with any device on the network,
+ including an IPv6 router and, if necessary, a DHCPv6 server
+\end_layout
+
+\begin_layout Itemize
+when a device starts up, before it obtains a GUA address, the device uses
+ its IPv6 link-local address as its source address to communicate with other
+ devices on the network, including the local router
+\end_layout
+
+\begin_layout Itemize
+devices use the router's link-local address as their default gateway address
+\end_layout
+
+\begin_layout Itemize
+routers exchange IPv6 dynamic routing protocol (OSPFv3, EIGRP for IPv6,
+ RIPng) messages from their IPv6 link-local address
+\end_layout
+
+\begin_layout Itemize
+IPv6 routing table entries populated from dynamic routing protocols use
+ the IPv6 link-local address as the next-hop address
+\end_layout
+
+\begin_layout Subsection
+Global Unicast Address
+\end_layout
+
+\begin_layout Standard
+Shortened as 
+\series bold
+GUA
+\series default
+s, these are globally routable and reachable in the IPv6 Internet, similar
+ to public IPv4 addresses.
+ The current global unicast address assignment from IANA begins with binary
+ value 001, or the prefix 
+\begin_inset Formula $2000::/3$
+\end_inset
+
+.
+ This results in a range of global unicast addresses of 
+\begin_inset Formula $2000::/3$
+\end_inset
+
+ through 
+\begin_inset Formula $3fff::/16$
+\end_inset
+
+.
+ A global unicast address is configured on an interface, which can be configured
+ with one or multiple GUA addresses.
+ The GUA addresses can be on the same or different subnets, and they can
+ be configured manually or obtained dynamically.
+ It is important to remember that an IPv6 interface does not have to be
+ configured with a global unicast address but it must have a link-local
+ address.
+ In other words, if an interface has a global unicast address, it also has
+ a link-local address.
+ However, if an interface has a link-local address, it does not necessarily
+ have to have a global unicast address.
+ The generic structure of a GUA has three fields
+\end_layout
+
+\begin_layout Itemize
+the Global Routing 
+\series bold
+Prefix
+\series default
+ is equivalent to the network portion of an IPv4 address
+\end_layout
+
+\begin_layout Itemize
+the 
+\series bold
+subnet
+\series default
+ ID is used for allocating subnets within the customer site.
+ Unlike with IPv4, it is not necessary to borrow bits from the Interface
+ ID (host portion) to create subnets.
+ The number of bits in the Subnet ID falls between where the Global Routing
+ Prefix ends and where the Interface ID begins.
+ This makes subnetting simple and manageable
+\end_layout
+
+\begin_layout Itemize
+the 
+\series bold
+interface
+\series default
+ ID identifies the interface on the subnet, equivalent to the host portion
+ of an IPv4 address.
+ The Interface ID in most cases is 64 bits
+\end_layout
+
+\begin_layout Standard
+The global routing prefix is the prefix or network portion of the address
+ assigned by the provider, such as an ISP, to a customer or site.
+ This is a site’s prefix or network address, as seen by the provider (that
+ is, the ISP).
+ In some cases this prefix, the Global Routing Prefix, may be propagated
+ to other ISPs or autonomous systems (ASs) throughout the Internet.
+\end_layout
+
+\begin_layout Subsubsection
+The 3–1–4 rule for recognizing parts of a GUA Address
+\end_layout
+
+\begin_layout Standard
+Similar to IPv4, the IPv6 prefix length determines the number of subnets
+ and devices available for the network.
+ End sites, as defined previously, receive a prefix and prefix length from
+ their provider.
+ It is common for end sites receiving their IPv6 address from an ISP to
+ get a 
+\begin_inset Formula $/48$
+\end_inset
+
+ prefix.
+ However, an end site may receive a prefix length of any size, as determined
+ by the provider.
+ An address with a 
+\begin_inset Formula $/48$
+\end_inset
+
+ prefix can be quickly broken down following the 
+\begin_inset Quotes eld
+\end_inset
+
+3–1–4 rule
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Each number refers to the number of hextets, or 16-bit segments, of that
+ portion of the address
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $3$
+\end_inset
+
+ hextets, or 
+\begin_inset Formula $48$
+\end_inset
+
+ bits, of the Global Routing Prefix
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1$
+\end_inset
+
+ hextet, or 
+\begin_inset Formula $16$
+\end_inset
+
+ bits, of the Subnet ID
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $4$
+\end_inset
+
+ hextets, or 
+\begin_inset Formula $64$
+\end_inset
+
+ bits, of the Interface ID.
+ A 
+\begin_inset Formula $64\text{-bit}$
+\end_inset
+
+ Interface ID is recommended for most end user networks to accommodate SLAAC
+ and make the addressing plan easier to manage
+\end_layout
+
+\begin_layout Subsection
+Dynamic IPv6 address allocation
+\end_layout
+
+\begin_layout Standard
+In IPv4, devices have two ways to get IPv4 addressing information, which
+ includes an IPv4 address, subnet mask, default gateway address, domain
+ name, and Domain Name Service (DNS) server address:
+\end_layout
+
+\begin_layout Itemize
+static or manual configuration 
+\end_layout
+
+\begin_layout Itemize
+dynamically from a DHCPv4 server 
+\end_layout
+
+\begin_layout Standard
+As with IPv4, IPv6 addresses can be statically assigned.
+ However, when it comes to dynamic addressing, IPv6 has a different approach.
+ IPv6 uses the ICMPv6 Router Advertisement message to suggest to devices
+ how to obtain their IPv6 addressing information.
+ An IPv6 router sends a Router Advertisement message periodically or when
+ it receives a Router Solicitation request from a device.
+ The RA message is typically sent to the all-IPv6 devices multicast address,
+ 
+\begin_inset Formula $ff02::1$
+\end_inset
+
+, so every IPv6 device on the link (network) receives it (can also be sent
+ as a unicast message).
+ Other routers do not forward RA messages.
+ The Router Advertisement message includes addressing information for IPv6
+ devices that includes the following: 
+\end_layout
+
+\begin_layout Itemize
+the network prefix and prefix length, along with other information about
+ the link (subnet)
+\end_layout
+
+\begin_layout Itemize
+the address of the default gateway.
+ This is a link-local address of the router’s egress interface, the source
+ IPv6 address of the RA message
+\end_layout
+
+\begin_layout Itemize
+three flags that are used to suggest to a device how to obtain its IPv6
+ addressing information.
+ These flags are the Autonomous Address Configuration (A flag), the Other
+ Configuration (O flag), and the Managed Address Configuration (M flag)
+\end_layout
+
+\begin_layout Itemize
+optional information such as a domain name and a list of DNS server addresses
+\end_layout
+
+\begin_layout Standard
+Unlike an IPv4 device, an IPv6 device can determine all of its addressing
+ dynamically without the services of a DHCP server.
+ IPv6 Router Advertisements are automatically sent on Ethernet interfaces
+ if IPv6 unicast routing is enabled and an IPv6 address has been configured
+ on the interface.
+ The RA message contains three flags to tell a device how to obtain or create
+ its global unicast address: 
+\end_layout
+
+\begin_layout Itemize
+Address Autoconfiguration (
+\series bold
+A flag
+\series default
+): when set to 1 (on), this flag tells the receiving host to use SLAAC to
+ create its global unicast address
+\end_layout
+
+\begin_layout Itemize
+Other Configuration (
+\series bold
+O flag
+\series default
+): When set to 1 (on), this flag tells the host to get other addressing
+ information, other than its global unicast address, from a stateless DHCPv6
+ server
+\end_layout
+
+\begin_layout Itemize
+Managed Address Configuration (
+\series bold
+M flag
+\series default
+): When set to 1 (on), this flag tells the host to use a stateful DHCPv6
+ server for its global unicast address and all other addressing information
+\end_layout
+
+\begin_layout Standard
+Notice that DAD is required to be performed for all unicast addresses (such
+ as global unicast addresses and link-local unicast addresses) before the
+ addresses are assigned to interfaces, regardless of whether they were obtained
+ through SLAAC, DHCPv6, or manual configuration.
+ 
+\end_layout
+
+\begin_layout Standard
+A device that is not a router maintains a Default Router List.
+ When a device receives a Router Advertisement, it adds the link-local source
+ address of the packet as one of the routers it can use as a default gateway.
+ Each entry has an invalidation timer, the Router Lifetime, extracted from
+ the Router Advertisement used to delete entries that are no longer being
+ advertised.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+ICMPv6 Neighbor Discovery Protocol
+\end_layout
+
+\begin_layout Standard
+ICMPv6 Neighbor Discovery Protocol (
+\series bold
+NDP
+\series default
+) adds new functionality for ICMPv6.
+ NDP is used for on-link (same subnet) device discovery and messaging.
+ NDP includes five message types: Router Solicitation, Router Advertisement,
+ Neighbor Solicitation, Neighbor Advertisement, and Redirect messages.
+ The first four messages are new with ICMPv6.
+ The Redirect message is also part of ICMPv4 but contains additional functionali
+ty
+\end_layout
+
+\begin_layout Itemize
+the 
+\series bold
+Neighbor Solicitation
+\series default
+ and 
+\series bold
+Neighbor Advertisement
+\series default
+ messages are used for messaging between any two devices on the same link
+ (subnet)
+\end_layout
+
+\begin_layout Itemize
+the 
+\series bold
+Router Solicitation
+\series default
+ and 
+\series bold
+Router Advertisement
+\series default
+ messages are used for messaging between a device and a router on the same
+ link (subnet).
+ The former is sent by a router as a suggestion to devices about how to
+ dynamically obtain their IPv6 addressing information.
+ The latter is sent by a device to request a Router Advertisement message
+ from the router
+\end_layout
+
+\begin_layout Subsubsection
+Stateless Address Autoconfiguration
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+SLAAC
+\series default
+, as the name implies, is stateless.
+ The host creates its own global unicast address, without the services of
+ a stateful device such as a stateful DHCPv6 server.
+ It does this by combining the prefix in the RA message with a self-generated
+ Interface ID.
+ The method the host uses to create the Interface ID depends on the operating
+ system.
+ There are two options for creating the Interface ID:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+EUI-64
+\series default
+ process 
+\end_layout
+
+\begin_layout Itemize
+random 64-bit value (
+\series bold
+privacy extension
+\series default
+) 
+\end_layout
+
+\begin_layout Standard
+The EUI-64 process uses the Ethernet MAC address to generate the Interface
+ ID.
+ MacOS and some Linux implementations use EUI-64 to create the Interface
+ ID for the public address.
+ The concern many have is related to the traceability of an address that
+ uses an Ethernet MAC address.
+ Another option is to use a randomized 64-bit value for the Interface ID,
+ part of the privacy extension for SLAAC.
+ The privacy extension also includes the use of temporary addresses.
+\end_layout
+
+\begin_layout Subsubsection
+SLAAC and stateless DHCPv6 server 
+\end_layout
+
+\begin_layout Standard
+After a device generates one or more addresses using SLAAC, it contacts
+ a stateless DHCPv6 server for additional information.
+ Remember that a stateless DHCPv6 server doesn’t allocate or maintain any
+ IPv6 global unicast addressing information.
+ A stateless server only provides common network information that is available
+ to all devices on the network, such as a list of DNS server addresses or
+ a domain name.
+ Implementing SLAAC with stateless DHCPv6 requires the following:
+\end_layout
+
+\begin_layout Itemize
+setting the router’s RA message’s O flag to 1
+\end_layout
+
+\begin_layout Itemize
+configuring a stateless DHCPv6 server 
+\end_layout
+
+\begin_layout Subsubsection
+Stateful DHCPv6 server 
+\end_layout
+
+\begin_layout Standard
+Unlike the first two methods, stateful DHCPv6 does not utilize SLAAC to
+ generate a global unicast address.
+ Stateful DHCPv6 is similar to the DHCP services provided for IPv4.
+ A stateful DHCPv6 server provides IPv6 GUA addresses to clients and keeps
+ track of (that is, maintains state for) which devices have been allocated
+ which IPv6 addresses.
+ A significant difference between stateful DHCPv6 and DHCPv4 is the advertising
+ of the default gateway address.
+ In IPv4, the DHCPv4 server usually provides the default gateway address.
+ In IPv6, only the router transmitting the ICMPv6 Router Advertisement can
+ provide the address of the default gateway dynamically.
+ There is no option within DHCPv6 to provide a default gateway address.
+ Besides, there is no better device to provide this address than the router
+ itself.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+Prefix Delegation
+\series default
+ option for DHCPv6 (
+\series bold
+DHCPv6-PD
+\series default
+) provides a method for delegating a globally routable IPv6 prefix from
+ a service provider to a customer.
+ Most customer IPv4 networks rely on NAT to translate from a private IPv4
+ address to a limited number of public IPv4 addresses.
+ DHCPv6-PD provides the customer with more than enough global unicast address
+ space to make NAT unnecessary.
+ Implementing stateful DHCPv6 requires the following: 
+\end_layout
+
+\begin_layout Itemize
+setting the router’s RA message’s M flag to 1 and the A flag to 0
+\end_layout
+
+\begin_layout Itemize
+configuring a stateful DHCPv6 server 
+\end_layout
+
+\begin_layout Section
+Firewalls primer
+\end_layout
+
+\begin_layout Subsection
+Host security 
+\end_layout
+
+\begin_layout Standard
+With this model, you enforce the security of each host machine separately,
+ and you make every effort to avoid or alleviate all the known security
+ problems that might affect that particular host.
+ The major impediment to effective host security in modern computing environment
+s is the complexity and diversity of those environments.
+ Most modern environments include machines from multiple vendors, each with
+ its own operating system, and each with its own set of security problems.
+ Even if the site has machines from only one vendor, different releases
+ of the same operating system often have significantly different security
+ problems.
+ 
+\end_layout
+
+\begin_layout Standard
+It takes a significant amount of up-front and ongoing work to effectively
+ implement and maintain host security.
+ Even with all that work done correctly, host security still often fails
+ due to bugs in vendor software, or due to a lack of suitably secure software
+ for some required functions.
+ Host security also relies on the good intentions and the skill of everyone
+ who has privileged access to any machine.
+ As the number of machines increases, the number of privileged users generally
+ increases as well.
+ Securing a machine is much more difficult than attaching it to a network,
+ so insecure machines may appear on your network as unexpected surprises.
+ A host security model may be highly appropriate for small sites, or sites
+ with extreme security requirements.
+ Indeed, all sites should include some level of host security in their overall
+ security plans.
+ 
+\end_layout
+
+\begin_layout Subsection
+Network Security 
+\end_layout
+
+\begin_layout Standard
+As environments grow larger and more diverse, and as securing them on a
+ host-by-host basis grows more difficult, more sites are turning to a network
+ security model.
+ With a network security model, you concentrate on controlling network access
+ to your various hosts and the services they offer, rather than on securing
+ them one by one.
+ Network security approaches include building firewalls to protect your
+ internal systems and networks, using strong authentication approaches (such
+ as one-time passwords), and using encryption to protect particularly sensitive
+ data as it transits the network.
+\end_layout
+
+\begin_layout Subsection
+Internet firewalls
+\end_layout
+
+\begin_layout Standard
+As we've mentioned, firewalls are a very effective type of network security.
+ A firewall serves multiple purposes:
+\end_layout
+
+\begin_layout Itemize
+it restricts people to entering at a carefully controlled point
+\end_layout
+
+\begin_layout Itemize
+it prevents attackers from getting close to your other defenses
+\end_layout
+
+\begin_layout Itemize
+it restricts people to leaving at a carefully controlled point
+\end_layout
+
+\begin_layout Standard
+All traffic coming from the Internet or going out from your internal network
+ passes through the firewall.
+ Because the traffic passes through it, the firewall has the opportunity
+ to make sure that this traffic is acceptable.
+ Logically, a firewall is a separator, a restricter, an analyzer.
+ The physical implementation of the firewall varies from site to site.
+ Most often, a firewall is a set of hardware components - a router, a host
+ computer, or some combination of routers, computers, and networks with
+ appropriate software.
+ A firewall is very rarely a single physical object, although some commercial
+ products attempt to put everything into the same box.
+ Usually, a firewall has multiple parts, and some of these parts may do
+ other tasks besides function as part of the firewall.
+\end_layout
+
+\begin_layout Standard
+Think of a firewall as a choke point.
+ All traffic in and out must pass through this single, narrow choke point.
+ A firewall gives you an enormous amount of leverage for network security
+ because it lets you concentrate your security measures on this choke point:
+ the point where your network connects to the Internet.
+ It enforces the site's security policy, allowing only "approved" services
+ to pass through and those only within the rules set up for them.
+ Sometimes, a firewall will be used to keep one section of your site's network
+ separate from another section.
+ By doing this, you keep problems that impact one section from spreading
+ through the entire network.
+ In some cases, you'll do this because one section of your network may be
+ more trusted than another; in other cases, because one section is more
+ sensitive than another.
+ Still, there are some things a firewall can not prevent:
+\end_layout
+
+\begin_layout Itemize
+if the attacker is already inside the network, a firewall can do virtually
+ nothing for you.
+\end_layout
+
+\begin_layout Itemize
+a firewall can effectively control the traffic that passes through it; however,
+ there is nothing a firewall can do about traffic that doesn't pass through
+ it
+\end_layout
+
+\begin_layout Itemize
+a firewall is designed to protect against known threats.
+ A well-designed one may also protect against some new threats.
+ However, no firewall can automatically defend against every new threat
+ that arises
+\end_layout
+
+\begin_layout Itemize
+firewalls can't keep computer viruses out of a network.
+ Detecting a virus in a random packet of data passing through a firewall
+ is very difficult
+\end_layout
+
+\begin_layout Itemize
+firewalls interfere with the way the Internet is supposed to work, introducing
+ all sorts of problems, annoying users, and slowing down the introduction
+ of new Internet services
+\end_layout
+
+\begin_layout Subsection
+Security strategies 
+\end_layout
+
+\begin_layout Subsubsection
+Least privilege
+\end_layout
+
+\begin_layout Standard
+Basically, the principle of least privilege means that any object (user,
+ administrator, program, system, whatever) should have only the privileges
+ the object needs to perform its assigned tasks - and no more.
+ Least privilege is an important principle for limiting your exposure to
+ attacks and for limiting the damage caused by particular attacks.
+ Many of the common security problems on the Internet can be viewed as failures
+ to follow the principle of least privilege.
+ However, there are two problems with trying to enforce least privilege.
+ First, it can be complex to implement when it isn't already a design feature
+ of the programs and protocols you're using.
+ Trying to add it on may be very difficult to get right.
+ Second, you may end up implementing something less than least privilege.
+\end_layout
+
+\begin_layout Subsubsection
+Defense in depth
+\end_layout
+
+\begin_layout Standard
+Do not depend on just one security mechanism, however strong it may seem
+ to be; instead, install multiple mechanisms that back each other up.
+ You don't want the failure of any single security mechanism to totally
+ compromise your security.
+ Any security - even the most seemingly impenetrable firewall - can be breached
+ by attackers who are willing to take enough risk and bring enough power
+ to bear.
+ The trick is to make the attempt too risky or too expensive for the attackers
+ you expect to face.
+ You can do this by adopting multiple mechanisms that provide backup and
+ redundancy for each other: network security (a firewall), host security
+ (particularly for your bastion host
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A computer system that must be highly secured because it is vulnerable to
+ attack, usually because it is exposed to the Internet and is a main point
+ of contact for users of internal networks.
+\end_layout
+
+\end_inset
+
+), and human security (user education, careful system administration).
+ All of these mechanisms are important and can be highly effective, but
+ don't place absolute faith in any one of them.
+ These redundant defenses aren't solely, or even primarily, to protect from
+ attackers; they mostly provide protection against failures of one level
+ of defense.
+\end_layout
+
+\begin_layout Subsubsection
+Choke point
+\end_layout
+
+\begin_layout Standard
+A choke point forces attackers to use a narrow channel, which you can monitor
+ and control.
+ In network security, the firewall between your site and the Internet (assuming
+ that it's the only connection between your site and the Internet) is such
+ a choke point; anyone who's going to attack your site from the Internet
+ is going to have to come through that channel, which should be defended
+ against such attacks.
+ A choke point is useless if there's an effective way for an attacker to
+ go around it.
+ A second Internet connection - even an indirect one, like a connection
+ to another company that has its own Internet connection elsewhere - is
+ an even more threatening breach.
+\end_layout
+
+\begin_layout Subsubsection
+Weakest link
+\end_layout
+
+\begin_layout Standard
+A fundamental tenet of security is that a chain is only as strong as its
+ weakest link and a wall is only as strong as its weakest point.
+ Smart attackers are going to seek out that weak point and concentrate their
+ attentions there.
+ You need to be aware of the weak points of your defense so that you can
+ take steps to eliminate them, and so that you can carefully monitor those
+ you can't eliminate.
+ You should try to pay attention equally to all aspects of your security,
+ so that there is no large difference in how insecure one thing is as compared
+ to another.
+ There is always going to be a weakest link, however; the trick is to make
+ that link strong enough and to keep the strength proportional to the risk.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Fail-Safe stance
+\end_layout
+
+\begin_layout Standard
+Another fundamental principle of security is that, to the extent possible,
+ systems should fail safe; that is, if they're going to fail, they should
+ fail in such a way that they deny access to an attacker, rather than letting
+ the attacker in.
+ The failure may also result in denying access to legitimate users as well,
+ until repairs are made, but this is usually an acceptable trade-off.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Universal participation
+\end_layout
+
+\begin_layout Standard
+In order to be fully effective, most security systems require the universal
+ participation (or at least the absence of active opposition) of a site's
+ personnel.
+ If someone can simply opt out of your security mechanisms, then an attacker
+ may be able to attack you by first attacking that exempt person's system
+ and then attacking your site from the inside.
+\end_layout
+
+\begin_layout Subsubsection
+Diversity of defense
+\end_layout
+
+\begin_layout Standard
+closely related to depth of defense, it's the idea that you need not only
+ multiple layers of defense, but different kinds of defense.
+ Properly implemented, diversity of defense makes a significant difference
+ to the security of a system.
+ However, many attempts to create diversity of defense are not particularly
+ effective.
+ A popular theory is to use different types of systems - for instance, in
+ an architecture that has two packet filtering systems, you can increase
+ diversity of defense by using systems from different vendors.
+ After all, if all of your systems are the same, somebody who knows how
+ to break into one of them probably knows how to break into all of them.
+ 
+\end_layout
+
+\begin_layout Standard
+Using security systems from different vendors may reduce the chances of
+ a common bug or configuration error that compromises them all.
+ There is a trade-off in terms of complexity and cost, however.
+ Procuring and installing multiple different systems is going to be more
+ difficult, take longer, and be more expensive than procuring and installing
+ a single system (or even several identical systems).
+ If you're not careful, you can create diversity of weakness instead of
+ diversity of defense.
+\end_layout
+
+\begin_layout Subsubsection
+Simplicity
+\end_layout
+
+\begin_layout Standard
+First, keeping things simple makes them easier to understand; if you don't
+ understand something, you can't really know whether or not it's secure.
+ Second, complexity provides nooks and crannies for all sorts of things
+ to hide in.
+ Complex programs have more bugs, any of which may be security problems.
+ Effective security is inherently complex.
+ You want a system you can explain, but you still want it to work.
+ Don't sacrifice security in order to get simplicity.
+ 
+\end_layout
+
+\begin_layout Subsection
+Firewall technology
+\end_layout
+
+\begin_layout Subsubsection
+Packet filtering
+\end_layout
+
+\begin_layout Standard
+These systems route packets between internal and external hosts, but they
+ do it selectively.
+ They allow or block certain types of packets in a way that reflects a site's
+ own security policy.
+ The type of router used in a packet filtering firewall is known as a 
+\series bold
+screening router
+\series default
+.
+ The router can also look past the packet headers at data further on in
+ the packet; this allows it, for instance, to filter packets based on more
+ detailed information (like the name of the web page that somebody is requesting
+) and to verify that packets appear to be formatted as expected for their
+ destination port.
+ The router can also make sure that the packet is valid (it actually is
+ the size that it claims to be and is a legal size, for instance), which
+ helps catch a number of denial of service attacks based on malformed packets.
+ In addition, the router knows things about the packet that aren't reflected
+ in the packet itself, such as the interface the packet arrives on and the
+ interface the packet will go out on.
+ Finally, a router that keeps track of packets it has seen knows some useful
+ historical facts, such as
+\end_layout
+
+\begin_layout Itemize
+whether this packet appears to be a response to another packet (that is,
+ its source was the destination of a recent packet and its destination is
+ the source of that other packet)
+\end_layout
+
+\begin_layout Itemize
+how many other packets have recently been seen to or from the same host
+ 
+\end_layout
+
+\begin_layout Itemize
+whether this packet is identical to a recently seen packet 
+\end_layout
+
+\begin_layout Itemize
+if this packet is part of a larger packet that has been broken into parts
+ (fragmented) 
+\end_layout
+
+\begin_layout Standard
+An ordinary router simply looks at the destination address of each packet
+ and picks the best way it knows to send that packet towards that destination.
+ The decision about how to handle the packet is based solely on its destination.
+ There are two possibilities: the router knows how to send the packet towards
+ its destination, and it does so; or the router does not know how to send
+ the packet towards its destination, and it forgets about the packet and
+ returns an ICMP "destination unreachable" message, to the packet's source.
+ A screening router, on the other hand, looks at packets more closely.
+ In addition to determining whether or not it can route a packet towards
+ its destination, a screening router also determines whether or not it should.
+ "Should" or "should not" are determined by the site's security policy,
+ which the screening router has been configured to enforce.
+ Once it has looked at all the information, a straightforward packet filtering
+ router can do any of the following things:
+\end_layout
+
+\begin_layout Itemize
+send the packet on to the destination it was bound for
+\end_layout
+
+\begin_layout Itemize
+drop the packet - just forget it, without notifying the sender
+\end_layout
+
+\begin_layout Itemize
+reject the packet - refuse to forward it, and return an error to the sender
+\end_layout
+
+\begin_layout Itemize
+log information about the packet.
+ Set off an alarm to notify somebody about the packet immediately.
+ 
+\end_layout
+
+\begin_layout Standard
+More sophisticated routers might also be able to do one or more of these
+ things:
+\end_layout
+
+\begin_layout Itemize
+modify the packet (for instance, to do network address translation)
+\end_layout
+
+\begin_layout Itemize
+send the packet on to a destination other than the one that it was bound
+ for (for instance, to force transactions through a proxy server or perform
+ load balancing)
+\end_layout
+
+\begin_layout Itemize
+modify the filtering rules (for instance, to accept replies to a UDP packet
+ or to deny all traffic from a site that has sent hostile packets)
+\end_layout
+
+\begin_layout Standard
+Packet filtering devices that keep track of packets that they see are frequently
+ called 
+\series bold
+stateful packet filters
+\series default
+ (because they keep information about the state of transactions).
+ They may also be called dynamic packet filters because they change their
+ handling of packets dynamically depending on the traffic they see.
+ A packet filtering system is also a logical place to provide virtual private
+ network or network address translation services.
+ Since the packet filter is already looking at all of the packets, it can
+ easily identify packets that are intended for a destination that is part
+ of the virtual private network, encrypt those packets, and encapsulate
+ them in another packet bound for the appropriate destination.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Proxy services
+\end_layout
+
+\begin_layout Standard
+In general, a proxy is something or someone who does something on somebody
+ else's behalf.
+ Proxy services are specialized application or server programs that take
+ users' requests for Internet services and forward them to the actual services.
+ The proxies provide replacement connections and act as gateways to the
+ services.
+ For this reason, proxies are sometimes known as application-level gateways.
+ Transparency is the major benefit of proxy services.
+ To the user, a proxy server presents the illusion that the user is dealing
+ directly with the real server.
+ To the real server, the proxy server presents the illusion that the real
+ server is dealing directly with a user on the proxy host (as opposed to
+ the user's real host).
+ Proxy services are effective only when they're used in conjunction with
+ a mechanism that restricts direct communications between the internal and
+ external hosts.
+ Dual-homed hosts and packet filtering are two such mechanisms.
+\end_layout
+
+\begin_layout Standard
+The proxy server doesn't always just forward users' requests on to the real
+ Internet services.
+ The proxy server can control what users do because it can make decisions
+ about the requests it processes.
+ Depending on your site's security policy, requests might be allowed or
+ refused.
+ Some proxy servers do in fact just forward requests on, no matter what
+ they are.
+ These may be called generic proxies or port forwarders.
+ 
+\end_layout
+
+\begin_layout Standard
+Some excellent software is available for proxying.
+ SOCKS is a proxy construction toolkit, designed to make it easy to convert
+ existing client/server applications into proxy versions of those same applicati
+ons.
+ In order to make it easy to support new clients, SOCKS is extremely generic.
+ This limits the features that it can provide.
+ SOCKS doesn't do any protocol-specific control or logging.
+ SOCKS does log connection requests on the server; provide access control
+ by user, by source host and port number, or by destination host and port
+ number; and allow configurable responses to access denials.
+ The prime advantage of SOCKS is its popularity.
+ Because SOCKS is widely used, server implementations and SOCKS-ified clients
+ are commonly available, and help is easy to find.
+\end_layout
+
+\begin_layout Subsubsection
+Application-Level versus Circuit-Level Proxies
+\end_layout
+
+\begin_layout Standard
+An 
+\series bold
+application-level proxy
+\series default
+ is one that knows about the particular application it is providing proxy
+ services for; it understands and interprets the commands in the application
+ protocol.
+ A circuit-level proxy is one that creates a circuit between the client
+ and the server without interpreting the application protocol.
+ The advantage of a circuit-level proxy is that it provides service for
+ a wide variety of different protocols.
+ Most circuit-level proxy servers are also generic proxy servers; they can
+ be adapted to serve almost any protocol.
+ Not every protocol can easily be handled by a circuit-level proxy, however.
+ Protocols like FTP, which communicate port data from the client to the
+ server, require some protocol-level intervention, and thus some application-lev
+el knowledge.
+ The disadvantage of a circuit-level proxy server is that it provides very
+ little control over what happens through the proxy.
+ Like a packet filter, it controls connections on the basis of their source
+ and destination and can't easily determine whether the commands going through
+ it are safe or even in the expected protocol.
+ Circuit-level proxies are easily fooled by servers set up at the port numbers
+ assigned to other services.
+ In general, circuit-level proxies are functionally equivalent to packet
+ filters.
+ They do provide extra protection against problems with packet headers (as
+ opposed to the data within the packets).
+\end_layout
+
+\begin_layout Subsection
+Firewall architectures 
+\end_layout
+
+\begin_layout Subsubsection
+Screening router
+\end_layout
+
+\begin_layout Standard
+It is possible to use a packet filtering system by itself as a firewall
+ using just a screening router to protect an entire network.
+ This is a low-cost system, since you almost always need a router to connect
+ to the Internet anyway, and you can simply configure packet filtering in
+ that router.
+ On the other hand, it's not very flexible; you can permit or deny protocols
+ by port number, but it's hard to allow some operations while denying others
+ in the same protocol, or to be sure that what's coming in on a given port
+ is actually the protocol you wanted to allow.
+ In addition, it gives you no depth of defense.
+ If the router is compromised, you have no further security.
+ A screening router is an appropriate firewall for a situation where:
+\end_layout
+
+\begin_layout Itemize
+the network being protected already has a high level of host security
+\end_layout
+
+\begin_layout Itemize
+the number of protocols being used is limited, and the protocols themselves
+ are straightforward
+\end_layout
+
+\begin_layout Itemize
+you require maximum performance and redundancy
+\end_layout
+
+\begin_layout Standard
+Screening routers are most useful for internal firewalls and for networks
+ that are dedicated to providing services to the Internet.
+ It's not uncommon for Internet service providers to use nothing but a screening
+ router between their service hosts and the Internet, for instance.
+\end_layout
+
+\begin_layout Subsubsection
+Dual-Homed Host 
+\end_layout
+
+\begin_layout Standard
+Built around the dual-homed host computer, a computer that has at least
+ two network interfaces.
+ Such a host could act as a router between the networks these interfaces
+ are attached to; it is capable of routing IP packets from one network to
+ another.
+ However, to use a dual-homed host as a firewall, you disable this routing
+ function.
+ Thus, IP packets from one network (e.g.
+ the Internet) are not directly routed to the other network (e.g.
+ the internal, protected network).
+ Systems inside the firewall can communicate with the dual-homed host, and
+ systems outside the firewall (on the Internet) can communicate with the
+ dual-homed host, but these systems can't communicate directly with each
+ other.
+ IP traffic between them is completely blocked.
+ Some variations on the dual-homed host architecture use IP to the Internet
+ and some other network protocol on the internal network.
+ This helps to enforce the separation between the two networks, making it
+ less likely that host misconfigurations will let traffic slip from one
+ interface to another, and also reducing the chance that if this does happen
+ there will be vulnerable clients.
+ However, it does not make a significant difference to the overall security
+ of the firewall.
+ The network architecture for a dual-homed host firewall is pretty simple:
+ the dual-homed host sits between, and is connected to, the Internet and
+ the internal network.
+\end_layout
+
+\begin_layout Standard
+Dual-homed hosts can provide a very high level of control.
+ If you aren't allowing packets to go between external and internal networks
+ at all, you can be sure that any packet on the internal network that has
+ an external source is evidence of some kind of security problem.
+ On the other hand, dual-homed hosts aren't high-performance devices.
+ A dual-homed host has more work to do for each connection than a packet
+ filter does, and correspondingly needs more resources.
+ A dual-homed host won't support as much traffic as an equivalent packet
+ filtering system.
+ Since a dual-homed host is a single point of failure, it's important to
+ make certain that its host security is absolutely impeccable.
+ An attacker who can compromise the dual-homed host has full access to your
+ site.
+ An attacker who crashes the dual-homed host has cut you off from the Internet.
+ This makes dual-homed hosts inappropriate if being able to reach the Internet
+ is critical to your business.
+ These problems exist with packet filtering routers as well, but they are
+ less frequent and usually easier to fix.
+ Architectures that involve multiple devices are usually more resilient
+ because multiple different IP implementations are involved.
+ A dual-homed host is an appropriate firewall for a situation where: 
+\end_layout
+
+\begin_layout Itemize
+traffic to the Internet is small
+\end_layout
+
+\begin_layout Itemize
+traffic to the Internet is not business-critical
+\end_layout
+
+\begin_layout Itemize
+no services are being provided to Internet-based users
+\end_layout
+
+\begin_layout Itemize
+the network being protected does not contain extremely valuable data
+\end_layout
+
+\begin_layout Subsubsection
+Screened Host 
+\end_layout
+
+\begin_layout Standard
+Whereas a dual-homed host architecture provides services from a host that's
+ attached to multiple networks (but has routing turned off), a screened
+ host architecture provides services from a host that's attached to only
+ the internal network, using a separate router.
+ In this architecture, the primary security is provided by packet filtering.
+ For a simple version of a screened host architecture, the  host sits on
+ the internal network, and the packet filtering on the screening router
+ is set up in such a way that the bastion host is the only system on the
+ internal network that hosts on the Internet can open connections to.
+ Even then, only certain types of connections are allowed.
+ Any external system trying to access internal systems or services will
+ have to connect to this host.
+ The bastion host thus needs to maintain a high level of host security.
+ Packet filtering also permits the bastion host to open allowable connections
+ (what is "allowable" will be determined by your site's particular security
+ policy) to the outside world.
+ The packet filtering configuration in the screening router may do one of
+ the following:
+\end_layout
+
+\begin_layout Itemize
+allow other internal hosts to open connections to hosts on the Internet
+ for certain services (allowing those services via packet filtering) 
+\end_layout
+
+\begin_layout Itemize
+disallow all connections from internal hosts (forcing those hosts to use
+ proxy services via the bastion host)
+\end_layout
+
+\begin_layout Standard
+For most purposes, the screened host architecture provides both better security
+ and better usability than the dual-homed host architecture.
+ Because the bastion host is a single point of failure, it is inappropriate
+ to run high-risk services like web servers on it.
+ You need to provide the same level of protection to it that you would provide
+ to a dual-homed host that was the sole firewall for your site.
+ A screened host architecture is appropriate when: 
+\end_layout
+
+\begin_layout Itemize
+few connections are coming from the Internet (in particular, it is not an
+ appropriate architecture if the screened host is a public web server)
+\end_layout
+
+\begin_layout Itemize
+the network being protected has a relatively high level of host security.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Screened subnet 
+\end_layout
+
+\begin_layout Standard
+The screened subnet architecture adds an extra layer of security to the
+ screened host architecture by adding a perimeter network
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A network added between a protected network and an external network, in
+ order to provide an additional layer of security.
+ A perimeter network is also called a DeMilitarized Zone (DMZ)
+\end_layout
+
+\end_inset
+
+ that further isolates the internal network from the Internet.
+ This because, by their nature, bastion hosts are the most vulnerable machines
+ on your network.
+ Despite your best efforts to protect them, they are the machines most likely
+ to be attacked because they're the machines that can be attacked.
+ If, as in a screened host architecture, your internal network is wide open
+ to attack from your bastion host, then your bastion host is a very tempting
+ target.
+ No other defenses are between it and your other internal machines (besides
+ whatever host security they may have, which is usually very little).
+ By isolating the bastion host on a perimeter network, you can reduce the
+ impact of a break-in on the bastion host.
+ It is no longer an instantaneous jackpot; it gives an intruder some access
+ but not all.
+ With the simplest type of screened subnet architecture, there are two screening
+ routers, each connected to the perimeter net.
+ One sits between the perimeter net and the internal network, and the other
+ sits between the perimeter net and the external network (usually the Internet).
+ To break into the internal network with this type of architecture, an attacker
+ would have to get past both routers.
+ Even if the attacker somehow broke in to the bastion host, he'd still have
+ to get past the interior router.
+ There is no single vulnerable point that will compromise the internal network.
+\end_layout
+
+\begin_layout Subsubsection
+Split-screened subnet 
+\end_layout
+
+\begin_layout Standard
+In a split-screened subnet, there is still a single interior router and
+ an exterior router, but multiple networks are between the two routers.
+ In general, the screened networks are connected to each other by one or
+ more dual- homed hosts, not by yet another router.
+ Some sites use this architecture purely to provide defense in depth, protecting
+ a proxy host with the routers.
+ The routers provide protection from forgery, and protection from failures
+ where the dual-homed host starts to route traffic.
+ The dual-homed host provides finer controls on the connections than packet
+ filtering.
+ 
+\end_layout
+
+\begin_layout Standard
+Others use this architecture to provide administrative access to machines
+ that also provide service to the Internet.
+ This allows administrators to use protocols that are too dangerous to allow
+ to the Internet on a sensitive machine without relying solely on the exterior
+ router as protection.
+ It also may be useful for performance reasons on machines making intense
+ use of the network; it prevents administrative traffic from using bandwidth
+ that could be used to serve user requests.
+ Split-screened subnets are appropriate for networks that need high security,
+ particularly if they are providing services to the Internet.
+ 
+\end_layout
+
+\begin_layout Section
+Virtual Private Network
+\end_layout
+
+\begin_layout Standard
+Making a private, high-speed, long-distance connection between two sites
+ is much more expensive than connecting the same two sites to a public high-spee
+d network, but it's also much more secure.
+ A 
+\series bold
+VPN
+\series default
+ is an attempt to combine the advantages of a public network (it's cheap
+ and widely available) with some of the advantages of a private network
+ (it's secure).
+ Fundamentally, all virtual private networks that run over the Internet
+ employ the same principle: traffic is encrypted, integrity protected, and
+ encapsulated into new packets, which are sent across the Internet to something
+ that undoes the encapsulation, checks the integrity, and decrypts the traffic.
+\end_layout
+
+\begin_layout Subsection
+Where to encrypt
+\end_layout
+
+\begin_layout Standard
+Encryption can be done as a transport method, where a host decides to encrypt
+ traffic when it is generated, or as a tunnel, where traffic is encrypted
+ and decrypted somewhere in between the source and the destination.
+ If you do the encryption and decryption inside the packet filtering perimeter
+ (i.e., on your internal net), then the filters just have to allow the encrypted
+ packets in and out.
+ This is especially easy if you're doing tunneling, because all the tunneled
+ packets will be addressed to the same remote address and port number at
+ the other end of the tunnel (the decryption unit).
+ On the other hand, doing the encryption and decryption inside your filtering
+ perimeter means that packets arriving encrypted are not subject to the
+ scrutiny of the packet filters.
+ This leaves you vulnerable to attack from the other site if that site has
+ been compromised.
+ If you do the encryption and decryption outside the packet filtering perimeter
+ (i.e., on your perimeter net or in your exterior router), then the packets
+ coming in from the other site can be subjected to the full scrutiny of
+ your packet filtering system.
+ On the other hand, they can also be subjected to the full scrutiny of anyone
+ who can read traffic on your perimeter net, including intruders.
+\end_layout
+
+\begin_layout Subsection
+Advantage and disadvantages
+\end_layout
+
+\begin_layout Standard
+A VPN conceals all the traffic that goes over it.
+ Not only does it guarantee that all the information is encrypted, but it
+ also keeps people from knowing which internal machines are being used and
+ with what protocols.
+ Furthermore, some protocols are extremely difficult to provide securely
+ through a firewall.
+ A VPN provides a way to give remote access for these protocols without
+ letting people attack them from the Internet at large.
+\end_layout
+
+\begin_layout Standard
+A VPN runs over an actual network, which is presumably not a private network.
+ The hosts on the virtual private network must be connected to that actual
+ network, and if you're not careful, they will be vulnerable to attack from
+ that network.
+ It's important to choose a system that will allow you to force this on
+ the remote system.
+ When you attach something via a VPN, you are making it part of your internal
+ network.
+ If a machine on the virtual private network is broken into, the attacker
+ will then be able to use the virtual private network to attack the rest
+ of your site, from something that's treated as if it were inside of your
+ local network.
+ Because of this, you want to be careful how you attach the VPN to your
+ real private network, and how you secure the remote end.
+\end_layout
+
+\begin_layout Subsection
+Secure Socket Layer
+\end_layout
+
+\begin_layout Standard
+the Secure Socket Layer/Transport Layer Security (
+\series bold
+SSL
+\series default
+/
+\series bold
+TLS
+\series default
+) that provides a secure tunnel between two hosts at the the transport layers.
+\end_layout
+
+\begin_layout Subsection
+The handshake protocol
+\end_layout
+
+\begin_layout Standard
+In the SSL/TLS handshake, the specific protocol version and set of cryptographic
+ algorithms to be used in order to provide interoperability for different
+ implementations, must be negotiated.
+ The server is authenticated using a certificate, which is an option that
+ may be used by the client as well.
+ However, a public key is used to establish a shared secret for symmetrical
+ cryptography in the record protocol.
+ 
+\end_layout
+
+\begin_layout Standard
+The communication involves the Hello, key exchange, certificate request
+ and verification, and the negotiated cipher.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+ClientHello
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+ServerHello
+\begin_inset Quotes erd
+\end_inset
+
+ are used to establish security capabilities between client and server.
+ Additionally, two nonces are generated and exchanged: 
+\begin_inset Quotes eld
+\end_inset
+
+ClientHello.random
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+ServerHello.random
+\begin_inset Quotes erd
+\end_inset
+
+, for deriving fresh session keys.
+ Following the ClientHello message, the server will send its certificate,
+ which is to be authenticated.
+ Additionally, a server key exchange message may be sent, if it is required
+ when the server has no certificate, or if its certificate is for signing
+ only.
+ If the server is authenticated, it may request a certificate from the client,
+ if that is appropriate.
+ If the server has sent a certificate request message, the client must send
+ either the certificate or a no certificate alert.
+ 
+\end_layout
+
+\begin_layout Standard
+The client key exchange message is now sent, and the content of that message
+ will depend on the public key algorithm selected between the ClientHello
+ and the ServerHello.
+ At this point, a change cipher spec message is sent by the client, and
+ the client copies the pending Cipher Spec into the current Cipher Spec.
+ The client then immediately sends the Finished message under the new symmetric
+ key cipher algorithms, keys, and secrets.
+ In response, the server will send its own change cipher spec message, transfer
+ the pending to the current Cipher Spec, and send its Finished message under
+ the new Cipher Spec.
+ 
+\end_layout
+
+\begin_layout Standard
+A Finished message is always sent immediately after a change cipher specs
+ message to verify that the key exchange and authentication processes were
+ successful.
+ The Finished message is first pro- tected with the just-negotiated symmetric-ke
+y algorithms, and new keys.
+ Recipients of Finished messages must verify that the contents are correct
+ using MAC.
+ The switch to a symmetric key cipher completes the handshake protocol.
+ At this point, the handshake is complete and the client and server may
+ begin to exchange application layer data.
+ 
+\end_layout
+
+\begin_layout Subsection
+Heartbeat and heartbleed
+\end_layout
+
+\begin_layout Subsection
+Internet Protocol Security
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+IPsec
+\series default
+ is basically a cocktail that is composed of several security-related functions.
+ The Internet Key Exchange (
+\series bold
+IKE
+\series default
+) provides authentication between two VPN parties, establishes the security
+ association for the Authentication Header (
+\series bold
+AH
+\series default
+) or the Encapsulating Security Payload (
+\series bold
+ESP
+\series default
+), and provides keys for both AH and ESP.
+ Within this framework, ESP provides both confidentiality and integrity,
+ while AH provides only integrity.
+ If IKE is broken, AH and ESP will no longer be secure.
+ AH and ESP rely on an existing security association, in which the two parties
+ must agree on the cryptographic algorithms, a set of secret keys and the
+ IP addresses.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+IPsec modes
+\end_layout
+
+\begin_layout Standard
+There are two IPsec modes, the 
+\series bold
+transport mode
+\series default
+ and the 
+\series bold
+tunnel mode
+\series default
+.
+ In the former mode, protection is afforded from host-to-host and host-to-gatewa
+y.
+ The latter mode provides protec- tion from gateway-to-gateway when the
+ same organization owns the two gateways as well as the host-to-gateway
+ connection.
+ The tunnel mode is rarely used between hosts in the same network.
+ 
+\end_layout
+
+\begin_layout Standard
+The differences between the transport mode and the tunnel mode can be seen
+ by examining the headers used in each case.
+ The transport mode uses the original IP header and the tunnel mode employs
+ the IPsec header.
+ The former protects the packet payload, while the latter encapsulates both
+ the IP header and the payload in an IPsec payload.
+ It is harder for attackers to identify valuable targets when using the
+ unexposed IP header.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Security Association
+\end_layout
+
+\begin_layout Standard
+The SA specifies the manner in which packets are protected.
+ The methods employed include cryptographic algorithms, keys, IVs, lifetimes,
+ sequence numbers and the mode, i.e., transport or tunnel.
+ In a one-way relationship between a sender and recipient, two SAs are required
+ for two-way communication.
+ Each SA is uniquely identified by a Security Parameter Index (SPI).
+ Each IPsec host maintains a database of SAs, indexed by SPI, and the SPI
+ is sent with the packet so that the recipient uses the SA to validate and
+ extract information.
+ 
+\end_layout
+
+\begin_layout Standard
+IKE phase 1 creates an IKE SA; IKE phase 2 creates an IPsec SA through a
+ channel protected by the IKE SA.
+ The IPsec SAs for ESP or AH that get set up through that IKE SA are called
+ Child SAs.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The Encapsulating Security Protocol
+\end_layout
+
+\begin_layout Standard
+The Encapsulating Security Payload (ESP) adds new header and trailer fields
+ to every packet.
+ In the transport mode there is a confidentiality arrangement for packets
+ between (1) two hosts, and (2) a host and gateway.
+ In addition, firewalls in the path must be configured to permit the encrypted
+ flow of ESP packets.
+ However, the transport mode with ESP is rarely used.
+ In the tun- nel mode, the confidentiality arrangement for packets resides
+ between (1) two gateways, and (2) a host and gateway.
+ VPN tunnels are implemented between those two entities.
+ It is the location of the IPSec software/hardware that helps determine
+ the mode to use.
+ 
+\end_layout
+
+\begin_layout Standard
+Both confidentiality and integrity are pro- vided for the packet payload,
+ and a symmetric cipher is negotiated as part of the SA during the IKE.
+ The difference between the two modes is clearly indicated in the figure.
+ In the transport mode, the original IP header is used, the TCP/UDP segment
+ and ESP trailer are encrypted, and that combination, together with the
+ ESP header, are authenticated using the ESP auth trailer.
+ In the tunnel mode, a new header is employed, the TCP/UDP segment and ESP
+ trailer are encrypted, and that combination, together with the ESP header,
+ are authenticated using the ESP auth trailer.
+ Use of the tunnel mode makes it harder for attackers to identify valuable
+ targets using the unexposed IP header.
+\end_layout
+
+\begin_layout Standard
+ESP is often used to provide a VPN tunnel for secure communication, between
+ two sites of the same organization, over the public unsecure Internet.
+ The path traversed by the packets is the following.
+ As packets proceed from the internal network to a gateway, the TCP/IP headers
+ contain source and destination IP addresses.
+ From the sending gateway to the receiving gateway, the entire packet is
+ hidden by encryption, which includes the original headers so that source
+ and destination IP addresses are unidentifiable.
+\end_layout
+
+\begin_layout Standard
+The new IP header generated by the sending gateway indicates the source
+ and destination IP addresses as the sending gateway and receiving gateway,
+ respectively.
+ As packets travel from the receiving gateway to the receiving host, the
+ gateway decrypts the packets and forwards the original IP packet to the
+ receiving host in the network it protects.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The Authentication Header
+\end_layout
+
+\begin_layout Standard
+The Authentication Header (AH), employed by the sender for support of the
+ authentication pro- cess, uses the HMAC.
+ It provides integrity for datagram payloads as well as the IP header.
+ The sender and receiver share a secret key used in the HMAC computation,
+ and the key is set up by the IKE key establishment protocol.
+ The key is recorded in the Security Association (SA), which also records
+ the protocol, i.e., AH or ESP, as well as the mode, i.e., transport or tunnel.
+\end_layout
+
+\begin_layout Standard
+Depending on whether transport or tunnel mode is used, the AH header inserted
+ after the outermost IP header.
+ Integrity check, and thus authentication, does not cover any mutable, unpredict
+able header fields.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The Internet Exchange Key
+\end_layout
+
+\begin_layout Standard
+Key management in IPsec may be performed in a manual mode, through the use
+ of pre-shared symmetric keys or in an online manner.
+ With manual key management, the keys and parameters used in the cryptographic
+ algorithms are exchanged offline, e.g., by phone or face-to-face, and the
+ security associations are established by hand.
+ 
+\end_layout
+
+\begin_layout Standard
+There is a need to dynamically generate a shared session key and authenticate
+ identities.
+ Authentication will ensure the identity of the other party, and secrecy
+ is maintained by ensuring that the generated shared key is fresh and known
+ only to the sender and receiver.
+ 
+\series bold
+Forward secrecy
+\series default
+ ensures that the compromise of one session key does not lead to the compromise
+ of keys in other sessions.
+ In addition, this process protects the identity of the parties from eavesdroppe
+rs, and prevents the replay of old key material as well as a denial of service.
+ 
+\end_layout
+
+\begin_layout Section
+Proxy
+\end_layout
+
+\begin_layout Subsection
+Forward proxy
+\end_layout
+
+\begin_layout Subsection
+Reverse proxy
+\end_layout
+
+\begin_layout Section
+Intrusion Detection systems
+\end_layout
+
+\begin_layout Standard
+The Intrusion Detection System/Intrusion Prevention System is positioned
+ behind the firewall; the VPN is permitted to pass firewall and IDS/IPS
+ since the traffic is usually encrypted and authenticated.
+ The IDS/IPS provides deep packet inspection for the payload, IDS is based
+ on out-of-band detection of intrusions and their reporting, and IPS is
+ in-band filtering to block intrusions.
+ IDS is performed through a wire tap, and is clearly an out-of-band operation.
+ In contrast, IPS is performed inline.
+ And by preventing intrusions, IPSs eliminate the need for keeping and reading
+ extensive intrusion-incident logs, which contributes to IDSs’ considerable
+ CPU, memory, and I/O overhead.
+\end_layout
+
+\begin_layout Standard
+Being out-of-band, an IDS does not interfere with the traffic, and an IDS
+ false positive is an alert that did not result from an intrusion.
+ In other words, the system under attack is not vulnerable to the attack,
+ the detection mechanism may be inappropriate, or the IDS detected an anomaly
+ that was actually benign.
+ Since an IDS false positive may cause a security analyst to expend unnecessary
+ effort, the false alarm must be minimized whenever possible.
+ IPS, on the other hand, is in band, and an IPS false positive blocks legitimate
+ traffic.
+ IPS cannot have false positives in order to avoid user complaints.
+ Therefore, IPS is designed to use a narrow set of rules to block the 
+\begin_inset Formula $100\%$
+\end_inset
+
+ sure intrusions.
+\end_layout
+
+\begin_layout Standard
+IDS/IPS can be either host-based or network-based, in which case it is labeled
+ as HIDS/HIPS or NIDS/NIPS, respectively.
+ In the former case, the monitoring and blocking activity is performed on
+ a single host.
+ HIDS/HIPS has the advantage that it provides better visibility into the
+ behavior of individual applications running on that host.
+ In the latter case, it is often located behind a router or firewall that
+ provides the guarded entrance to a critical asset.
+ At this location, traffic is monitored and packet headers and payloads
+ are examined using the knowledge base in NIDS/NIPS.
+ The advantage of this location is that a single NIDS/NIPS can protect many
+ hosts as well as detect global patterns.
+ The data available for intrusion detection systems can be at different
+ levels of granularity.
+ The data is of high dimensional, typically with a mix of parameters as
+ well as continuous attributes.
+ The parameters include the fields in network, transport and application
+ layers headers, such as ToS, SYN, and ACK, payload content length, packet
+ rate, etc.
+\end_layout
+
+\begin_layout Standard
+There are various types of IPS products.
+ Host-based application firewalls perform the IPS function independently
+ of the operating system and block the entry of application-level and web-based
+ intrusions, much like network firewalls bar entry to unwanted traffic.
+ A network-based IPS blocks network-level intrusions, such as denial-of-service
+ attacks, and may use anomaly detection to recognize threats based on their
+ behavior.
+ Combining network- and host-based IPSs provides the best protection against
+ all types of intrusions.
+\end_layout
+
+\begin_layout Standard
+The basic attack methodology involves the following: reconnaissance and
+ scanning, gain access, escalate privilege, maintain access and finally
+ cover tracks.
+ The growing awareness of the intruder problem has been instrumental in
+ the establishment of a number of computer emergency response teams (CERTs).
+ These cooperative ventures collect information about system vulnerabilities
+ and disseminate it to system managers.
+\end_layout
+
+\begin_layout Standard
+IDS/IPS monitors many activities and can capture an occurrence of any event
+ that is deemed to be a security concern.
+ Some typical intrusions include reconnaissance; patterns of specific commands
+ in application sessions, e.g., successful remote login sessions should contain
+ authentication commands; content types with different fields of application
+ protocols, e.g., the password for an application must be in 7-bit ASCII with
+ 8 to 64 allowed characters in order to avoid buffer overflow and SQL injection;
+ and network packet patterns between protected servers and the clients that
+ include the client application, protocol, port, volume and duration, as
+ well as the rate and burst length distributions of traffic.
+\end_layout
+
+\begin_layout Standard
+HIDS/HIPS monitoring also includes attacks by legitimate users/insiders.
+ These include illegitimate use of root privileges; unauthorized access
+ to resources and data; command and program execution, which involves items
+ such as the mouse, keyboard, CPU, disks and I/O; programs/ system calls
+ and process execution frequencies; field/database access activity; and
+ the frequency of read/write/create/delete.
+\end_layout
+
+\begin_layout Standard
+Malware is another item monitored by IDS/IPS.
+ It includes Rootkits, Trojans, Spyware, Viruses, botnets, worms, and malicious
+ scripts.
+ It is still hard for IDS/IPS to handle mutations, e.g., with polymorphic
+ and metamorphic viruses each copy has a different body.
+ IDS/IPS also monitors denial of service attacks by monitoring the rate
+ and burst length distributions for all types of traffic.
+\end_layout
+
+\begin_layout Standard
+Regardless of the location of the IDS system, it should be capable of detecting
+ a substantial percentage of intrusions with few false alarms.
+ For example, if too few intrusions are detected (false negatives) there
+ is really no security, while on the other hand too many false alarms (false
+ positives) will eventually be ignored.
+\end_layout
+
+\begin_layout Subsection
+Approaches for IDS/IPS
+\end_layout
+
+\begin_layout Standard
+The approaches to intrusion detection can generally be classified as either
+ anomaly/behaviorbased or signature-based.
+ Anomaly-based detectors generate the normal behavior/pattern (aka profile)
+ of the protected system, and deliver an anomaly/outlier alarm if the observed
+ behavior at an instant does not conform to expected behavior.
+ Anomaly-based IDS/IPS are more prone to generating false positives due
+ to the dynamic nature of networks, applications and exploits.
+ Because of the difficulty of manually setting the profiles for complicated
+ and dynamic traffic, anomaly-based detection should be applied at various
+ levels of traffic aggregation, such as a single server, a server farm,
+ an operation unit, or an enterprise, in order to achieve the accurate protectio
+n.
+ According to the type of processing, anomaly detection techniques can be
+ classified into three main categories: statistical-based, knowledge-based,
+ and machine learning-based.
+ Signature-based schemes (aka misuse-based) capture defined patterns, or
+ signatures, within the analyzed data in order to create a signature database
+ corresponding to known attacks.
+ It is efficient and accurate for signature-based detector to identify known
+ attacks using a signature database.
+ Combined anomaly-based and signature-based IDS/IPS provides the best protection.
+\end_layout
+
+\begin_layout Subsubsection
+Anomaly-based detection methods
+\end_layout
+
+\begin_layout Standard
+Legitimate traffic in networks may contain anomalies.
+ For example, protocol anomalies arise from custom applications that use
+ off-the-shelf protocol libraries, but employ them in an unexpected manner,
+ and behavioral anomalies come from exceptional, but often critical, business
+ processes.
+ While IDS filters create alerts on suspicious activity that would be later
+ pursued by an expert, IPS filters are used for automatic blocking traffic
+ or quarantining an endpoint.
+ Anomalybased detection mechanisms are useful for IDS to generate alerts.
+ When anomaly filters are used by IPS for blocking, the settings must be
+ tuned to avoid incorrect actions.
+\end_layout
+
+\begin_layout Standard
+In the statistical-based IDS/IPS, the behavior of the system is represented
+ from the captured network traffic activity and a profile representing its
+ stochastic behavior is created.
+ This profile is based on metrics such as the traffic rate, the number of
+ packets for each protocol, the rate of connections, the number of different
+ IP addresses, etc.
+ This method employs the collected profile that relates to the behavior
+ of legitimate users and is then used in statistical tests to determine
+ if the behavior under detection is legitimate or not.
+ During the anomaly detection process, one corresponding to the currently
+ captured profile is compared with the previously trained statistical profile.
+ As the network events occur, the current profile is determined and an anomaly
+ score estimated by comparison of the two behaviors.
+ The score normally indicates the degree of deviation for a specific event,
+ and the IDS/IPS will flag the occurrence of an anomaly when the score surpasses
+ a certain threshold.
+ The threshold detection uses thresholds that are independent of users for
+ examining the frequency of occurrence of events.
+ In contrast, profile detection uses a profile of activity of each user/device
+ to detect abnormal behavior.
+ Profiles can be established at both global and granular session levels,
+ short and long time periods.
+\end_layout
+
+\begin_layout Standard
+With threshold-based detection, network security managers can utilize pre-progra
+mmed limits based on the types of traffic to ensure that servers will not
+ become overloaded.
+ When a statistical distribution relationship exists among the different
+ types of TCP packets, for example, a 3-way handshake, 4-way close and data
+ transfer, this relationship can be learned for establishing profiles.
+ These profiles can be established upon statistical measures of time-of-day
+ and day-ofweek variations in traffic volume.
+ Profiles can also be developed for packet rate distributions on a multi-week
+ scale for normal network environments.
+ Then the profiles can be used to detect denial of service and distributed
+ denial of service (DoS/DDoS) anomalies based upon the difference between
+ the long-and short-term distributions or rare occurrences of long bursts
+ of highrate traffic.
+\end_layout
+
+\begin_layout Standard
+Statistical approaches have a number of advantages.
+ First, they do not require prior knowledge about the normal activity of
+ the target system; instead, they have the ability to learn the expected
+ behavior of the system from observations.
+ Second, statistical methods can provide accurate notification of malicious
+ activities occurring over long periods of time.
+ However, the drawbacks include setting the values of the thresholds, parameters
+/metrics that is a difficult task, especially because the balance between
+ false positives and false negatives is affected.
+ Not all behaviors can be modeled by using stochastic methods.
+\end_layout
+
+\begin_layout Subsubsection
+Knowledge-/expert-based IDS/IPS
+\end_layout
+
+\begin_layout Standard
+Knowledge-based IDS/IPS captures the normal behavior from available information,
+ including expert knowledge, protocol specifications, network traffic instances,
+ etc.
+ The normal behavior is represented as a set of rules.
+ Attributes and classes are identified from the training data or specifications.
+ Then a set of classification rules, parameters or procedures are generated.
+ The rules are used for detecting anomaly behaviors.
+\end_layout
+
+\begin_layout Standard
+Specification-based anomaly methods require that the model is manually construct
+ed by human experts in terms of a set of rules (the specifications) that
+ describing the system behavior.
+ Specification-based techniques have been shown to produce a low rate of
+ false alarms, but are not as effective as other anomaly detection methods
+ in detecting novel attacks, especially when it comes to network probing
+ and denial-of-service attacks.
+ Protocol anomaly is based on the inspection of layers 2-7 by specifications-gen
+erated rules.
+\end_layout
+
+\begin_layout Subsubsection
+ML-based IDS/IPS
+\end_layout
+
+\begin_layout Standard
+Machine learning IDS/IPS schemes are based on the establishment of an explicit
+ or implicit model that allows the patterns analyzed to be categorized.
+ Machine learning is different from statistical-based methods because machine
+ learning discovers the characteristics for building a model of behaviors.
+ As more learning is performed, the model will become more accurate.
+ The discovery and learning process is the advantage of machine learning;
+ however, it requires a significant amount of computational resources.
+\end_layout
+
+\begin_layout Subsubsection
+Signature-based IDS/IPS
+\end_layout
+
+\begin_layout Standard
+Signature-based detection is used to detect patterns of specific known exploits
+ and vulnerabilities.
+ The exploits include patterns of codes, scripts, registration-key-modification
+ and buffer overflow.
+ The vulnerabilities include payload content or requests to a known vulnerabilit
+y, which is used to create vulnerability-based signatures.
+ Content signature is often a string of characters that appear in the payload
+ of packets as part of the attack.
+ Once a new vulnerability is disclosed, signatures are developed by researchers
+ to counter threats.
+ Signature-based systems take a look at the payload and identify whether
+ it contains a matched signature.
+ While this signature-based detection usually has a lower false positive
+ rate, it may not detect zero-day and mutated attacks.
+ Malware can be stealthy by embedding its communications into protocols
+ that are likely to be present in normal network operations or incorporate
+ polymorphism and metamorphism to avoid a fixed signature.
+ A Botnet might coordinate with its C&C at irregular intervals and at low
+ rates to avoid generating significant anomalies.
+ The big challenges to signature-based IDS/IPS are the size of signature
+ database, and the processing time of packets against all entries in the
+ signature database.
+ These can make the IDS vulnerable to DoS attacks.
+ Some IDS evasion tools flood signature-based IDSs with too many packets,
+ thus making the IDS drop packets and fail detection.
+\end_layout
+
+\begin_layout Subsubsection
+Adaptive profile
+\end_layout
+
+\begin_layout Standard
+With behavior-based detection, the behavior is characterized by the state
+ of the protected host/ network.
+ A baseline of normal behavior is developed, and then when an event falls
+ outside this normal behavior pattern, it is flagged and logged.
+ The profile of normal behavior consists of a comprehensive list of parameters
+ and values for the target being monitored.
+ During IDS/IPS installation, the administrator can select an appropriate
+ profile (aka policy template) based on the network zone’s mission or service
+ types.
+ A profile/policy template, provided by the IDS/IPS vendor, is a collection
+ of policy construction rules that the IDS/IPS uses to create the zone policies
+ during the policy construction phase of the learning process.
+ Based on the characteristics of the zone traffic, each policy template
+ enables the IDS/IPS to produce a group of policies during the policy constructi
+on phase.
+ The IDS/IPS uses the policies to monitor the zone traffic for anomalies
+ that indicate an attack on the zone.
+ The zone policies are configured to take action against a particular traffic
+ flow if the flow exceeds the policy thresholds.
+ However, due to the ever-changing nature of network traffic, applications
+ and exploits, false detection may occur.
+\end_layout
+
+\begin_layout Standard
+The self-learning capability supports learning the patterns of network usage
+ and traffic patterns that may take place during normal network operations.
+ Consequently, adaptive profiles can reflect the normal network traffic
+ pattern evolution, and thus avoid raising false alarms.
+\end_layout
+
+\end_body
+\end_document
