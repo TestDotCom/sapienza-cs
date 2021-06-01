@@ -1,0 +1,3901 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\begin_removed_modules
+theorems-ams
+eqs-within-sections
+\end_removed_modules
+\begin_modules
+figs-within-sections
+theorems-ams-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+distributed systems
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Consistent global states
+\end_layout
+
+\begin_layout Section
+Asynchronous distributed systems
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+distributed system
+\series default
+ is a collection of sequential processes 
+\begin_inset Formula $p_{1},p_{2},\ldots,p_{n}$
+\end_inset
+
+ and a network capable of implementing unidirectional communication 
+\series bold
+channels
+\series default
+ between pairs of processes for message exchange.
+ Channels are reliable but may deliver messages out of order.
+ We assume that every process can communicate with every other process,
+ perhaps through intermediary processes.
+\end_layout
+
+\begin_layout Standard
+An 
+\series bold
+asynchronous system
+\series default
+ is characterized by the following properties: there exist no bounds on
+ the relative speeds of processes and there exist no bounds on message delays.
+ Asynchronous systems rule out the possibility of processes maintaining
+ synchronized local clocks or reasoning based on global real-time.
+ Communication remains the only possible mechanism for synchronization in
+ such systems.
+ 
+\end_layout
+
+\begin_layout Section
+Distributed computations
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+distributed computation
+\series default
+ describes the execution of a distributed program by a collection of processes.
+ The activity of each sequential process is modeled as executing a sequence
+ of 
+\series bold
+events
+\series default
+.
+ An event may be either internal to a process and cause only a local state
+ change, or it may involve communication with another process.
+ In an asynchronous distributed system where no global time frame exists,
+ events of a computation can be ordered only based on the notion of “happen-befo
+re”: if 
+\begin_inset Formula $e$
+\end_inset
+
+ sends message 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $e'$
+\end_inset
+
+ receives message 
+\begin_inset Formula $m$
+\end_inset
+
+, then 
+\begin_inset Formula $e\rightarrow e'$
+\end_inset
+
+.
+ In general, the only conclusion that can be drawn from 
+\begin_inset Formula $e\rightarrow e'$
+\end_inset
+
+ is that the mere occurrence of 
+\begin_inset Formula $e'$
+\end_inset
+
+ and its outcome may have been influenced by event 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ It is possible that for some 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $e'$
+\end_inset
+
+, neither 
+\begin_inset Formula $e\rightarrow e'$
+\end_inset
+
+ nor 
+\begin_inset Formula $e'\rightarrow e$
+\end_inset
+
+: we call such events concurrent.
+\end_layout
+
+\begin_layout Subsection
+Global states, cuts and runs
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\sigma_{i}^{k}$
+\end_inset
+
+ denote the 
+\series bold
+local state
+\series default
+ of process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ immediately after having executed event 
+\begin_inset Formula $e_{i}^{k}$
+\end_inset
+
+ and let 
+\begin_inset Formula $\sigma_{i}^{0}$
+\end_inset
+
+ be its initial state before any events are executed.
+ The 
+\series bold
+global state
+\series default
+ of a distributed computation is a set of local states, one for each process.
+ A 
+\series bold
+cut
+\series default
+ is a set of local states, one for each process.
+ A 
+\series bold
+run
+\series default
+ of a distributed computation is a total ordering 
+\begin_inset Formula $R$
+\end_inset
+
+ where, for each process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+, the events of 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ appear in the same order that they appear in its local history 
+\begin_inset Formula $h_{i}$
+\end_inset
+
+.
+ A single distributed computation may have many runs, each corresponding
+ to a different execution.
+\end_layout
+
+\begin_layout Standard
+In asynchronous distributed systems, the global state obtained through remote
+ observations could be obsolete, incomplete, or inconsistent.
+ It should be clear that uncertainties in message delays and in relative
+ speeds at which local computations proceed prevent a process from drawing
+ conclusions about the instantaneous global state of the system to which
+ it belongs.
+ Another source of difficulty in distributed systems arises when separate
+ processes independently construct global states.
+ The variability in message delays could lead to these separate processes
+ constructing different global states for the same computation.
+\end_layout
+
+\begin_layout Subsection
+Monitoring distributed computations
+\end_layout
+
+\begin_layout Standard
+For the time being, we will assume that a single process 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ called the 
+\series bold
+monitor
+\series default
+ is responsible for evaluating the global state of a distributed system.
+ In the first strategy we pursue for constructing global states, the monitor
+ 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ takes on an active role and queries each process about its state.
+ Upon the receipt of such a message, 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ replies with its current local state 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+.
+ When all 
+\begin_inset Formula $n$
+\end_inset
+
+ processes have replied, 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ can construct the global state 
+\begin_inset Formula $(\sigma_{1},...,\sigma_{n})$
+\end_inset
+
+.
+ Note that the positions in the process local histories that state enquiry
+ messages are received effectively defines a cut.
+ Given that the monitor process is part of the distributed system and is
+ subject to the same uncertainties as any other process, the above approach
+ is not sound.
+ While every cut of a distributed computation corresponds to a global state,
+ only certain cuts correspond to global states that could have taken place
+ during a run.
+\end_layout
+
+\begin_layout Subsection
+Consistency
+\end_layout
+
+\begin_layout Standard
+A cut is 
+\series bold
+consistent
+\series default
+ if for all events 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $e'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+(e'\in C)\land(e\rightarrow e')\Rightarrow e\in C
+\]
+
+\end_inset
+
+A consistent global state is one corresponding to a consistent cut.
+ Similarly, notions such as “before” and “after” that are defined with respect
+ to a given time in sequential systems have to be interpreted with respect
+ to consistent cuts in distributed system: an event 
+\begin_inset Formula $e$
+\end_inset
+
+ is before (after) a cut 
+\begin_inset Formula $C$
+\end_inset
+
+ if 
+\begin_inset Formula $e$
+\end_inset
+
+ is to the left (right) of the frontier of 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Section
+Observing distributed computations
+\end_layout
+
+\begin_layout Standard
+Let us consider an alternative strategy for the monitor 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ in constructing global states based on a reactive architecture.
+ In this approach, 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ will assume a passive role in that it will not send any messages of its
+ own.
+ The other processes, however, will be modified slightly so that whenever
+ they execute an event, they notify 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ by sending it a message describing the event.
+ The monitor constructs an 
+\series bold
+observation
+\series default
+ of the underlying distributed computation as the sequence of events correspondi
+ng to the order in which the notification messages arrive.
+ We note certain properties of observations as constructed above
+\end_layout
+
+\begin_layout Enumerate
+due to the variability of the notification message delays, a single run
+ of a distributed computation may have different observations at different
+ monitors
+\end_layout
+
+\begin_layout Enumerate
+an observation can correspond to a consistent run, an inconsistent run or
+ no run at all since events from the same process may be observed in an
+ order different from their local history.
+ A consistent observation is one that corresponds to a consistent run
+\end_layout
+
+\begin_layout Standard
+There is the possibility of messages being reordered by channels that leads
+ to undesirable observations.
+ We can restore order to messages between pairs of processes by defining
+ a delivery rule for deciding when received messages are to be presented
+ to the application process.
+ Communication from process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+ is said to satisfy 
+\series bold
+FIFO delivery
+\series default
+ if, for all messages 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $m'$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+send_{i}(m)\rightarrow send_{i}(m')\Rightarrow deliver_{j}(m)\rightarrow deliver_{j}(m')
+\]
+
+\end_inset
+
+While FIFO delivery is sufficient to guarantee that observations correspond
+ to runs, it is not sufficient to guarantee consistent observations.
+\end_layout
+
+\begin_layout Subsection
+Global real-time clocks
+\end_layout
+
+\begin_layout Standard
+Initially, assume that all processes have access to a 
+\series bold
+global real-time clock
+\series default
+ and that all message delays are bounded by 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $RC(e)$
+\end_inset
+
+ denote the value of the global clock when event 
+\begin_inset Formula $e$
+\end_inset
+
+ is executed.
+ When a process notifies 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ of some local event 
+\begin_inset Formula $e$
+\end_inset
+
+, it includes 
+\begin_inset Formula $RC(e)$
+\end_inset
+
+ in the notification message as a timestamp.
+ Let 
+\series bold
+DR1
+\series default
+ be the delivery rule employed by 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+: At time 
+\begin_inset Formula $t$
+\end_inset
+
+, deliver all received messages with timestamps up to 
+\begin_inset Formula $t-\delta$
+\end_inset
+
+ in increasing timestamp order.
+ 
+\end_layout
+
+\begin_layout Standard
+To see why an observation 
+\begin_inset Formula $O$
+\end_inset
+
+ constructed by 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ using DR1 is guaranteed to be consistent, first note that an event 
+\begin_inset Formula $e$
+\end_inset
+
+ is observed before event 
+\begin_inset Formula $e'$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $RC(e)<RC(e')$
+\end_inset
+
+.
+ This is true because messages are delivered in increasing timestamp order
+ and delivering only messages with timestamps up to time 
+\begin_inset Formula $t-\delta$
+\end_inset
+
+ ensures that no future message can arrive with a timestamp smaller than
+ any of the messages already delivered.
+ Since the observation 
+\begin_inset Formula $O$
+\end_inset
+
+ coincides with the delivery order, it is consistent iff the 
+\series bold
+clock condition
+\series default
+ 
+\begin_inset Formula 
+\[
+e\rightarrow e'\Rightarrow RC(e)<RC(e')
+\]
+
+\end_inset
+
+is respected (satisfied because timestamps are generated using the global
+ real-time clock).
+\end_layout
+
+\begin_layout Subsection
+Logical clocks
+\end_layout
+
+\begin_layout Standard
+In an asynchronous system where no global real-time clock can exist, we
+ can devise a simple clock mechanism for “timing” such that event orderings
+ based on increasing clock values are guaranteed to be consistent with causal
+ precedence.
+ In other words, the clock condition can be satisfied in an asynchronous
+ system.
+\end_layout
+
+\begin_layout Standard
+Each process maintains a local variable 
+\begin_inset Formula $LC$
+\end_inset
+
+ called its 
+\series bold
+logical clock
+\series default
+ that maps events to the positive natural numbers.
+ The value of the logical clock when event 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is executed by process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ is denoted 
+\begin_inset Formula $LC(e_{i})$
+\end_inset
+
+.
+ Each message 
+\begin_inset Formula $m$
+\end_inset
+
+ that is sent contains a timestamp 
+\begin_inset Formula $TS(m)$
+\end_inset
+
+ which is the logical clock value associated with the sending event.
+ Before any events are executed, all processes initialize their logical
+ clocks to zero.
+ The following update rules define how the logical clock is modified by
+ 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ with the occurrence of each new event 
+\begin_inset Formula 
+\[
+LC(e_{i})=\begin{cases}
+LC+1 & \text{if \ensuremath{e_{i}} is an internal or send event}\\
+max\{LC,TS(m)\}+1 & \text{if \ensuremath{e_{i}} is a receive event}
+\end{cases}
+\]
+
+\end_inset
+
+In other words, when a receive event is executed, the logical clock is updated
+ to be greater than both the previous local value and the timestamp of the
+ incoming message.
+ Otherwise the logical clock is simply incremented.
+ It is easy to verify that for any two events where 
+\begin_inset Formula $e\rightarrow e'$
+\end_inset
+
+ the logical clocks associated with them are such that 
+\begin_inset Formula $LC(e)<LC(e')$
+\end_inset
+
+.
+ Thus, logical clocks satisfy the clock condition of the previous section.
+ 
+\end_layout
+
+\begin_layout Standard
+Since each logical clock is monotone increasing and FIFO delivery preserves
+ order among messages sent by a single process, when 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ receives a message 
+\begin_inset Formula $m$
+\end_inset
+
+ from process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ with timestamp 
+\begin_inset Formula $TS(m)$
+\end_inset
+
+, it is certain that no other message 
+\begin_inset Formula $m'$
+\end_inset
+
+ can arrive from 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ such that 
+\begin_inset Formula $TS(m')\leq TS(m)$
+\end_inset
+
+.
+ This leads to a new delivery rule 
+\series bold
+DR2
+\series default
+ for constructing consistent observations (when using logical clocks): deliver
+ all received messages that are stable at 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ in increasing timestamp order.
+\end_layout
+
+\begin_layout Subsection
+Causal delivery
+\end_layout
+
+\begin_layout Standard
+Recall that FIFO delivery guarantees order to be preserved among messages
+ sent by the same process.
+ A more general abstraction extends this ordering to all messages that are
+ causally related, even if they are sent by different processes.
+ The resulting property is called 
+\series bold
+causal delivery
+\series default
+: for all messages 
+\begin_inset Formula $m,\,\,m'$
+\end_inset
+
+, sending processes 
+\begin_inset Formula $p_{i}\,\,p_{j},$
+\end_inset
+
+ and destination process 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+send_{i}(m)\rightarrow send_{j}(m')\Rightarrow deliver_{k}(m)\rightarrow deliver_{k}(m')
+\]
+
+\end_inset
+
+ In other words, in a system respecting causal delivery, a process cannot
+ known about the existence of a message any earlier than the event corresponding
+ to the delivery of that message.
+ Note that having FIFO delivery between all pairs of processes is not sufficient
+ to guarantee causal delivery.
+ The relevance of causal delivery to the construction of consistent observations
+ is obvious: if 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ uses a delivery rule satisfying CD, then all of its observations will be
+ consistent.
+ The correctness of this result is an immediate consequence of the definition
+ of CD, which coincides with that of a consistent observation.
+\end_layout
+
+\begin_layout Subsubsection
+Constructing the causal precedence relation
+\end_layout
+
+\begin_layout Standard
+For implementing causal delivery efficiently, what is really needed is an
+ effective procedure for deciding the following: given events 
+\begin_inset Formula $e,\,\,e'$
+\end_inset
+
+, that are causally related and their clock values, does there exist some
+ other event 
+\begin_inset Formula $e''$
+\end_inset
+
+ such that 
+\begin_inset Formula $e\rightarrow e''\rightarrow e'$
+\end_inset
+
+ (i.e.
+ 
+\begin_inset Formula $e''$
+\end_inset
+
+ falls in the causal “gap” between 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $e'$
+\end_inset
+
+)? Given 
+\begin_inset Formula $RC(e)<RC(e')$
+\end_inset
+
+ (or 
+\begin_inset Formula $LC(e)<LC(e')$
+\end_inset
+
+), it may be that 
+\begin_inset Formula $e$
+\end_inset
+
+ causally precedes 
+\begin_inset Formula $e'$
+\end_inset
+
+ or that they are concurrent.
+ What is known for certain is that 
+\begin_inset Formula $\lnot(e'\rightarrow e)$
+\end_inset
+
+.
+ Having just received the notification of event 
+\begin_inset Formula $e'$
+\end_inset
+
+, DR1 and DR2 could unnecessarily delay its delivery even if they could
+ predict the timestamps of all notifications yet to be received.
+ The delay would be unnecessary if there existed future notifications with
+ smaller timestamps.
+ We strengthen the clock condition by adding an implication in the other
+ sense to obtain 
+\series bold
+strong clock condition
+\series default
+: 
+\begin_inset Formula 
+\[
+e\rightarrow e'\Leftrightarrow TC(e)<TC(e')
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $TC$
+\end_inset
+
+ is a new timing mechanism.
+\end_layout
+
+\begin_layout Subsubsection
+Causal histories
+\end_layout
+
+\begin_layout Standard
+A brute-force approach to satisfying the strong clock condition is to devise
+ a timing mechanism that produces the set of all events that causally precede
+ an event as its “clock” value.
+ We define the causal history of event in distributed computation as the
+ set 
+\begin_inset Formula 
+\[
+\theta(e)=\{e'|e'\rightarrow e\}
+\]
+
+\end_inset
+
+In other words, the causal history of event is the smallest consistent cut
+ that includes 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ When causal histories are used as clock values, the strong clock condition
+ can be satisfied if we interpret clock comparison as set inclusion.
+ From the definition of causal histories, it follows that 
+\begin_inset Formula 
+\[
+e\rightarrow e'\Leftrightarrow\theta(e)\subset\theta(e')
+\]
+
+\end_inset
+
+The unfortunate property of causal histories that renders them impractical
+ is that they grow rapidly.
+ 
+\end_layout
+
+\begin_layout Subsection
+Vector clocks
+\end_layout
+
+\begin_layout Standard
+Causal history can be represented as a fixed-dimensional vector rather than
+ a set.
+ Note that 
+\begin_inset Formula $\theta_{i}(e)=h_{i}^{k}$
+\end_inset
+
+ for a process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ and, since 
+\begin_inset Formula $\theta(e)=\theta_{1}(e)\cup...\theta_{n}(e)$
+\end_inset
+
+, the entire causal history can be represented by an 
+\begin_inset Formula $n\text{-dimensional}$
+\end_inset
+
+ vector 
+\begin_inset Formula $VC(e)$
+\end_inset
+
+ where for all 
+\begin_inset Formula $1\leq i\leq n$
+\end_inset
+
+, the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ component is defined as 
+\begin_inset Formula 
+\[
+VC(e)[i]=k,\,\,\,\,\text{iff }\theta_{i}(e)=h_{i}^{k}
+\]
+
+\end_inset
+
+Each process maintains a local 
+\series bold
+vector clock
+\series default
+ 
+\begin_inset Formula $VC$
+\end_inset
+
+ of natural numbers where 
+\begin_inset Formula $VC(e_{i})$
+\end_inset
+
+ denotes the vector clock value of 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ when it executes event 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+.
+ Each process initializes 
+\begin_inset Formula $VC$
+\end_inset
+
+ to contain all zeros.
+ The following update rules define how the vector clock is modified by 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ with the occurrence of each new event 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{cases}
+VC(e_{i})[i]=VC[i]+1 & \text{if }e_{i}\text{ is an internal or send event}\\
+VC(e_{i})=max\{VC,TS(m)\} & \text{if }e_{i}=receive(m)
+\end{cases}
+\]
+
+\end_inset
+
+In other words, an internal or send event simply increments the local component
+ of the vector clock.
+ A receive event, on the other hand, first updates the vector clock to be
+ greater than (on a component-by-component basis) both the previous value
+ and the timestamp of the incoming message, and then increments the local
+ component.
+ Given the above implementation, the 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ component of the vector clock of process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ has the following operational interpretation for all 
+\begin_inset Formula $j\not=i$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+VC(e_{i})[j]\equiv\text{number of events of }p_{j}\text{ that causally precede event }e_{i}\text{ of }p_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+Property 1 (strong clock condition)
+\begin_inset Formula 
+\[
+e\rightarrow e'\equiv VC(e)<VC(e')
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Implementing causal delivery
+\end_layout
+
+\begin_layout Standard
+Assume that processes send a notification message to the monitor for all
+ of their events.
+ As usual, each message 
+\begin_inset Formula $m$
+\end_inset
+
+ carries a timestamp 
+\begin_inset Formula $TS(m)$
+\end_inset
+
+ wich is the vector clock value of the event being notified by 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ A message 
+\begin_inset Formula $m$
+\end_inset
+
+ from process 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+ is deliverable as soon as 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ can verify that there are no other messages whose sending causally precede
+ that of 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $m'$
+\end_inset
+
+ be the last message delivered from process 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+, where 
+\begin_inset Formula $k\not=j$
+\end_inset
+
+.
+ Before message 
+\begin_inset Formula $m$
+\end_inset
+
+ of process 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+ can be delivered, 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ must verify two conditions:
+\end_layout
+
+\begin_layout Enumerate
+there is no earlier message from 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+ that is undelivered 
+\end_layout
+
+\begin_layout Enumerate
+there is no undelivered message 
+\begin_inset Formula $m''$
+\end_inset
+
+ from 
+\begin_inset Formula $p_{k}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+m'\rightarrow m''\rightarrow m,\,\,\,\,\forall k\not=j
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+No undelivered message 
+\begin_inset Formula $m''$
+\end_inset
+
+ exists if 
+\begin_inset Formula $TS(m')[k]\geq TS(m)[k]$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ This test can be efficiently implemented if 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ maintains an array 
+\begin_inset Formula $D[1...n]$
+\end_inset
+
+ of counters, initially set to zeros, such that 
+\begin_inset Formula $D[i]=TS(m_{i})[i]$
+\end_inset
+
+ where 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ is the last message that has been delivered from process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+.
+ Then we can formulate 
+\series bold
+DR3
+\series default
+ (causal delivery) as: deliver message 
+\begin_inset Formula $m$
+\end_inset
+
+ from process 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+ as soon as both of the following conditions are satisfied
+\begin_inset Formula 
+\[
+\begin{cases}
+D[j]=TS(m)[j]-1\\
+D[k]=TS(m)[k] & \forall k\not=j
+\end{cases}
+\]
+
+\end_inset
+
+When 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ delivers 
+\begin_inset Formula $m$
+\end_inset
+
+, array 
+\begin_inset Formula $D$
+\end_inset
+
+ is updated by setting 
+\begin_inset Formula $D[j]$
+\end_inset
+
+ to 
+\begin_inset Formula $TS(m)[j]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Distributed snapshots
+\end_layout
+
+\begin_layout Standard
+We will now develop a strategy where 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ requests the states of the other processes and then combines them into
+ a consistent global state, assuming for semplicity that channels implement
+ FIFO delivery.
+\end_layout
+
+\begin_layout Subsubsection
+Snapshot protocol
+\end_layout
+
+\begin_layout Standard
+Initially, assume that all processes have acces to a real-time clock 
+\begin_inset Formula $RC$
+\end_inset
+
+ and that all message delays are bound by 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ Process 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ chooses a time 
+\begin_inset Formula $t$
+\end_inset
+
+ far enough in the future in order to guarantee that a message sent now
+ will be received by all other processes befor 
+\begin_inset Formula $t$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+At time 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+, process 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ sends a snapshot-request message to all processes, including a time 
+\begin_inset Formula $t\geq t_{0}+\delta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+when real-time clock 
+\begin_inset Formula $RC$
+\end_inset
+
+ reads 
+\begin_inset Formula $t$
+\end_inset
+
+, each process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ records its local state 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Being based on a real-time clock, it is easy to see that this protocol construct
+s a consistent global state
+\begin_inset Formula 
+\[
+(e\rightarrow e')\land(e'\in C)\rightarrow e\in C
+\]
+
+\end_inset
+
+From this, we can develop the 
+\series bold
+Chandy-Lamport protocol
+\series default
+, which doesn't need real-time clocks nor logical clocks
+\end_layout
+
+\begin_layout Enumerate
+process 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ sends a snapshot-request message to all processes
+\end_layout
+
+\begin_layout Enumerate
+let 
+\begin_inset Formula $p_{s}$
+\end_inset
+
+ be the process from which 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ receives the snapshot-request message for the first time.
+ Upon receiving this message, 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ records its local state 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+ and relays the snapshot-request message to each other process
+\end_layout
+
+\begin_layout Enumerate
+let 
+\begin_inset Formula $p_{f}$
+\end_inset
+
+ be the process from which 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ receives the snapshot-request message for the last time.
+ Since process 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ has received this message from each other processes, its participation
+ in the snapshot protocol can now end
+\end_layout
+
+\begin_layout Standard
+The Chandy-Lamport protocol requires 
+\begin_inset Formula $n\cdot(n+1)=O(n^{2})$
+\end_inset
+
+ messages.
+\end_layout
+
+\begin_layout Subsubsection
+Properties of snapshots
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $S_{0}$
+\end_inset
+
+ be the global state in which the snapshot protocol is initiated, 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ be the global state in which the protocol terminates and 
+\begin_inset Formula $S$
+\end_inset
+
+ be the global state constructed.
+ We will show that there exists a run 
+\begin_inset Formula $R$
+\end_inset
+
+ such that 
+\begin_inset Formula $S_{0}\rightarrow S\rightarrow S_{1}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $r$
+\end_inset
+
+ be the actual run the system followed while executing the snapshot protocol,
+ and let 
+\begin_inset Formula $e_{i}^{*}$
+\end_inset
+
+ denote the event when 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ receives a 
+\begin_inset Quotes eld
+\end_inset
+
+take snapshot
+\begin_inset Quotes erd
+\end_inset
+
+ message for the first time, causing 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ to record its state.
+ An event 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ is a prerecording event if 
+\begin_inset Formula $e\rightarrow e_{i}^{*}$
+\end_inset
+
+; otherwise, it is a postrecording event.
+\end_layout
+
+\begin_layout Standard
+Consider the subsequence 
+\begin_inset Formula $\langle e',e\rangle$
+\end_inset
+
+ of run 
+\begin_inset Formula $r$
+\end_inset
+
+ where 
+\begin_inset Formula $e'$
+\end_inset
+
+ is a postrecording event and 
+\begin_inset Formula $e$
+\end_inset
+
+ a prerecording event.
+ For contradiction, assume that 
+\begin_inset Formula $e'\rightarrow e$
+\end_inset
+
+.
+ There are two cases to consider:
+\end_layout
+
+\begin_layout Enumerate
+both events 
+\begin_inset Formula $e'$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+ are from the same process.
+ If this were the case, however, then by definition 
+\begin_inset Formula $e$
+\end_inset
+
+ would be a postrecording event
+\end_layout
+
+\begin_layout Enumerate
+event 
+\begin_inset Formula $e'$
+\end_inset
+
+ is a send event of 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+ is the corresponding receive event of 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+.
+ If this were the case, however, then from the protocol 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ will have sent a 
+\begin_inset Quotes eld
+\end_inset
+
+take snapshot
+\begin_inset Quotes erd
+\end_inset
+
+ message to 
+\begin_inset Formula $p_{j}$
+\end_inset
+
+ by the time 
+\begin_inset Formula $e'$
+\end_inset
+
+ is executed, and since the channel is FIFO, 
+\begin_inset Formula $e$
+\end_inset
+
+ will also be a postrecording event
+\end_layout
+
+\begin_layout Standard
+Hence, a postrecording event cannot causally precede a prerecording event
+ and thus any 
+\begin_inset Formula $\langle\text{postrecording},\text{prerecording}\rangle$
+\end_inset
+
+ event pair can be swapped.
+ Let 
+\begin_inset Formula $R$
+\end_inset
+
+ be the run derived from 
+\begin_inset Formula $r$
+\end_inset
+
+ by swapping such pairs until all postrecording events follow the prerecording
+ events.
+ By protocol description, postrecording events that record local states
+ will record them at point 
+\begin_inset Formula $e'$
+\end_inset
+
+.
+ Furthermore, the channel states that are recorded are those messages that
+ were sent by prerecording events and received by postrecording events.
+ By construction, these are exactly those messages in the channel after
+ the execution of event 
+\begin_inset Formula $e'$
+\end_inset
+
+, and so 
+\begin_inset Formula $S$
+\end_inset
+
+ is the state recorded by the snapshot protocol.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Distributed transactions
+\end_layout
+
+\begin_layout Standard
+A significant difference between transactions processing in a centralized
+ and a distributed (database) system concerns the nature of failures.
+ In a centralized system, either the system is working and transactions
+ are processed routinely, or the system has failed and no transaction can
+ be processed at all.
+ In a distributed system, however, we can have 
+\series bold
+partial failures
+\series default
+.
+ Some sites may be working while others have failed.
+ The fact that failures in distributed systems do not necessarily have the
+ crippling effect they do in centralized ones creates opportunities for
+ greater reliability.
+ However, ensuring that a single logical action (
+\series bold
+commit
+\series default
+ or 
+\series bold
+abort
+\series default
+) is consistently carried out at multiple sites is complicated considerably
+ by the prospect of partial failures.
+ 
+\end_layout
+
+\begin_layout Section
+Failures in a distributed system
+\end_layout
+
+\begin_layout Subsection
+Site failures
+\end_layout
+
+\begin_layout Standard
+When a site experiences a system failure, processing stops abruptly.
+ When the site recovers from a failure it first executes a recovery procedure,
+ which brings the site to a consistent state so it can resume normal processing.
+ In this model of failure (
+\series bold
+fail-stop
+\series default
+), a site is always either working correctly or not working at all
+\end_layout
+
+\begin_layout Subsection
+Communication failures
+\end_layout
+
+\begin_layout Standard
+Communication links are also subject to failures.
+ A combination of site and link failures can disable the communication between
+ sites.
+ This will happen if all paths between two sites 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ contain a failed site or a broken link.
+ This phenomenon is called a 
+\series bold
+network partition
+\series default
+.
+ In general, a network partition divides up the operationa sites into two
+ or more components, where every two sites within a component can communicate
+ with each other, but sites in different components cannot.
+ 
+\end_layout
+
+\begin_layout Subsection
+Detecting failures
+\end_layout
+
+\begin_layout Standard
+A message may be 
+\series bold
+undeliverable
+\series default
+ because its recipient is down when the message arrives, or because its
+ sender and recipient are in different components of a network partition.
+ In a distributed system the message is dropped: the computer network makes
+ no further attempt to deliver it.
+ 
+\end_layout
+
+\begin_layout Standard
+Both site failures and communication failures manifest themselves as the
+ inability of one site to exchange messages with another.
+ That is, if site 
+\begin_inset Formula $A$
+\end_inset
+
+ cannot communicate with site 
+\begin_inset Formula $B$
+\end_inset
+
+, it is either because 
+\begin_inset Formula $B$
+\end_inset
+
+ has failed or because 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ belong to different components of a partition.
+ In general, 
+\begin_inset Formula $A$
+\end_inset
+
+ cannot distinguish these two cases.
+ To find out if a site can't communicate with another usually some form
+ of 
+\series bold
+timeout
+\series default
+ is implemented: 
+\begin_inset Formula $A$
+\end_inset
+
+ sends a message to 
+\begin_inset Formula $B$
+\end_inset
+
+ and waits for a reply within a predetermined period of time 
+\begin_inset Formula $\delta$
+\end_inset
+
+ called the 
+\series bold
+timeout period
+\series default
+.
+ 
+\end_layout
+
+\begin_layout Section
+Atomic commitment protocol
+\end_layout
+
+\begin_layout Standard
+We'll assume that for each distributed transaction 
+\begin_inset Formula $T$
+\end_inset
+
+, there is a process at every 
+\series bold
+site
+\series default
+ where 
+\begin_inset Formula $T$
+\end_inset
+
+ executed.
+ The process at 
+\begin_inset Formula $T$
+\end_inset
+
+’s home site is called 
+\begin_inset Formula $T$
+\end_inset
+
+’s 
+\series bold
+coordinator
+\series default
+.
+ The remaining processes are 
+\begin_inset Formula $T$
+\end_inset
+
+’s 
+\series bold
+participants
+\series default
+.
+ The coordinator knows the names of all the participants, so it can send
+ them messages.
+ The participants know the name of the coordinator, but they don’t necessarily
+ know each other.
+ 
+\end_layout
+
+\begin_layout Standard
+Roughly speaking, an 
+\series bold
+atomic commitment protocol
+\series default
+ (ACP) is an algorithm for the coordinator and participants such that either
+ the coordinator and all participants commit the transaction or they all
+ abort it.
+ Each process may cast exactly one of two votes: 
+\series bold
+YES
+\series default
+ or 
+\series bold
+NO
+\series default
+, and can reach exactly one of two decisions: 
+\series bold
+COMMIT
+\series default
+ or 
+\series bold
+ABORT
+\series default
+.
+ An ACP is an algorithm for processes to reach decisions such that:
+\end_layout
+
+\begin_layout Definition
+(
+\series bold
+AC1
+\series default
+) All processes that reach a decision reach the same one.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(
+\series bold
+AC2
+\series default
+) A process cannot reverse its decision after it has reached one.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(
+\series bold
+AC3
+\series default
+) The Commit decision can only be reached if all processes voted YES.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(
+\series bold
+AC4
+\series default
+) If there are no failures and all processes voted YES, then the decision
+ will be to COMMIT.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(
+\series bold
+AC5
+\series default
+) Consider any execution containing only failures that the algorithm is
+ designed to tolerate.
+ At any point in this execution, if all existing failures are repaired and
+ no new failures occur for sufficiently long, then all processes will eventually
+ reach a decision.
+ 
+\end_layout
+
+\begin_layout Standard
+Condition AC1 says that the transaction terminates consistently.
+ Note that we do not require that all processes reach a decision.
+ We do not even require that all processes that remain operational reach
+ a decision.
+ However, we do require that all processes be able to reach a decision once
+ failures are repaired (AC5).
+ Condition AC2 says that the termination of a transaction at a site is an
+ irrevocable decision.
+ If a transaction commits (or aborts), it cannot be later aborted (or committed).
+ 
+\end_layout
+
+\begin_layout Standard
+Condition AC3 says that a transaction cannot commit unless all sites involved
+ in its execution agree to do so.
+ AC4 is a weak version of the converse of AC3.
+ A very important consequence of AC3 is that each process can unilaterally
+ decide Abort at any time, if it has not yet voted YES.
+ On the other hand, after voting YES a process cannot take unilateral action.
+ The period between the moment a process votes YES and the moment it has
+ received sufficient information to know what the decision will be is called
+ the uncertainty period for that process.
+ A process is called 
+\series bold
+uncertain
+\series default
+ while it is in its uncertainty period.
+ 
+\end_layout
+
+\begin_layout Subsection
+Two-phase commit protocol
+\end_layout
+
+\begin_layout Standard
+The simplest and most popular ACP is the 
+\series bold
+two-phase commit
+\series default
+ (2PC) protocol, Assuming no failures, it goes roughly as follows: 
+\end_layout
+
+\begin_layout Enumerate
+the coordinator sends a VOTE-REQ message to all participants
+\end_layout
+
+\begin_layout Enumerate
+when a participant receives a VOTE-REQ, it responds by sending to the coordinato
+r a message containing that participant’s vote: YES or NO.
+ If the participant votes NO, it decides ABORT and stops
+\end_layout
+
+\begin_layout Enumerate
+the coordinator collects the vote messages from all participants.
+ If all of them were YES and the coordinator’s vote is also YES, then the
+ coordinator decides and sends a COMMIT messages to all participants.
+ Otherwise, the coordinator decides and sends an ABORT messages to all participa
+nts that voted YES (those that voted NOalready decided ABORT in step (2)).
+ In either case, the coordinator then stops
+\end_layout
+
+\begin_layout Enumerate
+each participant that voted YES waits for a COMMIT or ABORT message from
+ the coordinator.
+ When it receives the message, it decides accordingly and stops
+\end_layout
+
+\begin_layout Standard
+The two phases of 2PC are the voting phase (steps (1) and (2)) and the decision
+ phase (steps (3) and (4)).
+ A participant’s uncertainty period starts when it sends a YES to the coordinato
+r (step (2)) and ends when it receives a COMMIT or ABORT (step (4)).
+ The coordinator has no uncertainty period since it decides as soon as it
+ votes - with the knowledge, of course, of the participants’ votes (step
+ (3)).
+ 
+\end_layout
+
+\begin_layout Standard
+It is easy to see that 2PC satisfies conditions AC1 to AC4.
+ To satisfy AC5, first we must avoid situations in which a process is waiting
+ for a message forever, supplying suitable timeout actions for each protocol
+ step.
+ Second, each process must keep some information in stable storage (
+\series bold
+DT log
+\series default
+) to recover from eventual failures.
+\end_layout
+
+\begin_layout Subsubsection
+Timeout actions
+\end_layout
+
+\begin_layout Standard
+There are three places in 2PC where a process is waiting for a message:
+ in the beginning of steps (2), (3) and (4).
+ In step (2), a participant waits for a VOTE- REQ from the coordinator.
+ This happens before the participant has voted.
+ Since any process can unilaterally decide ABORT before it votes YES, if
+ a participant times out waiting for a VOTE-REQ, it can simply decide ABORT
+ and stop.
+ In step (3) the coordinator is waiting for YES or NO messages from all
+ the participants.
+ At this stage, the coordinator has not yet reached any decision.
+ In addition, no participant can have decided COMMIT.
+ Therefore, the coordinator can decide ABORT but must send ABORT to every
+ participant from which it received a YES.
+ In step (4), a participant 
+\begin_inset Formula $p$
+\end_inset
+
+ that voted YES is waiting for a COMMIT or ABORT from the coordinator.
+ At this point 
+\begin_inset Formula $p$
+\end_inset
+
+ is uncertain, therefore the participant must consult with other processes
+ to find out what to decide.
+ 
+\end_layout
+
+\begin_layout Standard
+This consultation is carried out in a 
+\series bold
+cooperative termination protocol
+\series default
+: assume that participants to know each other, so they can exchange messages
+ directly.
+ A participant 
+\begin_inset Formula $p$
+\end_inset
+
+ that times out while in its uncertainty period sends a DECISION-REQ message
+ to every other process, 
+\begin_inset Formula $q$
+\end_inset
+
+, to inquire whether 
+\begin_inset Formula $q$
+\end_inset
+
+ either knows the decision or can unilaterahy reach one.
+ In this scenario, 
+\begin_inset Formula $p$
+\end_inset
+
+ is the initiator and 
+\begin_inset Formula $q$
+\end_inset
+
+ a responder in the termination protocol.
+ There are three cases:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q$
+\end_inset
+
+ has already decided COMMIT (or ABORT): 
+\begin_inset Formula $q$
+\end_inset
+
+ simply sends a COMMIT (or ABORT) to 
+\begin_inset Formula $p$
+\end_inset
+
+, and 
+\begin_inset Formula $p$
+\end_inset
+
+ decides accordingly
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q$
+\end_inset
+
+ has not voted yet: 
+\begin_inset Formula $q$
+\end_inset
+
+ can unilaterally decide ABORT.
+ It then sends an ABORT to 
+\begin_inset Formula $p$
+\end_inset
+
+, and 
+\begin_inset Formula $p$
+\end_inset
+
+ therefore decides ABORT
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q$
+\end_inset
+
+ has voted YES but has not yet reached a decision: 
+\begin_inset Formula $q$
+\end_inset
+
+ is also uncertain and therefore cannot help 
+\begin_inset Formula $p$
+\end_inset
+
+ reach a decision
+\end_layout
+
+\begin_layout Standard
+With this protocol, if 
+\begin_inset Formula $p$
+\end_inset
+
+ can communicate with some 
+\begin_inset Formula $q$
+\end_inset
+
+ for which either (1) or (2) holds, then 
+\begin_inset Formula $p$
+\end_inset
+
+ can reach a decision without blocking.
+ On the other hand, if (3) holds for all processes with which 
+\begin_inset Formula $p$
+\end_inset
+
+ can communicate, then 
+\begin_inset Formula $p$
+\end_inset
+
+ is blocked.
+ This predicament will persist until enough failures are repaired to enable
+ 
+\begin_inset Formula $p$
+\end_inset
+
+ to communicate with a process 
+\begin_inset Formula $q$
+\end_inset
+
+ for which either (1) or (2) applies.
+ At least one such process exists, namely, the coordinator.
+ Thus this termination protocol satisfies AC5.
+ However, even with the cooperative termination protocol, 2PC is subject
+ to blocking even if only site failures occur.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Recovery
+\end_layout
+
+\begin_layout Standard
+Consider a process 
+\begin_inset Formula $p$
+\end_inset
+
+ recovering from a failure.
+ To satisfy AC5, 
+\begin_inset Formula $p$
+\end_inset
+
+ must reach a decision consistent with that reached by the other processes.
+ If 
+\begin_inset Formula $p$
+\end_inset
+
+ failed before having sent YES to the coordinator (step (2) of 2PC), then
+ 
+\begin_inset Formula $p$
+\end_inset
+
+ can unilaterally decide ABORT.
+ Also, if 
+\begin_inset Formula $p$
+\end_inset
+
+ failed after having received a COMMIT or ABORT from the coordinator or
+ after having unilaterally decided ABORT, then it has already decided.
+ In these cases, 
+\begin_inset Formula $p$
+\end_inset
+
+ can recover independently.
+ However, if 
+\begin_inset Formula $p$
+\end_inset
+
+ failed while in its uncertainty period, then it cannot decide on its own
+ when it recovers.
+ Since it had voted YES, it is possible that all other processes did too,
+ and they decided Commit while 
+\begin_inset Formula $p$
+\end_inset
+
+ is down.
+ But it is also possible that some processes either voted NO or didn’t vote
+ at all and ABORT was decided.
+ 
+\end_layout
+
+\begin_layout Standard
+In this case, 
+\begin_inset Formula $p$
+\end_inset
+
+ is in exactly the same state as if it had timed out waiting for a COMMIT
+ or ABORT from the coordinator.
+ Thus, 
+\begin_inset Formula $p$
+\end_inset
+
+ can reach a decision by using the (cooperative) termination protocol.
+ To remember its state at the time it failed, each process must keep some
+ information in its site’s DT-log, which survives failures.
+\end_layout
+
+\begin_layout Itemize
+when the coordinator sends VOTE-REQS, it writes a start-2PC record in the
+ DT-log.
+ This record contains the identities of the participants, and may be written
+ before or after sending the messages 
+\end_layout
+
+\begin_layout Itemize
+if a participant votes YES, it writes a yes record in the DT-log, before
+ sending YES to the coordinator.
+ This record contains the name of the coordinator and a list of the other
+ participants (which is provided by the coordinator in VOTE-REQ).
+ If the participant votes NO, it writes an abort record either before or
+ after the participant sends NO to the coordinator
+\end_layout
+
+\begin_layout Itemize
+before the coordinator sends COMMIT to the participants, it writes a commit
+ record in the DT-Iog
+\end_layout
+
+\begin_layout Itemize
+when the coordinator sends ABORT to the participants, it writes an abort
+ record in the DT-log.
+ The record may be written before or after sending the messages
+\end_layout
+
+\begin_layout Itemize
+after receiving COMMIT (or ABORT), a participant writes a commit (or ABORT)
+ record in the DT-log
+\end_layout
+
+\begin_layout Standard
+When a site 
+\begin_inset Formula $S$
+\end_inset
+
+ recovers from a failure, the fate of a distributed transaction executing
+ at 
+\begin_inset Formula $S$
+\end_inset
+
+ can be determined by examining its DT-Iog:
+\end_layout
+
+\begin_layout Itemize
+if the DT-log contains a start-2PC record, then 
+\begin_inset Formula $S$
+\end_inset
+
+ was the host of the coordinator.
+ If it also contains a commit or abort record, then the coordinator had
+ decided before the failure.
+ If neither record is found, the coordinator can now unilaterally decide
+ ABORT by inserting an abort record in the DT-log.
+ For this to work, it is crucial that the coordinator first insert the commit
+ record in the DT-log and then send COMMITS (point (3) in the preceding
+ list)
+\end_layout
+
+\begin_layout Itemize
+if the DT-log doesn’t contain a start-2PC record, then 
+\begin_inset Formula $S$
+\end_inset
+
+ was the host of a participant.
+ There are three cases to consider:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the DT-log contains a commit or abort record.
+ Then the participant had reached its decision before the failure
+\end_layout
+
+\begin_layout Itemize
+the DT-log does not contain a yes record.
+ Then either the participant failed before voting or voted NO, but did not
+ write an abort record before failing (this is why the yes record must be
+ written before YES is sent; see point (2) in the preceding list).
+ It can therefore unilaterally ABORT by inserting an abort record in the
+ DT-log
+\end_layout
+
+\begin_layout Itemize
+the DT-log contains a yes but no commit or abort record.
+ Then the participant failed while in its uncertainty period.
+ It can try to reach a decision using the termination protocol.
+ Recall that a yes record includes the name of the coordinator and participants,
+ which are needed for the termination protocol
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Consensus
+\end_layout
+
+\begin_layout Section
+The FLP impossibility result
+\end_layout
+
+\begin_layout Theorem
+In asynchronous systems, it is not possible to simultaneously guarantee
+ safety (every non-faulty node agrees on a common value) and liveness (the
+ algorithm terminates with a decision) for even one crash-failure, in a
+ deterministic fashion.
+\end_layout
+
+\begin_layout Standard
+In practice, this means that algorithms for asynchronous systems sacrifice
+ liveness for safety (2PC and Paxos), or relax the initial synchronicity
+ assumptions (PBFT).
+ A third option instead is the implementation of a failure detector.
+\end_layout
+
+\begin_layout Proof
+(
+\series bold
+sketch
+\series default
+) Assume an asynchronous system where each node starts with either (i) all
+ zeros or (ii) all ones, and must reach a consensus (on zero or one) by
+ running some algorithm.
+ We can devise new configurations by flipping these 
+\begin_inset Quotes eld
+\end_inset
+
+bits
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Now suppose we have a configuration in which the final result depends upon
+ the value of a crash-faulty process.
+ It is easy to see that we can get different results whether or not this
+ process fails.
+\end_layout
+
+\begin_layout Section
+Paxos
+\end_layout
+
+\begin_layout Standard
+Paxos can be described in terms of three agent roles: 
+\series bold
+proposers
+\series default
+ that can propose values for consensus, 
+\series bold
+acceptors
+\series default
+ that can accept a value among those proposed, and 
+\series bold
+learners
+\series default
+ that record the chosen value.
+ An agent can take on multiple roles: in a typical configuration, all agents
+ play all roles.
+ Paxos is safe for any number of crash failures, and can make progress with
+ up to 
+\begin_inset Formula $f$
+\end_inset
+
+ crash failures, given 
+\begin_inset Formula $2f+1$
+\end_inset
+
+ acceptors.
+ The basic Paxos protocol follow these steps:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+prepare
+\series default
+.
+ A proposer chooses one of the rounds associated to itself, say round 
+\begin_inset Formula $i$
+\end_inset
+
+, and starts off the round by sending a 
+\begin_inset Formula $<\text{PREPARE},i>$
+\end_inset
+
+ message to all the acceptors
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+promise
+\series default
+.
+ When an acceptor receives the 
+\begin_inset Formula $\langle\text{PREPARE},i\rangle$
+\end_inset
+
+ message for round 
+\begin_inset Formula $i$
+\end_inset
+
+, it sends a 
+\begin_inset Formula $\langle\text{PROMISE},i,lrnd,lval\rangle$
+\end_inset
+
+ message back to the proposer.
+ In this way, the acceptor promises that it will not participate in any
+ round smaller than 
+\begin_inset Formula $i$
+\end_inset
+
+ and it will stick to this promise.
+ Along with the promise, the acceptor sends the last value it has voted
+ 
+\begin_inset Formula $lval$
+\end_inset
+
+ and the associated round 
+\begin_inset Formula $lrnd$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+accept
+\series default
+.
+ After collecting a quorum of 
+\begin_inset Formula $n-f$
+\end_inset
+
+ promises for round 
+\begin_inset Formula $i$
+\end_inset
+
+ from the acceptors, the proposer sends an 
+\begin_inset Formula $\langle\text{ACCEPT},v\rangle$
+\end_inset
+
+ message to all the acceptors asking to vote for a value 
+\begin_inset Formula $v$
+\end_inset
+
+ selected as follow:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+a value 
+\begin_inset Formula $x$
+\end_inset
+
+ proposed by the proposer, if no acceptor in the quorum has ever voted
+\end_layout
+
+\begin_layout Enumerate
+the value 
+\begin_inset Formula $lval$
+\end_inset
+
+ in the promises that is associated with the highest round 
+\begin_inset Formula $lrnd$
+\end_inset
+
+ otherwise 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+learn
+\series default
+.
+ If an acceptor receives a 
+\begin_inset Formula $\langle\text{ACCEPT},v\rangle$
+\end_inset
+
+ message, and if it has not promised otherwise, it votes for the value in
+ the message and sends a 
+\begin_inset Formula $\langle\text{LEARN},i,v\rangle$
+\end_inset
+
+ message to all the learners to let them know about the vote
+\end_layout
+
+\begin_layout Enumerate
+the value is 
+\series bold
+chosen
+\series default
+.
+ If a learner receives 
+\begin_inset Formula $n-f$
+\end_inset
+
+ 
+\begin_inset Formula $\langle\text{LEARN}\rangle$
+\end_inset
+
+ messages for the same round 
+\begin_inset Formula $i$
+\end_inset
+
+ and the same value 
+\begin_inset Formula $v$
+\end_inset
+
+ from a quorum of 
+\begin_inset Formula $n-f$
+\end_inset
+
+ acceptors, then the value is chosen
+\end_layout
+
+\begin_layout Subsection
+A simple proof of safety
+\end_layout
+
+\begin_layout Standard
+To prove safety, we need to prove the following three properties:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+CS1
+\series default
+.
+ Only a proposed value may be chosen
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+CS2
+\series default
+.
+ Only a single value is chosen
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+CS3
+\series default
+.
+ Only a chosen value may be learned by a correct learner
+\end_layout
+
+\begin_layout Standard
+Property CS1 is very easy to check, acceptors only vote for values that
+ have been proposed by the proposers.
+ Property CS3 also is very easy to check, as learners learn a value only
+ if it has been voted by a quorum of acceptors, the same quorum needed to
+ chose the value.
+ To prove CS2, it is more easy to handle the following property:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+CS
+\series default
+.
+ If acceptor 
+\begin_inset Formula $a$
+\end_inset
+
+ has voted for value 
+\begin_inset Formula $v$
+\end_inset
+
+ at round 
+\begin_inset Formula $i$
+\end_inset
+
+, then no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in any previous round
+\end_layout
+
+\begin_layout Theorem
+In Paxos, if acceptor 
+\begin_inset Formula $a$
+\end_inset
+
+ has voted for value 
+\begin_inset Formula $v$
+\end_inset
+
+ at round 
+\begin_inset Formula $i$
+\end_inset
+
+, then no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in any previous round.
+\end_layout
+
+\begin_layout Proof
+We prove Property CS by induction on round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ The base case, when 
+\begin_inset Formula $i=0$
+\end_inset
+
+, is trivially true.
+ We now assume that the property holds for rounds 
+\begin_inset Formula $0,\ldots,i-1$
+\end_inset
+
+ (inductive hypothesis) and we prove the property for round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Assume 
+\begin_inset Formula $A$
+\end_inset
+
+ is the set of acceptors, 
+\begin_inset Formula $Q\subseteq A$
+\end_inset
+
+ is the set of acceptors which sent their 
+\begin_inset Formula $<\text{PROMISE},i,lrnd,lval>$
+\end_inset
+
+ and 
+\begin_inset Formula $\mid Q\mid=n-f$
+\end_inset
+
+ is a quorum, 
+\begin_inset Formula $j<i$
+\end_inset
+
+ is the largest 
+\begin_inset Formula $vrnd$
+\end_inset
+
+ in the promises collected from the acceptors in 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+First, no value can be chosen in rounds 
+\begin_inset Formula $j+1,\ldots,i-1$
+\end_inset
+
+.
+ Indeed, the acceptors in 
+\begin_inset Formula $Q$
+\end_inset
+
+ have promised to not vote in these rounds and the remaining 
+\begin_inset Formula $\mid Q\setminus A\mid$
+\end_inset
+
+ acceptors are not enough to form a quorum.
+ If 
+\begin_inset Formula $j=-1$
+\end_inset
+
+, then we are done with the inductive step and with the proof.
+ Assume acceptor 
+\begin_inset Formula $a$
+\end_inset
+
+ has voted for value 
+\begin_inset Formula $v$
+\end_inset
+
+ at round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ This is possible only if some acceptor in 
+\begin_inset Formula $Q$
+\end_inset
+
+ has voted value 
+\begin_inset Formula $v$
+\end_inset
+
+ in round 
+\begin_inset Formula $j\geq0$
+\end_inset
+
+.
+ We can deduce two consequences: no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in round 
+\begin_inset Formula $j$
+\end_inset
+
+; and, no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in rounds 
+\begin_inset Formula $0,\ldots,j-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Therefore we know that Paxos is safe.
+\end_layout
+
+\begin_layout Subsection
+Liveness of Paxos 
+\end_layout
+
+\begin_layout Standard
+In Paxos, progress is not guaranteed even if the number of failures is at
+ most 
+\begin_inset Formula $f=\lfloor(n-1)/2\rfloor$
+\end_inset
+
+.
+ Indeed, if more than one proposer starts off new rounds concurrently, then
+ there is no guarantee that any round completes and a value is chosen.
+ It is important to realize that we cannot do much about it - we cannot
+ get both safety and liveness - since it is impossible to solve consensus
+ in the presence of faults (FLP result).
+\end_layout
+
+\begin_layout Standard
+To get progress we can however use a leader election protocol.
+ One of the proposer is elected as the 
+\series bold
+coordinator
+\series default
+, the only one allowed to start off new rounds.
+ In this way, no conflict occurs and, if the number of failures is at most
+ 
+\begin_inset Formula $f$
+\end_inset
+
+, the round completes with a chosen value.
+ Of course, we are not circumventing the FLP result.
+ In the presence of faults leader election is impossible as well.
+ However, with Paxos we can accept that the election fails and that two
+ or more leaders are chosen.
+ In that case we cannot guarantee liveness but Paxos is there to guarantee
+ safety whatsoever.
+ 
+\end_layout
+
+\begin_layout Subsection
+Multi-Paxos
+\end_layout
+
+\begin_layout Standard
+Consensus protocols like Paxos are often used to get consensus on a sequence
+ of values.
+ A sequence of Paxos instances executes and instance 
+\begin_inset Formula $s$
+\end_inset
+
+ is used to agree on the 
+\begin_inset Formula $s\text{-th}$
+\end_inset
+
+ proposed value.
+ A key observation in such a system is that a single 
+\begin_inset Formula $\langle PREPARE\rangle$
+\end_inset
+
+ message can be sent to initiate a sequence of Paxos instances.
+ Similarly, a single 
+\begin_inset Formula $\langle PROMISE\rangle$
+\end_inset
+
+ message can be sent to respond to the aggregate 
+\begin_inset Formula $\langle PREPARE\rangle$
+\end_inset
+
+ message.
+ To complete each instance, a proposer 
+\begin_inset Formula $p$
+\end_inset
+
+ that has a value to propose sends this value to the coordinator 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ The coordinator then completes the instance by sending the proper 
+\begin_inset Formula $\langle ACCEPT\rangle$
+\end_inset
+
+ message to the acceptors that will be followed by the 
+\begin_inset Formula $\langle LEARN\rangle$
+\end_inset
+
+ message to the learners.
+ Then the delay between proposing and learning in each instance consists
+ of only three messages (down from four required for basic Paxos).
+ 
+\end_layout
+
+\begin_layout Subsection
+Fast Paxos
+\end_layout
+
+\begin_layout Standard
+Further improving on multi-Paxos, 
+\series bold
+fast Paxos
+\series default
+ is based on the following idea: We can save one message and reduce the
+ delay between proposing and learning by allowing the proposer to send its
+ value directly to the acceptors.
+ To achieve this result, the coordinator can send an aggregate 
+\begin_inset Formula $\langle ACCEPT,crnd,\bot\rangle$
+\end_inset
+
+ message (a so called 
+\series bold
+accept-any 
+\series default
+message) to the acceptors as a response to the 
+\begin_inset Formula $\langle PROMISE\rangle$
+\end_inset
+
+ messages.
+ An accept-any message means that, in the same round, the acceptors can
+ accept any value that they receive from any of the proposers.
+ As a result, the pattern of each instance consists of only two messages,
+ a message with the proposed value from any of the proposer to the acceptors,
+ and a 
+\begin_inset Formula $\langle LEARN\rangle$
+\end_inset
+
+ message from the acceptors to the learners.
+\end_layout
+
+\begin_layout Standard
+The improvement of Fast Paxos in delay comes at a price.
+ In the same round multiple proposers can send a value to the acceptors.
+ Therefore, in the same round many different values can be voted by the
+ acceptors.
+ To solve this problem, in Fast Paxos we require a larger quorum of 
+\begin_inset Formula $n-f'$
+\end_inset
+
+ acceptors, where 
+\begin_inset Formula $f'=\lfloor(n-1)/3\rfloor$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Protocol details
+\end_layout
+
+\begin_layout Standard
+First, it is useful to understand why the quorum requirement of 
+\begin_inset Formula $n-f$
+\end_inset
+
+, where 
+\begin_inset Formula $f=(n-1)/2$
+\end_inset
+
+, does not work any more.
+ Suppose that 
+\begin_inset Formula $n=7$
+\end_inset
+
+ and 
+\begin_inset Formula $f=3$
+\end_inset
+
+.
+ During round 
+\begin_inset Formula $i$
+\end_inset
+
+, the proposer responsible for round 
+\begin_inset Formula $i$
+\end_inset
+
+ collects a quorum of exactly 
+\begin_inset Formula $n-f=4$
+\end_inset
+
+ promises from the acceptors.
+ Some of the promises have the form 
+\begin_inset Formula $\langle PROMISE,i,j,v\rangle$
+\end_inset
+
+ (the last vote was cast in round 
+\begin_inset Formula $j$
+\end_inset
+
+ and the value was 
+\begin_inset Formula $v$
+\end_inset
+
+) and some have the form 
+\begin_inset Formula $\langle PROMISE,i,j,v'\rangle$
+\end_inset
+
+.
+ This is possible in Fast Paxos since multiple values can be proposed and
+ voted in a fast round.
+ The problem is that the coordinator still does not know the last vote of
+ 
+\begin_inset Formula $|A/Q|=3$
+\end_inset
+
+ acceptors and, unfortunately, these may be enough to form a quorum of 
+\begin_inset Formula $n-f=4$
+\end_inset
+
+ votes in round 
+\begin_inset Formula $j$
+\end_inset
+
+ either on value 
+\begin_inset Formula $v$
+\end_inset
+
+ or on value 
+\begin_inset Formula $v'$
+\end_inset
+
+.
+ The proposer just does not know and therefore it cannot make any safe choice
+ in round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Therefore, let’s assume that the proposer that is executing round 
+\begin_inset Formula $i$
+\end_inset
+
+ has collected 
+\begin_inset Formula $n−f'$
+\end_inset
+
+ promises from a set 
+\begin_inset Formula $Q$
+\end_inset
+
+ of exactly 
+\begin_inset Formula $n−f'$
+\end_inset
+
+ acceptors.
+ Again, let 
+\begin_inset Formula $j$
+\end_inset
+
+ be the highest 
+\begin_inset Formula $lrnd$
+\end_inset
+
+ in the promises.
+ Moreover, let 
+\begin_inset Formula $Q_{j}\subseteq Q$
+\end_inset
+
+ be the set of acceptors that last voted in round 
+\begin_inset Formula $j$
+\end_inset
+
+ and let 
+\begin_inset Formula $Q_{j}[v]\subseteq Q_{j}$
+\end_inset
+
+ be the set of acceptors that last voted value 
+\begin_inset Formula $v$
+\end_inset
+
+ in round 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ As we know, in Fast Paxos there is no guarantee that the acceptors in 
+\begin_inset Formula $Q_{j}$
+\end_inset
+
+ have last voted for the same value.
+ Clearly, that means that we need to change the rule that Paxos uses to
+ select the value to be sent in the Accept message.
+ We change the rule in the following way: 
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $j=-1$
+\end_inset
+
+ (no acceptor in 
+\begin_inset Formula $Q$
+\end_inset
+
+ has voted yet), select 
+\begin_inset Formula $\bot$
+\end_inset
+
+ (start a fast round)
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $j\geq0$
+\end_inset
+
+ and there exists 
+\begin_inset Formula $v$
+\end_inset
+
+ such that 
+\begin_inset Formula $\mid Q_{j}[v]\mid\geq n-2f'$
+\end_inset
+
+, then select 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $j\geq0$
+\end_inset
+
+ and for all 
+\begin_inset Formula $v$
+\end_inset
+
+ we get 
+\begin_inset Formula $\mid Q_{j}[v]\mid<n-2f'$
+\end_inset
+
+, then select any value that has been last voted in round 
+\begin_inset Formula $j$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+A simple proof of safety for Fast Paxos 
+\end_layout
+
+\begin_layout Standard
+Like in Paxos, our goal is to prove the three safety Properties CS1, CS2,
+ and CS3.
+ Again, Property CS1 and CS3 are very easy to check and we prove Property
+ CS as a way to prove Property CS2.
+ 
+\end_layout
+
+\begin_layout Theorem
+In Fast Paxos, if acceptor 
+\begin_inset Formula $a$
+\end_inset
+
+ has voted for value 
+\begin_inset Formula $v$
+\end_inset
+
+ at round 
+\begin_inset Formula $i$
+\end_inset
+
+, then no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in any previous round.
+ 
+\end_layout
+
+\begin_layout Proof
+We prove Property CS by induction on round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ The base case, when 
+\begin_inset Formula $i=0$
+\end_inset
+
+, is trivially true.
+ We now assume that the property holds for rounds 
+\begin_inset Formula $0,\ldots,i-1$
+\end_inset
+
+ (inductive hypothesis) and we prove the property for round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $Q\subseteq A$
+\end_inset
+
+, 
+\begin_inset Formula $\mid Q\mid=n-f'$
+\end_inset
+
+, be the quorum of acceptors that sent the 
+\begin_inset Formula $\langle PROMISE\rangle$
+\end_inset
+
+ message for round 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $j<i$
+\end_inset
+
+ be the largest 
+\begin_inset Formula $lrnd$
+\end_inset
+
+ in the promises, 
+\begin_inset Formula $Q_{j}\subseteq Q$
+\end_inset
+
+ be the set of acceptors who last voted in round 
+\begin_inset Formula $j$
+\end_inset
+
+, and 
+\begin_inset Formula $Q_{j}[v]\subseteq Q_{j}$
+\end_inset
+
+ be the set of acceptors that have last voted value 
+\begin_inset Formula $v$
+\end_inset
+
+ in round 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ Just like in Paxos, we can easily see that no value can be chosen in rounds
+ 
+\begin_inset Formula $j+1,\ldots,i-1$
+\end_inset
+
+ (the acceptors in 
+\begin_inset Formula $Q\backslash A$
+\end_inset
+
+ are not enough to form a quorum).
+ If 
+\begin_inset Formula $j=-1$
+\end_inset
+
+, then we are done with the inductive step and with the proof.
+ So, let’s assume that 
+\begin_inset Formula $j\geq0$
+\end_inset
+
+ and proceed.
+ 
+\end_layout
+
+\begin_layout Proof
+Assume that acceptor 
+\begin_inset Formula $a$
+\end_inset
+
+ has voted for value 
+\begin_inset Formula $v$
+\end_inset
+
+ at round 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Then, for all 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ we know that 
+\begin_inset Formula $\mid Q_{j}[v']\mid<n-2f'$
+\end_inset
+
+.
+ As a consequence, no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in round 
+\begin_inset Formula $j$
+\end_inset
+
+ since the acceptors in 
+\begin_inset Formula $Q\backslash Q_{j}[v']$
+\end_inset
+
+, which are strictly more than 
+\begin_inset Formula $f'$
+\end_inset
+
+, have not voted for value 
+\begin_inset Formula $v'$
+\end_inset
+
+ in round 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ Indeed, the acceptors in 
+\begin_inset Formula $Q\backslash Q_{j}$
+\end_inset
+
+ have promised not to vote any value in round 
+\begin_inset Formula $j$
+\end_inset
+
+, and the acceptors in 
+\begin_inset Formula $Q_{j}\backslash Q_{j}[v']$
+\end_inset
+
+ have not voted for value 
+\begin_inset Formula $v$
+\end_inset
+
+ by definition.
+ Lastly, since at least one acceptor has voted for 
+\begin_inset Formula $v$
+\end_inset
+
+ in round 
+\begin_inset Formula $j$
+\end_inset
+
+, no value 
+\begin_inset Formula $v'\not=v$
+\end_inset
+
+ can be chosen in rounds 
+\begin_inset Formula $0,\ldots,j-1$
+\end_inset
+
+ by using the inductive hypothesis on round 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Property CS2 easily follows from Property CS like in Paxos.
+ Therefore, we are done and we can claim that Fast Paxos is safe.
+ 
+\end_layout
+
+\begin_layout Section
+Agreement problem
+\end_layout
+
+\begin_layout Standard
+Agreement among the processes in a distributed system is a fundamental requireme
+nt for a wide range of applications.
+ Many forms of coordination require the processes to exchange information
+ to negotiate with one another and eventually reach a common understanding
+ or agreement.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+failure models
+\series default
+: among the 
+\begin_inset Formula $n$
+\end_inset
+
+ processes in the system, at most 
+\begin_inset Formula $f$
+\end_inset
+
+ processes can be faulty.
+ Recall that in the fail-stop model, a process may crash in the middle of
+ a step.
+ In particular, it may send a message to only a subset of the destination
+ set before crashing.
+ In the Byzantine failure model, a process may behave arbitrarily
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+a
+\series default
+/
+\series bold
+synchronous
+\series default
+ 
+\series bold
+communication
+\series default
+: if a failure-prone process chooses to send a message to process 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+ but fails, then 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+ cannot detect the non-arrival of the message in an asynchronous system
+ because this scenario is indistinguishable from the scenario in which the
+ message takes a very long time in transit.
+ In a synchronous system, however, the scenario in which a message has not
+ been sent can be recognized by the intended recipient, at the end of the
+ round
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+channel reliability
+\series default
+: The channels are reliable, and only the processes may fail (under one
+ of various failure models).
+ This is a simplifying assumption in our study
+\end_layout
+
+\begin_layout Subsection
+Byzantine agreement problem
+\end_layout
+
+\begin_layout Standard
+The Byzantine agreement problem requires a designated process, called the
+ source process, with an initial value, to reach agreement with the other
+ processes about its initial value, subject to the following conditions:
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+agreement
+\series default
+.
+ All non-faulty processes must agree on the same value
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+validity
+\series default
+.
+ If the source process is non-faulty, then the agreed upon value by all
+ the non-faulty processes must be the same as the initial value of the source
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+termination
+\series default
+.
+ Each non-faulty process must eventually decide on a value
+\end_layout
+
+\begin_layout Standard
+The validity condition rules out trivial solutions, such as one in which
+ the agreed upon value is a constant.
+ It also ensures that the agreed upon value is correlated with the source
+ value.
+ If the source process is faulty, then the correct processes can agree upon
+ any value.
+ It is irrelevant what the faulty processes agree upon - or whether they
+ terminate and agree upon anything at all.
+ 
+\end_layout
+
+\begin_layout Subsection
+Consensus problem
+\end_layout
+
+\begin_layout Standard
+The consensus problem differs from the Byzantine agreement problem in that
+ each process has an initial value and all the correct processes must agree
+ on a single value:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+agreement
+\series default
+.
+ All non-faulty processes must agree on the same (single) value
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+validity
+\series default
+.
+ If all the non-faulty processes have the same initial value, then the agreed
+ upon value by all the non-faulty processes must be that same value
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+termination
+\series default
+.
+ Each non-faulty process must eventually decide on a value
+\end_layout
+
+\begin_layout Subsection
+Interactive consistency problem
+\end_layout
+
+\begin_layout Standard
+The interactive consistency problem differs from the Byzantine agreement
+ problem in that each process has an initial value, and all the correct
+ processes must agree upon a set of values, with one value for each process:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+agreement
+\series default
+.
+ All non-faulty processes must agree on the same array of values 
+\begin_inset Formula $A[v_{1},\ldots,v_{N}]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+validity
+\series default
+.
+ If process 
+\begin_inset Formula $i$
+\end_inset
+
+ is non-faulty and its initial value is 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+, then all non-faulty processes agree on 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ as the 
+\begin_inset Formula $i\text{-th}$
+\end_inset
+
+ element of the array 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ If process 
+\begin_inset Formula $j$
+\end_inset
+
+ is faulty, then the non-faulty processes can agree on any value for 
+\begin_inset Formula $A[j]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+termination
+\series default
+.
+ Each non-faulty process must eventually decide on the array 
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Equivalence
+\end_layout
+
+\begin_layout Standard
+The three problems defined above are equivalent in the sense that a solution
+ to any one of them can be used as a solution to the other two problems.
+ This equivalence can be shown using a reduction of each problem to the
+ other two problems.
+\end_layout
+
+\begin_layout Section
+Agreement flavours
+\end_layout
+
+\begin_layout Standard
+There is also a connection between the synchrony of a system and its crash
+ tolerance.
+ In a synchronous system, we can solve consensus for any number of failures.
+ In an asynchronous system, consensus is impossible for even one failure.
+\end_layout
+
+\begin_layout Subsection
+Agreement in a failure-free system
+\end_layout
+
+\begin_layout Standard
+In a failure-free system, consensus can be reached by collecting information
+ from the different processes, arriving at a 
+\series bold
+decision
+\series default
+, and distributing this decision in the system.
+ The decision can be reached by using an application-specific function,
+ like the majority, max, and min functions.
+\end_layout
+
+\begin_layout Subsection
+Agreement in (message-passing) synchronous systems with failures
+\end_layout
+
+\begin_layout Standard
+If a system is wholly synchronous, consensus can be solved, i.e.
+ the trade-offs between safety and liveness can be avoided.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Consensus for crash failures
+\end_layout
+
+\begin_layout Standard
+Each process has an initial value 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ If up to 
+\begin_inset Formula $f$
+\end_inset
+
+ failures are to be tolerated, then the algorithm has 
+\begin_inset Formula $f+1$
+\end_inset
+
+ rounds.
+ In each round, a process 
+\begin_inset Formula $i$
+\end_inset
+
+ sends the value of its variable 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to all other processes if that value has not been sent before.
+ Of all the values received within the round and its own value 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ at the start of the round, the process takes the minimum, and updates 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ After 
+\begin_inset Formula $f+1$
+\end_inset
+
+ rounds, the local value 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is guaranteed to be the consensus value.
+\end_layout
+
+\begin_layout Itemize
+the agreement condition is satisfied because in the 
+\begin_inset Formula $f+1$
+\end_inset
+
+ rounds, there must be at least one round in which no process failed.
+ In this round, say round 
+\begin_inset Formula $r$
+\end_inset
+
+, all the processes that have not failed so far succeed in broadcasting
+ their values, and all these processes take the minimum of the values broadcast
+ and received in that round.
+ Thus, the local values at the end of the round are the same, say 
+\begin_inset Formula $x_{i}^{r}$
+\end_inset
+
+ for all non-failed processes.
+ In further rounds, only this value may be sent by each process at most
+ once, and no process 
+\begin_inset Formula $i$
+\end_inset
+
+ will update its value 
+\begin_inset Formula $x_{i}^{r}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the validity condition is satisfied because processes do not send fictitious
+ values in this failure model.
+ For all 
+\begin_inset Formula $i$
+\end_inset
+
+, if the initial value is identical, then the only value sent by any process
+ is the value that has been agreed upon as per the agreement condition
+\end_layout
+
+\begin_layout Itemize
+the termination condition is seen to be satisfied
+\end_layout
+
+\begin_layout Standard
+There are 
+\begin_inset Formula $f+1$
+\end_inset
+
+ rounds, where 
+\begin_inset Formula $f<n$
+\end_inset
+
+.
+ The number of messages is at most 
+\begin_inset Formula $n\cdot(n-1)=O(n^{2})$
+\end_inset
+
+ in each round, hence the total number of messages is 
+\begin_inset Formula $O((f+1)\cdot n^{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Consensus for byzantine failures
+\end_layout
+
+\begin_layout Standard
+In a system of 
+\begin_inset Formula $n$
+\end_inset
+
+ processes, the Byzantine agreement problem (as also the other variants
+ of the agreement problem) can be solved in a synchronous system only if
+ the number of Byzantine processes 
+\begin_inset Formula $f$
+\end_inset
+
+ is such that 
+\begin_inset Formula $f\leq\lfloor\frac{n-1}{3}\rfloor$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Agreement in (message-passing) asynchronous systems with failures
+\end_layout
+
+\begin_layout Standard
+Fischer et al.
+ showed a fundamental result on the impossibility of reaching agreement
+ in an asynchronous (message-passing) system, even if a single process is
+ allowed to have a crash failure.
+ This result, popularly known as the 
+\series bold
+FLP impossibility result
+\series default
+, has a significant impact on the field of designing distributed algorithms
+ in a failure-susceptible system.
+ Observe that reaching consensus requires some form of exchange of the intial
+ values.
+ Hence, a running process cannot make a unilateral decision on the consensus
+ value.
+ The key idea of the impossibility result is that, in the face of a potential
+ process crash, it is not possible to distinguish between a crashed process
+ and a process or link that is extremely slow.
+ The impossibility result is significant because it implies that all problems
+ to which the agreement problem can be reduced are also not solvable in
+ any asynchronous system in which crash failures may occur.
+ Problems which reduce to the consensus problem, like the leader election,
+ are not solvable in the face of even a single crash-failure.
+\end_layout
+
+\begin_layout Section
+Practical byzantine fault tolerance
+\end_layout
+
+\begin_layout Standard
+Assuming an asynchronous distributed system with a byzantine failure model,
+ we can devise an algorithm which offers both liveness and safety, provided
+ at most 
+\begin_inset Formula $f=\lfloor\frac{n-1}{3}\rfloor$
+\end_inset
+
+ out of a total of 
+\begin_inset Formula $n$
+\end_inset
+
+ nodes are simultaneously faulty.
+ 
+\series bold
+Practical byzantine fault tollerance
+\series default
+ does not rely on synchrony to provide safety, but it needs synchrony to
+ provide liveness.
+ For simplicity, we assume 
+\begin_inset Formula $n=3f+1$
+\end_inset
+
+, where 
+\begin_inset Formula $f$
+\end_inset
+
+ is the maximum number of nodes that may be faulty.
+ These nodes move through a succession of configurations called 
+\series bold
+views
+\series default
+.
+ In a view one node is the 
+\series bold
+primary
+\series default
+ (i.e.
+ coordinator from Paxos) while others are 
+\series bold
+backups
+\series default
+ (i.e.
+ acceptors from Paxos).
+ View changes are carried out when it appears that the primary has failed.
+ Furthermore, we use cryptographic techniques to prevent ill actions.
+\end_layout
+
+\begin_layout Section
+The CAP intuition
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+CAP intuition
+\series default
+ was introduced as a trade-off between consistency, availability, and partition
+ tolerance:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+consistency
+\series default
+: informally it means that each server returns the 
+\begin_inset Quotes eld
+\end_inset
+
+right
+\begin_inset Quotes erd
+\end_inset
+
+ response to each request.
+ The meaning of consistency depends on the service.
+ Here we discuss simple services, where its semantics are specified by a
+ sequential specification and operations are atomic (from the PoV of the
+ client, it is as if all operations were executed by a single centralized
+ server)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+availability
+\series default
+: each request eventually receives a response
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+partition-tolerance
+\series default
+: communication among the servers is not reliable, and the servers may be
+ partitioned into multiple groups that cannot communicate with each other.
+ here we simply treat communication as faulty
+\end_layout
+
+\begin_layout Theorem
+In a network subject to communication failures, it is impossible for any
+ web service to implement an atomic R/W shared memory that guarantees a
+ response to every request.
+\end_layout
+
+\begin_layout Standard
+The trade-off between consistency and availability in a partition-prone
+ system is a particular example of the more general trade-off between safety
+ and liveness in an unreliable system 
+\end_layout
+
+\begin_layout Itemize
+a 
+\series bold
+safety property
+\series default
+ is one that states 
+\begin_inset Quotes eld
+\end_inset
+
+nothing bad ever happens
+\begin_inset Quotes erd
+\end_inset
+
+: it requires that at every point in every execution, the property holds.
+ Consistency requirements are almost always safety properties
+\end_layout
+
+\begin_layout Itemize
+a 
+\series bold
+liveness property
+\series default
+ is one that states that 
+\begin_inset Quotes eld
+\end_inset
+
+eventually something good happens
+\begin_inset Quotes erd
+\end_inset
+
+: it says nothing about the state at any instant in time; it requires only
+ that if an execution continues for long enough, then something desirable
+ happens.
+ Availability in a classic liveness property
+\end_layout
+
+\begin_layout Subsection
+Practical implications
+\end_layout
+
+\begin_layout Standard
+When dealing with unreliable networks, there are seemingly only two reasonable
+ approaches: sacrifice availability or sacrifice consistency.
+ This is the implication of the CAP theorem: we cannot achive consistency
+ and availability in a partition-prone system.
+\end_layout
+
+\begin_layout Subsubsection
+Best effort availability
+\end_layout
+
+\begin_layout Standard
+Perhaps the most common approach to dealing with unreliable networks is
+ to design a service that guarantees consistency regardless of the network
+ behaviour.
+ The service is then optimized to provide best effort availability.
+ A recent popular example of this approach is the Chubby Lock Service used
+ in the Google infrastructure.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Best effort consistency
+\end_layout
+
+\begin_layout Standard
+For some applications, sacrificing availability is not an option: users
+ require that it be responsive in all situations.
+ In such situations, designers sacrifice consistency: a response is guaranteed
+ at all times.
+ The classic example of this is web caching, as pioneered by Akamai CDN.
+\end_layout
+
+\begin_layout Section
+Blockchain
+\end_layout
+
+\begin_layout Standard
+The blockchain can be thought as another way of dealing with the CAP intuition.
+\end_layout
+
+\begin_layout Subsection
+Bitcoin
+\end_layout
+
+\begin_layout Subsection
+Algorand
+\end_layout
+
+\end_body
+\end_document
