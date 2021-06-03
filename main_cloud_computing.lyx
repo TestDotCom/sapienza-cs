@@ -1968,51 +1968,9 @@ Virtualization
  Virtualization technologies provide a virtual environment for not only
  executing applications but also for storage, memory, and networking.
  Virtualization technologies have gained renewed interested recently due
- to the confluence of several phenomena: 
-\end_layout
-
-\begin_layout Itemize
-increased performance and computing capacity, underutilized hardware and
- software resources.
- Nowadays, the average end-user desktop PC is powerful enough to meet almost
- all the needs of everyday computing, with extra capacity that is rarely
- used.
- Moreover, if we consider the IT infrastructure of an enterprise, many computers
- are only partially utilized whereas they could be used without interruption
- on a 24/7/365 basis
-\end_layout
-
-\begin_layout Itemize
-lack of space.
- The continuous need for additional capacity, whether storage or compute
- power, makes data centers grow quickly.
- In most cases enterprises cannot afford to build another data center to
- accommodate additional resource capacity.
- This condition, along with hardware underutilization, has led to the diffusion
- of a technique called server consolidation, for which virtualization technologi
-es are fundamental
-\end_layout
-
-\begin_layout Itemize
-greening initiatives.
- Maintaining a data center operation not only involves keeping servers on,
- but a great deal of energy is also consumed in keeping them cool.
- Hence, reducing the number of servers through server consolidation will
- definitely reduce the impact of cooling and power consumption of a data
- center.
- Virtualization technologies can provide an efficient way of consolidating
- servers
-\end_layout
-
-\begin_layout Itemize
-rise of administrative costs.
- Power consumption and cooling costs have now become higher than the cost
- of IT equipment.
- Moreover, the increased demand for additional capacity, which translates
- into more servers in a data center, is also responsible for a significant
- increment in administrative costs.
- Virtualization can help reduce the number of required servers for a given
- workload, thus reducing the cost of the administrative personnel
+ to the confluence of several phenomena: underutilization of hardware and
+ software resources, lack of space, greening initiatives, and rise of administra
+tive costs.
 \end_layout
 
 \begin_layout Subsection
@@ -2054,9 +2012,7 @@ virtual machine manager
  or users that interact with the virtual storage management software deployed
  on top of the real storage system.
  The case of virtual networking is also similar: The guest - applications
- and users - interacts with a virtual network, such as a virtual private
- network (VPN), which is managed by specific software (VPN client) using
- the physical network available on the node.
+ and users - interacts with a virtual network.
  The main common characteristic of all these different implementations is
  the fact that the virtual environment is created by means of a software
  program.
@@ -2064,13 +2020,8 @@ virtual machine manager
  it possible to fully exploit the advantages that come with it, such as:
 \end_layout
 
-\begin_layout Subsubsection
-Increased security
-\end_layout
-
-\begin_layout Standard
-The virtual machine represents an emulated environment in which the guest
- is executed.
+\begin_layout Itemize
+increased security.
  All the operations of the guest are generally performed against the virtual
  machine, which then translates and applies them to the host.
  This level of indirection allows the virtual machine manager to control
@@ -2080,113 +2031,25 @@ The virtual machine represents an emulated environment in which the guest
  the guest.
  Sensitive information that is contained in the host can be naturally hidden
  without the need to install complex security policies.
- Increased security is a requirement when dealing with untrusted code.
- By default, the file system exposed by the virtual computer is completely
- separated from the one of the host machine.
- This becomes the perfect environment for running applications without affecting
- other users in the environment.
-\end_layout
-
-\begin_layout Subsubsection
-Managed execution
-\end_layout
-
-\begin_layout Standard
-Virtualization of the execution environment not only allows increased security,
- but a wider range of features also can be implemented.
- In particular, sharing, aggregation, emulation, and isolation are the most
- relevant features.
+ Increased security is a requirement when dealing with untrusted code
 \end_layout
 
 \begin_layout Itemize
-
-\series bold
-sharing
-\series default
-.
- Virtualization allows the creation of a separate computing environments
- within the same host.
- In this way it is possible to fully exploit the capabilities of a powerful
- guest, which would otherwise be underutilized.
- Sharing is a particularly important feature in virtualized data centers,
- where this basic feature is used to reduce the number of active servers
- and limit power consumption
+managed execution.
+ Virtualization of the execution environment not only allows increased security,
+ but a wider range of features also can be implemented, such as sharing,
+ aggregation, emulation, and isolation
 \end_layout
 
 \begin_layout Itemize
-
-\series bold
-aggregation
-\series default
-.
- Not only is it possible to share physical resource among several guests,
- but virtualization also allows aggregation, which is the opposite process.
- A group of separate hosts can be tied together and represented to guests
- as a single virtual host.
- This function is naturally implemented in middleware for distributed computing,
- with a classical example represented by cluster management software, which
- harnesses the physical resources of a homogeneous group of machines and
- represents them as a single resource
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-emulation
-\series default
-.
- Guest programs are executed within an environment that is controlled by
- the virtualization layer, which ultimately is a program.
- For instance, a completely different environment with respect to the host
- can be emulated, thus allowing the execution of guest programs requiring
- specific characteristics that are not present in the physical host.
- This feature becomes very useful for testing purposes, where a specific
- guest has to be validated against different platforms or architectures
- and the wide range of options is not easily accessible during development.
- Old and legacy software that does not meet the requirements of current
- systems can be run on emulated hardware without any need to change the
- code.
- This is possible either by emulating the required hardware architecture
- or within a specific operating system sandbox
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-isolation
-\series default
-.
- Virtualization allows providing guests—whether they are operating systems,
- applications, or other entities—with a completely separate environment,
- in which they are executed.
- The guest program performs its activity by interacting with an abstraction
- layer, which provides access to the underlying resources.
- Isolation brings several benefits; for example, it allows multiple guests
- to run on the same host without interfering with each other.
- Second, it provides a separation between the host and the guest.
- The virtual machine can filter the activity of the guest and prevent harmful
- operations against the host
-\end_layout
-
-\begin_layout Subsubsection
-Portability
-\end_layout
-
-\begin_layout Standard
-In the case of a hardware virtualization solution, the guest is packaged
+portability.
+ In the case of a hardware virtualization solution, the guest is packaged
  into a virtual image that, in most cases, can be safely moved and executed
  on top of different virtual machines.
- Virtual images are generally proprietary formats that require a specific
- virtual machine manager to be executed.
  In the case of programming-level virtualization, as implemented by the
  JVM or the .NET runtime, the binary code representing application components
- (jars or assemblies) can be run without any recompilation on any implementation
- of the corresponding virtual machine.
- This makes the application development cycle more flexible and application
- deployment very straightforward: One version of the application, in most
- cases, is able to run on different platforms with no changes.
- Finally, portability allows having your own system always with you and
- ready to use as long as the required virtual machine manager is available.
+ can be run without any recompilation on any implementation of the corresponding
+ virtual machine
 \end_layout
 
 \begin_layout Subsubsection
@@ -2256,59 +2119,13 @@ Execution virtualization
 Execution virtualization includes all techniques that aim to emulate an
  execution environment that is separate from the one hosting the virtualization
  layer.
- All these techniques concentrate their interest on providing support for
- the execution of programs, whether these are the operating system, a binary
- specification of a program compiled against an abstract machine model,
- or an application.
- Therefore, execution virtualization can be implemented directly on top
- of the hardware by the operating system, an application, or libraries dynamical
-ly or statically linked to an application image.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Machine reference model
-\end_layout
-
-\begin_layout Standard
-Virtualizing an execution environment at different levels of the computing
+ Virtualizing an execution environment at different levels of the computing
  stack requires a 
 \series bold
 reference model
 \series default
  that defines the interfaces between the levels of abstractions, which hide
  implementation details.
- From this perspective, virtualization techniques actually replace one of
- the layers and intercept the calls that are directed toward it.
- Modern computing systems can be expressed in terms of ISA, ABI and API
- layers.
- At the bottom layer, the model for the hardware is expressed in terms of
- the Instruction Set Architecture (
-\series bold
-ISA
-\series default
-), which defines the instruction set for the processor, registers, memory,
- and interrupt management.
- ISA is the interface between hardware and software.
- The application binary interface (
-\series bold
-ABI
-\series default
-) separates the operating system layer from the applications and libraries,
- which are managed by the OS.
- ABI covers details such as low-level data types, alignment, and call convention
-s and defines a format for executable programs.
- System calls are defined at this level.
- This interface allows portability of applications and libraries across
- operating systems that implement the same ABI.
- The highest level of abstraction is represented by the application programming
- interface (
-\series bold
-API
-\series default
-), which interfaces applications to libraries and/or the underlying operating
- system.
- 
 \end_layout
 
 \begin_layout Standard
@@ -2329,20 +2146,12 @@ Nonprivileged instructions
 Privileged instructions
 \series default
  are those that are executed under specific restrictions and are mostly
- used for sensitive operations, which expose (
-\series bold
-behavior-sensitive
-\series default
-) or modify (
-\series bold
-control-sensitive
-\series default
-) the privileged state.
- For instance, behavior-sensitive instructions are those that operate on
- the I/O, whereas control-sensitive instructions alter the state of the
- CPU registers.
- Some types of architecture feature more than one class of privileged instructio
-ns and implement a finer control of how these instructions can be accessed.
+ used for sensitive operations, which expose or modify the privileged state.
+\end_layout
+
+\begin_layout Standard
+Some types of architecture feature more than one class of privileged instruction
+s and implement a finer control of how these instructions can be accessed.
  For instance, a possible implementation features a hierarchy of privileges
  in the form of ring-based security: Ring 0, Ring 1, Ring 2, and Ring 3;
  
@@ -2356,9 +2165,6 @@ Ring 3
  in the least privileged level.
  Ring 0 is used by the kernel of the OS, rings 1 and 2 are used by the OS-level
  services, and Ring 3 is used by the user.
- Recent systems support only two levels, with Ring 0 for supervisor mode
- and Ring 3 for user mode.
- 
 \end_layout
 
 \begin_layout Standard
@@ -2394,8 +2200,18 @@ hypervisor
  privileged mode, which requires supervisor mode in order to avoid traps.
  Without this assumption it is impossible to fully emulate and manage the
  status of the CPU for guest operating systems.
- More recent implementations of ISA (Intel-VTx and AMD-V) have solved this
- problem by redesigning such sensitive instructions as privileged ones.
+ More recent implementations of ISA
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Instruction Set Architecture.
+\end_layout
+
+\end_inset
+
+ (Intel-VTx and AMD-V) have solved this problem by redesigning such sensitive
+ instructions as privileged ones.
  
 \end_layout
 
@@ -2412,11 +2228,6 @@ Hardware-level virtualization is a virtualization technique that provides
  and the virtual machine manager by the hypervisor.
  The hypervisor is generally a program or a combination of software and
  hardware that allows the abstraction of the underlying physical hardware.
- Hardware-level virtualization is also called system virtualization, since
- it provides ISA to virtual machines, which is the representation of the
- hardware interface of a system.
- This is to differentiate it from process virtual machines, which expose
- ABI to virtual machines.
  
 \end_layout
 
@@ -2457,74 +2268,19 @@ type II
  hypervisors require the support of an operating system to provide virtualizatio
 n services.
  This means that they are programs managed by the operating system, which
- interact with it through the ABI and emulate the ISA of virtual hardware
- for guest operating systems.
+ interact with it through the ABI
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Application Binary Interface.
+\end_layout
+
+\end_inset
+
+ and emulate the ISA of virtual hardware for guest operating systems.
  This type of hypervisor is also called a hosted virtual machine since it
  is hosted within an operating system
-\end_layout
-
-\begin_layout Standard
-Conceptually, a virtual machine manager is internally organized as three
- main modules, dispatcher, allocator, and interpreter.
- The 
-\series bold
-dispatcher
-\series default
- constitutes the entry point of the monitor and reroutes the instructions
- issued by the virtual machine instance to one of the two other modules.
- The 
-\series bold
-allocator
-\series default
- is responsible for deciding the system resources to be provided to the
- VM: whenever a virtual machine tries to execute an instruction that results
- in changing the machine resources associated with that VM, the allocator
- is invoked by the dispatcher.
- The 
-\series bold
-interpreter
-\series default
- module consists of interpreter routines.
- These are executed whenever a virtual machine executes a privileged instruction
-: a trap is triggered and the corresponding routine is executed.
- The design and architecture of a virtual machine manager, together with
- the underlying hardware design of the host machine, determine the full
- realization of hardware virtualization, where a guest operating system
- can be transparently executed on top of a VMM as though it were run on
- the underlying hardware.
- Three properties have to be met by a virtual machine manager to efficiently
- support virtualization:
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-equivalence
-\series default
-.
- A guest running under the control of a virtual machine manager should exhibit
- the same behavior as when it is executed directly on the physical host
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-resource control
-\series default
-.
- The virtual machine manager should be in complete control of virtualized
- resources.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-efficiency
-\series default
-.
- A statistically dominant fraction of the machine instructions should be
- executed without intervention from the virtual machine manager
 \end_layout
 
 \begin_layout Standard
@@ -2545,10 +2301,9 @@ hardware-assisted virtualization
  support for building a virtual machine manager able to run a guest operating
  system in complete isolation.
  At present, examples of hardware-assisted virtualization are the extensions
- to the x86-64 bit architecture introduced with Intel-VTx and AMD-V.
- These extensions, which differ between the two vendors, are meant to reduce
- the performance penalties experienced by emulating x86 hardware with hypervisor
-s.
+ to the x86-64 bit architecture introduced with Intel-VTx and AMD-V, which
+ are meant to reduce the performance penalties experienced by emulating
+ x86 hardware with hypervisors.
  Today there exist many hardware-assisted solutions like Kernel-based Virtual
  Machine (KVM), VirtualBox, Xen, VMware and Hyper-V
 \end_layout
@@ -2566,13 +2321,7 @@ full virtualization
  a complete emulation of the entire underlying hardware.
  The principal advantage of full virtualization is complete isolation, which
  leads to enhanced security, ease of emulation of different architectures,
- and coexistence of different systems on the same platform.
- Whereas it is a desired goal for many virtualization solutions, full virtualiza
-tion poses important concerns related to performance and technical implementatio
-n.
- A key challenge is the interception of privileged instructions such as
- I/O instructions: Since they change the state of the resources exposed
- by the host, they have to be contained within the virtual machine manager
+ and coexistence of different systems on the same platform
 \end_layout
 
 \begin_layout Itemize
@@ -2590,18 +2339,9 @@ paravirtualization
  execution of performance-critical operations directly on the host, thus
  preventing performance losses that would otherwise be experienced in managed
  execution.
- This allows a simpler implementation of virtual machine managers that have
- to simply transfer the execution of these operations, which were hard to
- virtualize, directly to the host.
- To take advantage of such an opportunity, guest operating systems need
- to be modified and explicitly ported by remapping the performance-critical
- operations through the virtual machine software interface.
  This technique has been successfully used by Xen for providing virtualization
  solutions for Linux-based operating systems specifically ported to run
- on Xen hypervisors.
- Operating systems that cannot be ported can still take advantage of paravirtual
-ization by using ad-hoc device drivers that remap the execution of critical
- instructions to the paravirtualization APIs exposed by the hypervisor
+ on Xen hypervisors
 \end_layout
 
 \begin_layout Itemize
@@ -2619,7 +2359,15 @@ partial virtualization
  An example of partial virtualization is address space virtualization used
  in time-sharing systems; this allows multiple applications and users to
  run concurrently in a separate memory space, but they still share the same
- hardware resources (disk, processor, and network)
+ hardware resources
+\end_layout
+
+\begin_layout Standard
+Multiple instances of a variety of operating systems may share the virtualized
+ hardware resources.
+ This contrasts with operating-system-level virtualization, where all instances
+ must share a single kernel, though the guest operating systems can differ
+ in user space.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2637,15 +2385,8 @@ This offers the opportunity to create different and separated execution
  A user space instance in general contains a proper view of the file system,
  which is completely isolated, and separate IP addresses, software configuration
 s, and access to devices.
- Operating systems supporting this type of virtualization are general-purpose,
- time-shared operating systems with the capability to provide stronger namespace
- and resource isolation.
  This virtualization technique can be considered an evolution of the chroot
  mechanism in Unix systems.
- The chroot operation changes the file system root directory for a process
- and its children to a specific directory.
- As a result, the process and its children cannot have access to other portions
- of the file system than those accessible under the new root directory.
  Because Unix systems also expose devices as parts of the file system, by
  using this method it is possible to completely isolate a set of processes.
  Following the same principle, operating system-level virtualization aims
@@ -2678,7 +2419,7 @@ Application-level virtualization is a technique allowing applications to
  system component - that is in charge of executing the application.
  Emulation can also be used to execute program binaries compiled for different
  hardware architectures.
- In this case, one of the following strategies can be implemented:
+ In this case, one of the following strategies can be implemented: 
 \end_layout
 
 \begin_layout Itemize
@@ -2719,7 +2460,6 @@ Emulation, as described, is different from hardware-level virtualization.
  Another advantage is that in this case the virtual machine manager is much
  lighter since it provides a partial emulation of the runtime environment
  compared to hardware virtualization.
- Moreover, this technique allows incompatible applications to run together.
 \end_layout
 
 \begin_layout Section
@@ -4411,18 +4151,6 @@ A main advantage of cloud computing is elasticity - the ability to use as
  always trivial.
  Only in some cases can the data be partitioned into blocks of arbitrary
  size and processed in parallel by servers in the cloud.
- We distinguish two types of divisible workloads: 
-\end_layout
-
-\begin_layout Itemize
-modularly divisible.
- The workload partitioning is defined a priori
-\end_layout
-
-\begin_layout Itemize
-arbitrarily divisible.
- The workload can be partitioned into an arbitrarily large number of smaller
- workloads of equal or very close size
 \end_layout
 
 \begin_layout Standard
@@ -4431,19 +4159,12 @@ arbitrarily divisible.
 MapReduce
 \series default
  is based on a very simple idea for parallel processing of data-intensive
- applications supporting arbitrarily divisible load sharing.
+ applications.
  First, split the data into blocks, assign each block to an instance or
  process, and run these instances in parallel.
  Once all the instances have finished, the computations assigned to them
  start the second phase: Merge the partial results produced by individual
  instances.
- The so-called same program, multiple data (
-\series bold
-SPMD
-\series default
-) paradigm, used since the early days of parallel computing, is based on
- the same idea but assumes that a master instance partitions the data and
- gathers the partial results.
 \end_layout
 
 \begin_layout Standard
@@ -4584,11 +4305,14 @@ Map-Reduce-Merge
 
 \begin_layout Standard
 It is an extension of the MapReduce model, introducing a third phase to
- the standard MapReduce pipeline - the Merge phase - that allows efficiently
- merging data already partitioned and sorted (or hashed) by map and reduce
- modules.
+ the standard MapReduce pipeline - the 
+\series bold
+Merge
+\series default
+ phase - that allows efficiently merging data already partitioned and sorted
+ (or hashed) by map and reduce modules.
  The MapReduce-Merge framework simplifies the management of heterogeneous
- related datasets and pro vides an abstraction able to express the common
+ related datasets and provides an abstraction able to express the common
  relational algebra operators as well as several join algorithms.
 \end_layout
 
