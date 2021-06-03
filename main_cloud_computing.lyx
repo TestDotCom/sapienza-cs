@@ -1109,10 +1109,8 @@ Principles of distributed computing
 \end_layout
 
 \begin_layout Standard
-Distributed computing studies the models, architectures, and algorithms
- used for building and managing distributed systems.
- As a general definition of the term distributed system, we use the one
- proposed by Tanenbaum et.
+As a general definition of the term distributed system, we use the one proposed
+ by Tanenbaum et.
  al: 
 \begin_inset Quotes eld
 \end_inset
@@ -1123,9 +1121,9 @@ A distributed system is a collection of independent computers that appears
 \end_inset
 
 .
- Communication is another fundamental aspect of distributed computing.A distribut
-ed system is one in which components located at networked computers communicate
- and coordinate their actions only by passing messages.
+ Communication is another fundamental aspect of distributed computing.
+ A distributed system is one in which components located at networked computers
+ communicate and coordinate their actions only by passing messages.
 \end_layout
 
 \begin_layout Standard
@@ -1143,18 +1141,15 @@ IPC
  Taken together these two layers become the platform on top of which specialized
  software is deployed to turn a set of networked computers into a distributed
  system.
- The use of well-known standards at the operating system level and even
- more at the hardware and network levels allows easy harnessing of heterogeneous
- components and their organization into a coherent and uniform system.
- The middleware layer leverages such services to build a uniform environment
+\end_layout
+
+\begin_layout Standard
+The middleware layer leverages such services to build a uniform environment
  for the development and deployment of distributed applications, completely
  independent from the underlying operating system and hiding all the heterogenei
 ties of the bottom layers.
  The top of the distributed system stack is represented by the applications
  and services designed and developed to use the middleware.
- These can serve several purposes and often expose their features in the
- form of graphical user interfaces accessible locally or through the Internet
- via a web browser.
 \end_layout
 
 \begin_layout Subsection
@@ -1192,13 +1187,8 @@ This category identifies all systems that are organised into components
 top-down
 \series default
  style.
- This architectural style is quite representative of systems developed with
- imperative programming, which leads to a divide-and-conquer approach to
- problem resolution.
  Systems developed according to this style are composed of one large main
  program that accomplishes its tasks by invoking subprograms or procedures.
- The components in this style are procedures and subprograms, and connections
- are method calls or invocation.
  The calling program passes information with parameters and receives data
  from return values or parameters.
  Method calls can also extend beyond the boundary of a single process by
@@ -1232,7 +1222,6 @@ layered
  A user or client generally interacts with the layer at the highest abstraction,
  which, in order to carry its activity, interacts and uses the services
  of the lower layer.
- This process is repeated (if necessary) until the lowest layer is reached.
  It is also possible to have the opposite behavior: events and callbacks
  from the lower layers can trigger the activity of the higher layer and
  propagate information up through the stack.
@@ -1244,8 +1233,7 @@ d style, it supports a modular design of systems and allows us to decompose
  protocols and interfaces, thus making the system flexible.
  The main disadvantage is constituted by the lack of extensibility, since
  it is not possible to add layers without changing the protocols and the
- interfaces between layers.
- This also makes it complex to add operations
+ interfaces between layers
 \end_layout
 
 \begin_layout Subsubsection
@@ -1264,13 +1252,11 @@ This class of architectural style models systems in terms of independent
 communicating processes
 \series default
 .
- In this architectural style, components are represented by independent
- processes that leverage IPC facilities for coordination management.
+ Components are represented by independent processes that leverage IPC facilitie
+s for coordination management.
  This is an abstraction that is quite suitable to modeling distributed systems
  that, being distributed over a network of computing nodes, are necessarily
  composed of several concurrent processes.
- Each of the processes provides other processes with services and can leverage
- the services exposed by the other processes.
  The conceptual organization of these processes and the way in which the
  communication happens vary according to the specific model used, either
  peer-to-peer or client/server
@@ -1282,20 +1268,12 @@ communicating processes
 event systems
 \series default
 .
- In this architectural style, the components of the system are loosely coupled
- and connected.
+ Components of the system are loosely coupled and connected.
  In addition to exposing operations for data and state manipulation, each
  component also publishes (or announces) a collection of events with which
  other components can register.
  In general, other components provide a callback that will be executed when
  the event is activated.
- During the activity of a component, a specific runtime condition can activate
- one of the exposed events, thus triggering the execution of the callbacks
- registered with it.
- Event activation may be accompanied by contextual information that can
- be used in the callback to handle the event.
- This information can be passed as an argument to the callback or by using
- some shared repository between components.
  The main advantage of such an architectural style is that it fosters the
  development of open systems: new modules can be added and easily integrated
  into the system as long as they have compliant interfaces for registering
@@ -1322,60 +1300,11 @@ Microservices
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-Microservice
-\series default
-s is an architectural style that structures an application as a collection
- of services that are
-\end_layout
-
-\begin_layout Itemize
-highly maintainable and testable 
-\end_layout
-
-\begin_layout Itemize
-loosely coupled 
-\end_layout
-
-\begin_layout Itemize
-independently deployable 
-\end_layout
-
-\begin_layout Itemize
-organized around business capabilities
-\end_layout
-
-\begin_layout Itemize
-owned by a small team
-\end_layout
-
-\begin_layout Standard
-The microservice architecture enables rapid, frequent and reliable delivery
- of large, complex applications.
- It also enables an organization to evolve its technology stack.
- Keep in mind that the microservice architecture is not a silver bullet.
- It has several drawbacks.
- Moreover, when using this architecture there are numerous issues that you
- must address.
- Initially a monolithic architecture has benefits like:
-\end_layout
-
-\begin_layout Itemize
-simple to develop, easy to make radical changes to the application
-\end_layout
-
-\begin_layout Itemize
-straightforward to test and to deploy
-\end_layout
-
-\begin_layout Itemize
-easy to scale
-\end_layout
-
-\begin_layout Standard
-But over time, as complexity increases, development, testing, deployment,
- and scaling became much more difficult.
+Initially, a monolithic architecture offers several benefits, since it is
+ simple to developt and easy to make radical changes, straightforward to
+ test and deploy, easy to scale.
+ But over time, as complexity increases, development, testing, deployment,
+ and scaling becomes much more difficult.
  Switching to a microservice achitecture has several benefits:
 \end_layout
 
@@ -1388,7 +1317,8 @@ services are small and easily maintained
 \end_layout
 
 \begin_layout Itemize
-services are independently deployable and independently scalable
+services are independently deployable and independently scalable (loosely
+ coupled)
 \end_layout
 
 \begin_layout Itemize
@@ -1448,18 +1378,12 @@ These two components interact with each other through a network connection
  using a given protocol.
  The communication is unidirectional: The client issues a request to the
  server, and after processing the request the server returns a response.
- There could be multiple client components issuing requests to a server
- that is passively waiting for them.
- Hence, the important operations in the client-server paradigm are request,
- accept (client side), and listen and response (server side).
  The client/server model is suitable in many-to-one scenarios, where the
  information and the services of interest can be centralized and accessed
  through a single access point: the server.
  In general, multiple clients are interested in such services and the server
  must be appropriately designed to efficiently serve requests coming from
  different clients.
- This consideration has impli- cations on both client design and server
- design.
 \end_layout
 
 \begin_layout Subsubsection
