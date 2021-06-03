@@ -2470,21 +2470,15 @@ Scaling mechanisms
 Autoscaling
 \end_layout
 
-\begin_layout Subsubsection
-Dynamic scalability architecture
-\end_layout
-
 \begin_layout Standard
-An architectural model based on a system of predefined scaling conditions
- that trigger the dynamic allocation of IT resources from resource pools.
- Dynamic allocation enables variable utilization as dictated by usage demand
+Dynamic allocation enables variable utilization as dictated by usage demand
  fluctuations, since unnecessary IT resources are efficiently reclaimed
  without requiring manual interaction.
  The automated scaling listener is configured with workload thresholds that
  dictate when new IT resources need to be added to the workload processing.
  This mechanism can be provided with logic that determines how many additional
  IT resources can be dynamically provided, based on the terms of a given
- cloud consumer’s provisioning contract.
+ cloud consumer provisioning contract.
  The following types of dynamic scaling are commonly used:
 \end_layout
 
@@ -2515,7 +2509,7 @@ dynamic vertical scaling
 dynamic relocation
 \series default
 .
- the IT resource is relocated to a host with more capacity
+ IT resource is relocated to a host with more capacity
 \end_layout
 
 \begin_layout Standard
@@ -2645,9 +2639,57 @@ A load balancer is programmed or configured with a set of performance and
  The load balancer is typically located on the communication path between
  the IT resources generating the workload and the IT resources performing
  the workload processing.
- This mechanism can be designed as a transparent agent that remains hidden
- from the cloud service consumers, or as a proxy component that abstracts
- the IT resources performing their workload.
+\end_layout
+
+\begin_layout Subsubsection
+AWS Elastic Load Balancer
+\end_layout
+
+\begin_layout Standard
+Elastic Load Balancing (
+\series bold
+ECB
+\series default
+) automatically distributes incoming traffic across multiple targets, such
+ as EC2 instances, containers, and IP addresses, in one or more Availability
+ Zones.
+ It monitors the health of its registered targets, and routes traffic only
+ to the healthy targets.
+ A listener checks for connection requests from clients, using the protocol
+ and port that you configure.
+ The rules that you define for a listener determine how the load balancer
+ routes requests to its registered targets.
+ Each rule consists of a priority, one or more actions, and one or more
+ conditions.
+ ECB supports the following load balancers: Application Load Balancers,
+ Network Load Balancers, Gateway Load Balancers, and Classic Load Balancers.
+ 
+\end_layout
+
+\begin_layout Standard
+An 
+\series bold
+Application Load Balancer
+\series default
+, after it receives a request, evaluates the listener rules in priority
+ order to determine which rule to apply, and then selects a target from
+ the target group for the rule action.
+ You can configure listener rules to route requests to different target
+ groups based on the content of the application traffic.
+ You can configure the routing algorithm used at the target group level.
+ The default routing algorithm is round robin.
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+Network Load Balancer
+\series default
+ can handle millions of requests per second.
+ After the load balancer receives a connection request, it selects a target
+ from the target group for the default rule.
+ It attempts to open a TCP connection to the selected target on the port
+ specified in the listener configuration.
  
 \end_layout
 
@@ -2724,23 +2766,9 @@ Pay-per-use monitor
 This mechanism measures cloud-based IT resource usage in accordance with
  predefined pricing parameters and generates usage logs for fee calculations
  and billing purposes.
- Some typical monitoring variables are: 
-\end_layout
-
-\begin_layout Itemize
-request/response message quantity
-\end_layout
-
-\begin_layout Itemize
-transmitted data volume
-\end_layout
-
-\begin_layout Itemize
-bandwidth consumption 
-\end_layout
-
-\begin_layout Standard
-The data collected by the 
+ Some typical monitoring variables are request/response message quantity,
+ transmitted data volume, and bandwidth consumption.
+ The data collected by the 
 \series bold
 pay-per-use monitor
 \series default
@@ -2823,121 +2851,11 @@ Docker
  It is a command-line program, a background process, and a set of remote
  services to solve common software problems and simplifying your experience
  in installing, running, publishing, and removing software.
- It accomplishes this by using an operating system technology called 
-\series bold
-containers
-\series default
-.
- Using containers has been a best practice for a long time.
- But manually building containers can be challenging and easy to do incorrectly.
- This was a problem begging to be solved, and Docker helps.
- Any soft- ware run with Docker is run inside a container.
- Docker uses existing container engines to provide consistent containers
- built according to best practices.
-\end_layout
-
-\begin_layout Subsection
-Containers are not virtualization
-\end_layout
-
-\begin_layout Standard
-Unlike virtual machines, Docker containers don’t use any hardware virtualization.
- Programs running inside Docker containers interface directly with the host's
- Linux kernel.
- Many programs can run in isolation without running redundant operating
- systems or suffering the delay of full boot sequences.
- Docker is not a hardware virtualization technology.
+ Unlike virtual machines, Docker is not a hardware virtualization technology.
  Instead, it helps you use the container technology already built into your
  operating system kernel.
- 
-\end_layout
-
-\begin_layout Standard
-Virtual machines provide hardware abstractions so you can run operating
- systems.
- Containers are an operating system feature.
- So you can always run Docker in a virtual machine if that machine is running
- a modern Linux kernel.
- Docker for Mac and Windows users, and almost all cloud computing users,
- will run Docker inside virtual machines.
- Docker doesn’t provide the container technology, but it specifically makes
- it simpler to use, by leveraging 10 major system features:
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-PID namespace
-\series default
-.
- Process identifiers and capabilities
-\end_layout
-
-\begin_layout Itemize
-UTS namespace.
- Host and domain name 
-\end_layout
-
-\begin_layout Itemize
-MNT namespace.
- Filesystem access and structure 
-\end_layout
-
-\begin_layout Itemize
-IPC namespace.
- Process communication over shared memory 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-NET namespace
-\series default
-.
- Network access and structure 
-\end_layout
-
-\begin_layout Itemize
-USR namespace.
- User names and identifiers 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-chroot
-\series default
- syscall.
- Controls the location of the filesystem root 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-cgroups
-\series default
-.
- Resource protection 
-\end_layout
-
-\begin_layout Itemize
-CAP drop.
- Operating system feature restrictions 
-\end_layout
-
-\begin_layout Itemize
-Security modules.
- Mandatory access controls 
-\end_layout
-
-\begin_layout Standard
-Docker uses those to build containers at runtime, but it uses another set
- of technologies to package and ship containers.
- 
-\end_layout
-
-\begin_layout Subsection
-Docker architecture
+ While virtual machines provide hardware abstractions so you can run operating
+ systems, containers are an operating system feature.
 \end_layout
 
 \begin_layout Standard
@@ -2972,7 +2890,7 @@ Every running program - or process - on a Linux machine has a unique number
  Most programs will not need access to other running processes or be able
  to list the other running processes on the system.
  And so Docker creates a new PID namespace for each container by default.
- A container’s PID namespace isolates processes in that container from processes
+ A container PID namespace isolates processes in that container from processes
  in other containers.
  
 \end_layout
@@ -3050,40 +2968,18 @@ UFS
 \end_layout
 
 \begin_layout Standard
-Docker uses a variety of union filesystems and will select the best fit
- for your system.
- The filesystem is used to create mount points on your host's filesystem
- that abstract the use of layers.
+Docker uses a variety of union filesystems and can select the best fit for
+ the system.
+ The filesystem is used to create mount points on the host filesystem that
+ abstract the use of layers.
  The layers created are bundled into Docker image layers.
  Likewise, when a Docker image is installed, its layers are unpacked and
  appropriately configured for use by the specific filesystem provider chosen
- for your system.
- The Linux kernel provides a namespace for the MNT system.
- When Docker creates a container, that new container will have its own MNT
- namespace, and a new mount point will be created for the container to the
- image.
+ for the system.
  Lastly, chroot is used to make the root of the image filesystem the root
  in the container's context.
  This prevents anything running inside the container from referencing any
  other part of the host filesystem.
- 
-\end_layout
-
-\begin_layout Standard
-Different filesystems have different rules about file attributes, sizes,
- names, and characters.
- Union filesystems are in a position where they often need to translate
- between the rules of different filesystems.
- In the best cases, they’re able to provide acceptable translations.
- In the worst cases, features are omitted.
- Union filesystems use a pattern called 
-\series bold
-copy-on-write
-\series default
-, and that makes implementing memory-mapped files.
- Some union filesystems provide implementations that work under the right
- conditions, but it may be a better idea to avoid memory-mapping files from
- an image.
  
 \end_layout
 
@@ -3144,7 +3040,11 @@ Volumes
 \end_layout
 
 \begin_layout Standard
-Volumes are the preferred way to persist data in Docker containers and services.
+
+\series bold
+Volumes
+\series default
+ are the preferred way to persist data in Docker containers and services.
  Some use cases for volumes include:
 \end_layout
 
@@ -3187,7 +3087,11 @@ Bind mounts
 
 \begin_layout Standard
 In general, you should use volumes where possible.
- Bind mounts are appropriate for the following types of use case:
+ 
+\series bold
+Bind mounts
+\series default
+ are appropriate for the following types of use case:
 \end_layout
 
 \begin_layout Itemize
@@ -3216,8 +3120,12 @@ Tmpfs mounts
 \end_layout
 
 \begin_layout Standard
-tmpfs mounts are best used for cases when you do not want the data to persist
- either on the host machine or within the container.
+
+\series bold
+Tmpfs mounts
+\series default
+ are best used for cases when you do not want the data to persist either
+ on the host machine or within the container.
  This may be for security reasons or to protect the performance of the container
  when your application needs to write a large volume of non-persistent state
  data.
@@ -3233,24 +3141,40 @@ Docker networking subsystem is pluggable, using drivers.
 \end_layout
 
 \begin_layout Itemize
-bridge its the default network driver.
+
+\series bold
+bridge
+\series default
+ its the default network driver.
  Bridge networks are useful when you need multiple containers to communicate
  on the same Docker host
 \end_layout
 
 \begin_layout Itemize
-host is for standalone containers, remove network isolation between the
- container and the Docker host, and use the host networking directly
+
+\series bold
+host
+\series default
+ is for standalone containers, removes network isolation between the container
+ and the Docker host, and use the host networking directly
 \end_layout
 
 \begin_layout Itemize
-overlay networks connect multiple Docker daemons together and enable swarm
- services to communicate with each other
+
+\series bold
+overlay
+\series default
+ networks connect multiple Docker daemons together and enable swarm services
+ to communicate with each other
 \end_layout
 
 \begin_layout Itemize
-macvlan networks allow you to assign a MAC address to a container, making
- it appear as a physical device on your network.
+
+\series bold
+macvlan
+\series default
+ networks allow you to assign a MAC address to a container, making it appear
+ as a physical device on your network.
  Using the macvlan driver is sometimes the best choice when dealing with
  legacy applications that expect to be directly connected to the physical
  network, rather than routed through the Docker host’s network stack, or
@@ -3268,11 +3192,6 @@ Any processes, functionality, or data that must be discoverable and available
 service
 \series default
 .
- That name, service, is an abstraction.
- By encoding those goals into an abstract term, we simplify how we talk
- about the things that use this pattern.
- We can reflect those same benefits in our tooling.
- Docker already does this for containers.
  Containers are described as processes that start using specific Linux namespace
 s, with specific filesystem views, and resource allotments.
  We do not have to describe those specifics each time we talk about a container,
@@ -4300,20 +4219,43 @@ Apache Hadoop is a collection of software projects for reliable and scalable
 \end_layout
 
 \begin_layout Subsubsection
-Map-Reduce-Merge
+Shuffle and sort
 \end_layout
 
 \begin_layout Standard
-It is an extension of the MapReduce model, introducing a third phase to
- the standard MapReduce pipeline - the 
+MapReduce makes the guarantee that the input to every reducer is sorted
+ by key.
+ The process by which the system performs the sort - and transfers the map
+ outputs to the reducers as inputs - is known as the 
 \series bold
-Merge
+shuffle
 \series default
- phase - that allows efficiently merging data already partitioned and sorted
- (or hashed) by map and reduce modules.
- The MapReduce-Merge framework simplifies the management of heterogeneous
- related datasets and provides an abstraction able to express the common
- relational algebra operators as well as several join algorithms.
+.
+\end_layout
+
+\begin_layout Standard
+When the map function starts producing output, before it writes to disk,
+ the thread first divides the data into partitions corresponding to the
+ reducers that they will ultimately be sent to.
+ Within each partition, the background thread performs an in-memory sort
+ by key.
+\end_layout
+
+\begin_layout Standard
+The map tasks may finish at different times, so the reduce task starts copying
+ their outputsas soon as each completes.
+ This is known as the copy phase of the reduce task.
+ When all the map outputs have been copied, the reduce task moves into the
+ 
+\series bold
+sort
+\series default
+ (or merge) phase, which merges the map outputs, maintaining their sort
+ ordering.
+ During the reduce phase, the reduce function is invoked for each key in
+ the sorted output.
+ The output of this phase is written directly to the output filesystem,
+ typically HDFS.
 \end_layout
 
 \begin_layout Subsection
@@ -4401,15 +4343,11 @@ The scheduler tracks, updates, and satisfies these requests with available
  The RM forwards the exit status of finished containers, as reported by
  the NMs, to the responsible AMs.
  AMs are also notified when a new NM joins the cluster so that they can
- start requesting resources on the new nodes.
-\end_layout
-
-\begin_layout Standard
-The RM is not responsible for coordinating application execution or task
- fault-tolerance, but neither is is charged with providing status or metrics
- for running applications (now part of the ApplicationMaster), nor serving
- framework specific reports of completed jobs (now delegated to a per-framework
- daemon).
+ start requesting resources on the new nodes.The RM is not responsible for
+ coordinating application execution or task fault-tolerance, but neither
+ is is charged with providing status or metrics for running applications
+ (now part of the ApplicationMaster), nor serving framework specific reports
+ of completed jobs (now delegated to a per-framework daemon).
  This is consistent with the view that the ResourceManager should only handle
  live resource scheduling.
 \end_layout
