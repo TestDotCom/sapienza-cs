@@ -816,6 +816,72 @@ performance.
  a network introduces delay
 \end_layout
 
+\begin_layout Subsection
+The Address Resolution Protocol
+\end_layout
+
+\begin_layout Standard
+The main issue is that IP datagrams contain IP addresses, but the physical
+ interface hardware on the host or router to which you want to send the
+ datagram only understands the addressing scheme of that particular network.
+ Thus, we need to translate the IP address to a link-level address that
+ makes sense on this network.
+ We can then encapsulate the IP datagram inside a frame that contains that
+ link-level address and send it either to the ultimate destination or to
+ a router that promises to forward the datagram toward the ultimate destination.
+ 
+\end_layout
+
+\begin_layout Standard
+The goal of 
+\series bold
+ARP
+\series default
+ is to enable each host on a network to build up a table of mappings between
+ IP addresses and link-level addresses.
+ Since these mappings may change over time, the entries are timed out periodical
+ly and removed.
+ The set of mappings currently stored in a host is known as the ARP cache
+ or 
+\series bold
+ARP table
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+ARP takes advantage of the fact that many link-level network technologies,
+ such as Ethernet, support broadcast.
+ If a host wants to send an IP datagram to a host (or router) that it knows
+ to be on the same network, it first checks for a mapping in its table.
+ If no mapping is found, it broadcasts an ARP query onto the network.
+ This query contains the target IP address.
+ Each host receives the query and checks to see if it matches its IP address.
+ If it does match, the host sends a response message that contains its link-laye
+r address back to the originator of the query.
+ The originator adds the information contained in this response to its ARP
+ table.
+ 
+\end_layout
+
+\begin_layout Standard
+The query message also includes the IP address and link-layer address of
+ the sending host.
+ Thus, when a host broadcasts a query message, each host on the network
+ can learn the sender link-level and IP addresses and place that information
+ in its ARP table.
+ If the host already has an entry for that host in its table, it refreshes
+ this entry.
+ If that host is the target of the query, then it adds the information about
+ the sender to its table.
+ This is because there is a good chance that the source host is about to
+ send it an application-level message, and it may eventually have to send
+ a response or ACK back to the source; it will need the source’s physical
+ address to do this.
+ If a host is not the target and does not already have an entry for the
+ source in its ARP table, then it does not add an entry for the source.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
