@@ -152,16 +152,6 @@ SLA
 \end_layout
 
 \begin_layout Subsubsection
-IT resources 
-\end_layout
-
-\begin_layout Standard
-A physical or virtual IT-related artifact that can be either software-based,
- such as a virtual server or a custom software program, or hardware-based,
- such as a physical server or a network device.
-\end_layout
-
-\begin_layout Subsubsection
 Cloud services
 \end_layout
 
@@ -246,8 +236,8 @@ The most common economic rationale for investing in cloud-based IT resources
  consumers, resulting in increased or even maximum possible utilization.
  By providing pools of IT resources, along with tools and technologies designed
  to leverage them collectively, clouds can instantly and dynamically allocate
- IT resources to cloud consumers, on-demand or via the cloud consumer’s
- direct configuration.
+ IT resources to cloud consumers, on-demand or via the cloud consumer direct
+ configuration.
 \end_layout
 
 \begin_layout Itemize
@@ -289,7 +279,7 @@ Capacity planning
 \end_layout
 
 \begin_layout Standard
-The process of determining and fulfilling future demands of an organization’s
+The process of determining and fulfilling future demands of an organization
  IT resources, products, and services.
  Within this context, capacity represents the maximum amount of work that
  an IT resource is capable of delivering in a given period of time.
@@ -318,21 +308,6 @@ lag strategy
  usage load fluctuations.
  There is a constant need to balance peak usage requirements without unnecessary
  over-expenditure on infrastructure.
-\end_layout
-
-\begin_layout Subsubsection
-Cost reduction
-\end_layout
-
-\begin_layout Standard
-A direct alignment between IT costs and business performance can be difficult
- to maintain.
- The growth of IT environments often corresponds to the assessment of their
- maximum usage requirements.
- Two costs need to be accounted for: the cost of acquiring new infrastructure,
- and the cost of its ongoing ownership.
- Operational overhead represents a considerable share of IT budgets, often
- exceeding up-front investment costs.
 \end_layout
 
 \begin_layout Subsubsection
@@ -508,7 +483,7 @@ The moving of business data to the cloud means that the responsibility over
  There can be overlapping trust boundaries from different cloud consumers
  due to the fact that cloud-based IT resources are commonly shared.
  Furthermore, another consequence of overlapping trust boundaries relates
- to the cloud provider’s privileged access to cloud consumer data.
+ to the cloud provider privileged access to cloud consumer data.
  The extent to which the data is secure is now limited to the security controls
  and policies applied by both the cloud consumer and cloud provider.
  The overlapping of trust boundaries and the increased exposure of data
@@ -929,14 +904,16 @@ Autonomic systems are commonly modeled as closed-loop control systems where
 \end_layout
 
 \begin_layout Itemize
-elasticity: autonomic systems can monitor usage conditions and leverage
- cloudbased IT resources to automatically acquire and free IT resources
- as needed for the purpose of maintaining required service levels
+elasticity.
+ Autonomic systems can monitor usage conditions and leverage cloudbased
+ IT resources to automatically acquire and free IT resources as needed for
+ the purpose of maintaining required service levels
 \end_layout
 
 \begin_layout Itemize
-resiliency: autonomic systems can automatically detect unavailable IT resources
- and self-respond to allocate alternative IT resources as required
+resiliency.
+ Autonomic systems can automatically detect unavailable IT resources and
+ self-respond to allocate alternative IT resources as required
 \end_layout
 
 \begin_layout Subsubsection
@@ -951,110 +928,6 @@ y.
  Data centers usually have redundant, uninterruptable power supplies, cabling,
  and environmental control subsystems in anticipation of system failure,
  along with communication links and clustered hardware for load balancing.
-\end_layout
-
-\begin_layout Subsubsection
-Computing hardware 
-\end_layout
-
-\begin_layout Standard
-Much of the heavy processing in data centers is often executed by standardized
- commodity servers that have substantial computing power and storage capacity.
- Several computing hardware technologies are integrated into these modular
- servers, such as: 
-\end_layout
-
-\begin_layout Itemize
-support for different hardware processing architectures, such as x86 and
- RISCs 
-\end_layout
-
-\begin_layout Itemize
-redundant and hot-swappable components, such as hard disks, power supplies,
- network interfaces, and storage controller cards 
-\end_layout
-
-\begin_layout Standard
-With a properly established management console, a single operator can oversee
- hundreds to thousands of physical servers, virtual servers, and other IT
- resources.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Storage hardware 
-\end_layout
-
-\begin_layout Standard
-Data centers have specialized storage systems that maintain enormous amounts
- of digital information in order to fulfill considerable storage capacity
- needs.
- These storage systems are containers housing numerous hard disks that are
- organized into arrays.
- Storage systems usually involve the following technologies: 
-\end_layout
-
-\begin_layout Itemize
-hard disk arrays, which inherently divide and replicate data among multiple
- physical drives, and increase performance and redundancy by including spare
- disks.
- This technology is often implemented using Redundant Arrays of Independent
- Disks (RAID) schemes
-\end_layout
-
-\begin_layout Itemize
-I/O caching, generally performed through hard disk array controllers, which
- enhance disk access times and performance
-\end_layout
-
-\begin_layout Itemize
-hot-swappable hard disks, which can be safely removed from arrays without
- requiring prior powering down
-\end_layout
-
-\begin_layout Itemize
-storage virtualization, realized through the use of virtualized hard disks
- and storage sharing
-\end_layout
-
-\begin_layout Itemize
-fast data replication mechanisms, including snapshotting, which is saving
- a virtual machine’s memory into a hypervisor-readable file for future reloading
-, and volume cloning, which is copying virtual or physical hard disk volumes
- and partitions
-\end_layout
-
-\begin_layout Standard
-Storage systems encompass tertiary redundancies, such as robotized tape
- libraries, which are used as backup and recovery systems that typically
- rely on removable media.
- This type of system can exist as a networked IT resource or direct-attached
- storage (DAS).
- In the former case, the storage system is connected to one or more IT resources
- through a network.
- Networked storage devices usually fall into one of the following categories:
- 
-\end_layout
-
-\begin_layout Itemize
-Storage Area Network (SAN).
- Physical data storage media are connected through a dedicated network and
- provide block-level data storage access using industry standard protocols
-\end_layout
-
-\begin_layout Itemize
-Network-Attached Storage (NAS).
- Hard drive arrays are contained and managed by this dedicated device, which
- connects through a network and facilitates access to data using file-centric
- data access protocols like the Network File System (NFS) or Server Message
- Block (SMB).
- 
-\end_layout
-
-\begin_layout Standard
-NAS, SAN, and other more advanced storage system options provide fault tolerance
- in many components through controller redundancy, cooling redundancy, and
- hard disk arrays that use RAID storage technology.
 \end_layout
 
 \begin_layout Subsection
@@ -1150,6 +1023,90 @@ The middleware layer leverages such services to build a uniform environment
 ties of the bottom layers.
  The top of the distributed system stack is represented by the applications
  and services designed and developed to use the middleware.
+\end_layout
+
+\begin_layout Subsection
+The AKF scale cube
+\end_layout
+
+\begin_layout Standard
+Imagine a cube drawn with the aid of a three-dimensional axis for a guide.
+ The initial point, with coordinates of 
+\begin_inset Formula $(0,0,0)$
+\end_inset
+
+, is the point of least scalability within any system.
+ It consists of a single monolithic solution deployed on a single server.
+ It might scale up with larger and faster hardware, but it will not scale
+ out.
+ As such, it will limit your growth to that which can be served by a single
+ unit.
+ In other words, your system will be bound by how fast the server runs the
+ application in question and how well the application is tuned to use the
+ server.
+\end_layout
+
+\begin_layout Standard
+Making modifications to your solution for the purposes of scaling moves
+ you along one of the three axes.
+ Equivalent effort applied to any axis will not always return equivalent
+ results.
+ Choosing one axis does not preclude you from making use of other axes later.
+ When we make choices about what to implement, we should select the splits
+ that have the highest return (in terms of scale) for our effort and that
+ meet our needs in terms of delivering scalability in time for customer
+ demand.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $x\text{-axis}$
+\end_inset
+
+ of scale is very useful and easy to implement, you simply clone the activity
+ among several participants.
+ Scaling along the 
+\begin_inset Formula $x\text{-axis}$
+\end_inset
+
+ starts to fail, however, when you have a lot of different tasks requiring
+ significantly different information from many potential sources.
+ Fast transactions start to run at the speed of slow transactions, and everythin
+g starts to work suboptimally.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $y\text{-axis}$
+\end_inset
+
+ helps to solve that problem by isolating transaction type and speed to
+ systems and people specializing in that area of data or service.
+ Slower transactions are now bunched together, but because the data set
+ has been reduced relative to the 
+\begin_inset Formula $x\text{-axis}$
+\end_inset
+
+ only example, they run faster than they had previously.
+ Fast transactions also speed up because they are no longer competing for
+ resources with the slower transactions and their data set has been reduced.
+ Monolithic systems are reduced to components that operate more efficiently
+ and can scale for data and transaction needs.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $z\text{-axis}$
+\end_inset
+
+ not only helps us scale transactions and data, but may also help with monolithi
+c system deconstruction.
+ Furthermore, we can now move teams and systems around geographically and
+ start to gain benefits from this geographic dispersion, such as disaster
+ recovery.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1281,9 +1238,7 @@ event systems
  This architectural style solves some of the limitations observed for the
  top-down and object-oriented styles.
  First, the invocation pattern is implicit, and the connection between the
- caller and the callee is not hard-coded; this gives a lot of flexibility
- since addition or removal of a handler to events can be done without changes
- in the source code of applications.
+ caller and the callee is not hard-coded.
  Second, the event source does not need to know the identity of the event
  handler in order to invoke the callback.
  The disadvantage of such a style is that it relinquishes control over system
@@ -1293,66 +1248,6 @@ event systems
  This information is available only at runtime and, from a static design
  point of view, becomes more complex to identify the connections among component
 s and to reason about the correctness of the interactions
-\end_layout
-
-\begin_layout Subsubsection
-Microservices
-\end_layout
-
-\begin_layout Standard
-Initially, a monolithic architecture offers several benefits, since it is
- simple to developt and easy to make radical changes, straightforward to
- test and deploy, easy to scale.
- But over time, as complexity increases, development, testing, deployment,
- and scaling becomes much more difficult.
- Switching to a microservice achitecture has several benefits:
-\end_layout
-
-\begin_layout Itemize
-it enables the continuous delivery and deployment of large, complex applications
-\end_layout
-
-\begin_layout Itemize
-services are small and easily maintained
-\end_layout
-
-\begin_layout Itemize
-services are independently deployable and independently scalable (loosely
- coupled)
-\end_layout
-
-\begin_layout Itemize
-it enables different teams to be autonomous
-\end_layout
-
-\begin_layout Itemize
-it allows easy experimenting and adoption of new technologies
-\end_layout
-
-\begin_layout Itemize
-it has better fault isolation
-\end_layout
-
-\begin_layout Standard
-However, no technology is a silver bullet, and the microservice architecture
- has a number of significant drawbacks and issues:
-\end_layout
-
-\begin_layout Itemize
-finding the right set of services is challenging
-\end_layout
-
-\begin_layout Itemize
-distributed systems are complex, which makes development, testing, and deploymen
-t difficult
-\end_layout
-
-\begin_layout Itemize
-deploying features that span multiple services requires careful coordination
-\end_layout
-
-\begin_layout Itemize
-deciding when to adopt the microservice architecture is difficult
 \end_layout
 
 \begin_layout Subsection
@@ -1430,19 +1325,6 @@ Distributed systems are composed of a collection of concurrent processes
  model.
 \end_layout
 
-\begin_layout Standard
-The abstraction of message has played an important role in the evolution
- of the models and technologies enabling distributed computing.
- Couloris et al.
- define a distributed system as “one in which components located at networked
- computers communicate and coordinate their actions only by passing messages”.
- The term message, in this case, identifies any discrete amount of information
- that is passed from one entity to another.
- Several distributed programming paradigms eventually use message-based
- communication despite the abstractions that are presented to developers
- for programming the interaction of distributed components.
-\end_layout
-
 \begin_layout Subsubsection
 Remote Procedure Call
 \end_layout
@@ -1460,11 +1342,7 @@ This paradigm extends the concept of procedure call beyond the boundaries
  Therefore, the calling process thread remains blocked until the procedure
  on the server process has completed its execution and the result (if any)
  is returned to the client.
- 
-\end_layout
-
-\begin_layout Standard
-An important aspect of RPC is 
+ An important aspect of RPC is 
 \series bold
 marshaling
 \series default
@@ -1476,30 +1354,6 @@ marshaling
 unmarshaling
 \series default
  refers to the opposite procedure.
- Marshaling and unmarshaling are performed by the RPC runtime infrastructure,
- and the client and server user code does not necessarily have to perform
- these tasks.
- The RPC runtime, on the other hand, is not only responsible for parameter
- packing and unpacking but also for handling the request-reply interaction
- that happens between the client and the server process in a completely
- transparent manner.
- Therefore, developing a system leveraging RPC for IPC consists of the following
- steps: 
-\end_layout
-
-\begin_layout Enumerate
-design and implementation of the server procedures that will be exposed
- for remote invocation
-\end_layout
-
-\begin_layout Enumerate
-registration of remote procedures with the RPC server on the node where
- they will be made available
-\end_layout
-
-\begin_layout Enumerate
-design and implementation of the client code that invokes the remote procedure(s
-)
 \end_layout
 
 \begin_layout Subsubsection
@@ -1522,16 +1376,12 @@ Distributed object frameworks extend object-oriented programming systems
 
 \begin_layout Enumerate
 the server process maintains a registry of active objects that are made
- available to other processes.
- According to the specific implementation, active objects can be published
- using interface definitions or class definitions
+ available to other processes
 \end_layout
 
 \begin_layout Enumerate
 the client process, by using a given addressing scheme, obtains a reference
- to the active remote object.
- This reference is represented by a pointer to an instance that is of a
- shared type of interface and class definition
+ to the active remote object
 \end_layout
 
 \begin_layout Enumerate
@@ -1556,8 +1406,11 @@ Distributed object frameworks give the illusion of interaction with a local
  the boundaries of the process.
  This is an important aspect to take into account in designing distributed
  object systems, because it might lead to inconsistencies.
- An alternative to this standard process, which is called marshaling by
- value, is 
+\end_layout
+
+\begin_layout Standard
+An alternative to this standard process, which is called marshaling by value,
+ is 
 \series bold
 marshaling by reference
 \series default
@@ -1566,7 +1419,7 @@ marshaling by reference
  it is created on the server side (for parameters) or the client side (for
  return values).
  Marshaling by reference is a more complex technique and generally puts
- more burden on the runtime infrastructure since remote refer- ences have
+ more burden on the runtime infrastructure since remote references have
  to be tracked.
  Being more complex and resource demanding, marshaling by reference should
  be used only when duplication of parameters and return values lead to unexpecte
@@ -1611,65 +1464,9 @@ service
  complex applications.
  The term service is a general abstraction that encompasses several different
  implementations using different technologies and protocols, usually identified
- by four major characteristics: 
-\end_layout
-
-\begin_layout Itemize
-boundaries are explicit.
- A service-oriented application is generally composed of services that are
- spread across different domains, trust authorities, and execution environments.
- Generally, crossing such boundaries is costly; therefore, service invocation
- is explicit by design and often leverages message passing.
- With respect to distributed object programming, whereby remote method invocatio
-n is transparent, in a service-oriented computing environment the interaction
- with a service is explicit and the interface of a service is kept minimal
- to foster its reuse and simplify the interaction
-\end_layout
-
-\begin_layout Itemize
-services are autonomous.
- Services are components that exist to offer functionality and are aggregated
- and coordinated to build more complex system.
- They are not designed to be part of a specific system, but they can be
- integrated in several software systems, even at the same time.
- With respect to object orientation, which assumes that the deployment of
- applications is atomic, service orientation considers this case an exception
- rather than the rule and puts the focus on the design of the service as
- an autonomous component.
- The notion of autonomy also affects the way services handle failures.
- Services operate in an unknown environment and interact with third-party
- applications.
- Therefore, minimal assumptions can be made concerning such environments:
- applications may fail without notice, messages can be malformed, and clients
- can be unauthorized
-\end_layout
-
-\begin_layout Itemize
-services share schema and contracts, not class or interface definitions.
- Services are not expressed in terms of classes or interfaces, as happens
- in object-oriented systems, but they define themselves in terms of schemas
- and contracts.
- A service advertises a contract describing the structure of messages it
- can send and/or receive and additional constraint - if any - on their ordering.
- Because they are not expressed in terms of types and classes, services
- are more easily consumable in wider and heterogeneous environments.
- At the same time, a service orientation requires that contracts and schema
- remain stable over time, since it would be possible to propagate changes
- to all its possible clients.
- To address this issue, contracts and schema are defined in a way that allows
- services to evolve without breaking already deployed code
-\end_layout
-
-\begin_layout Itemize
-services compatibility is determined based on policy.
- Service orientation separates structural compatibility from semantic compatibil
-ity.
- Structural compatibility is based on contracts and schema and can be validated
- or enforced by machine-based techniques.
- Semantic compatibility is expressed in the form of policies that define
- the capabilities and requirements for a service.
- Policies are organized in terms of expressions that must hold true to enable
- the normal operation of a service
+ by four major characteristics: boundaries are explicit, services are autonomous
+, services share schema and contracts (not class or interface definitions),
+ services compatibility is based on policy.
 \end_layout
 
 \begin_layout Standard
@@ -1719,18 +1516,18 @@ service consumer
  use it, the requirements for the service, and the fees charged.
  The service consumer can locate the service metadata in the registry and
  develop the required client components to bind and use the service.
- Service providers and consumers can belong to different organization bodies
- or business domains.
- It is very common in SOA-based computing systems that components play the
- roles of both service provider and service consumer.
- Services might aggregate information and data retrieved from other services
+ 
+\end_layout
+
+\begin_layout Standard
+Services might aggregate information and data retrieved from other services
  or create workflows of services to satisfy the request of a given service
  consumer.
  This practice is known as 
 \series bold
 service orchestration
 \series default
-, which more generally describes the automated arrangement, coor- dination,
+, which more generally describes the automated arrangement, coordination,
  and management of complex computer systems, middleware, and services.
  Another important interaction pattern is 
 \series bold
@@ -1742,80 +1539,9 @@ service choreography
  especially enterprise business applications and systems.
  In this context, interoperability, standards, and service contracts play
  a fundamental role.
- In particular, the following guiding principles are recommended:
-\end_layout
-
-\begin_layout Itemize
-standardized service contract.
- Services adhere to a given communication agreement, which is specified
- through one or more service description documents
-\end_layout
-
-\begin_layout Itemize
-loose coupling.
- Services are designed as self-contained components, maintain relationships
- that minimize dependencies on other services, and only require being aware
- of each other.
- Service contracts will enforce the required interaction among services.
- This simplifies the flexible aggregation of services and enables a more
- agile design strategy that supports the evolution of the enterprise business
-\end_layout
-
-\begin_layout Itemize
-abstraction.
- A service is completely defined by service contracts and description documents.
- They hide their logic, which is encapsulated within their implementation.
- The use of service description documents and contracts removes the need
- to consider the technical implementation details and provides a more intuitive
- framework to define software systems within a business context
-\end_layout
-
-\begin_layout Itemize
-reusability.
- Designed as components, services can be reused more effectively, thus reducing
- development time and the associated costs.
- Reusability allows for a more agile design and cost-effective system implementa
-tion and deployment.
- Therefore, it is possible to leverage third-party services to deliver required
- functionality by paying an appropriate fee rather developing the same capabilit
-y in-house.
-\end_layout
-
-\begin_layout Itemize
-autonomy.
- Services have control over the logic they encapsulate and, from a service
- consumer point of view, there is no need to know about their implementation
-\end_layout
-
-\begin_layout Itemize
-lack of state.
- By providing a stateless interaction pattern (at least in principle), services
- increase the chance of being reused and aggregated, especially in a scenario
- in which a single service is used by multiple consumers that belong to
- different administrative and business domains
-\end_layout
-
-\begin_layout Itemize
-discoverability.
- Services are defined by description documents that constitute supplemental
- metadata through which they can be effectively discovered.
- Service discovery provides an effective means for utilizing third-party
- resources
-\end_layout
-
-\begin_layout Itemize
-composability.
- Using services as building blocks, sophisticated and complex operations
- can be implemented.
- Service orchestration and choreography provide a solid support for composing
- services and achieving business goals
-\end_layout
-
-\begin_layout Standard
-SOA can be realized through several technologies, but nowadays, SOA is mostly
- realized through Web services technology, which provides an interoperable
- platform for connecting systems and applications.
- 
+ In particular, recommended guiding principles are standardized service
+ contracts, loose coupling, abstractions, reusability, autonomy, lack of
+ state, discoverability, and composability.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1835,12 +1561,10 @@ ng languages.
  Third, they provide an intuitive and simple way to connect heterogeneous
  software systems, enabling the quick composition of services in a distributed
  environment.
- Finally, they provide the features required by enterprise business applications
- to be used in an industrial environment.
- They define facilities for enabling service discovery, which allows system
- architects to more efficiently compose SOA applications, and service metering
- to assess whether a specific service complies with the contract between
- the service provider and the service consumer.
+ Finally, they define facilities for enabling service discovery, which allows
+ system architects to more efficiently compose SOA applications, and service
+ metering to assess whether a specific service complies with the contract
+ between the service provider and the service consumer.
  
 \end_layout
 
@@ -1874,7 +1598,120 @@ RESTful
 \begin_layout Standard
 REST provides a lightweight alternative to SOAP: data can be transmitted
  using XML, but often JSON is preferable, as part of the HTTP content.
- Therefore the additional markup required by SOAP is removed.
+\end_layout
+
+\begin_layout Subsubsection
+Microservices
+\end_layout
+
+\begin_layout Standard
+Initially, a monolithic architecture offers several benefits, since it is
+ simple to developt and easy to make radical changes, straightforward to
+ test and deploy, easy to scale.
+ But over time, as complexity increases, development, testing, deployment,
+ and scaling becomes much more difficult.
+ Instead, a 
+\series bold
+microservice
+\series default
+ is a cohesive, independent process interacting via messages, and a 
+\series bold
+microservice architecture
+\series default
+ is a distributed application whereall its modules are microservices.
+\end_layout
+
+\begin_layout Standard
+The microservices architecture appeared lately as a new paradigm for programming
+ applications by means of the composition of small services, each running
+ its own processes and communicating via lightweight mechanisms.
+ This approach has been built on the concepts of SOA brought from crossing-bound
+aries workflows to the application level and into the applications architectures
+, i.e.
+ its Service-Oriented Architecture and Programming from the large to the
+ small.
+\end_layout
+
+\begin_layout Standard
+Microservices manage growing complexity by functionally decomposing large
+ systems into a set of independent services.
+ By making services completely independent in development and deployment,
+ microservices emphasise loose coupling and high cohesion by taking modularity
+ to the next level.
+ This approach delivers all sorts of benefits in terms of maintainability,
+ scalability and so on:
+\end_layout
+
+\begin_layout Itemize
+small and easily maintained services.
+ Microservices implement a limited amount of functionalities, which makes
+ their code base small and inherently limits the scope of a bug, which can
+ be tested in isolation
+\end_layout
+
+\begin_layout Itemize
+continuos integration.
+ It is possible to plan gradual transitions to new versions of a microservice.
+ The new version can be deployed “next” to the old one and the services
+ that depend on the latter can be gradually modified to interact with the
+ former
+\end_layout
+
+\begin_layout Itemize
+microservices naturally lend themselves to containerisation
+\end_layout
+
+\begin_layout Itemize
+loosely coupled services.
+ Scaling a microservice architecture does not imply a duplication of all
+ its components and developers can conveniently deploy/dispose instances
+ of services with respect to their load
+\end_layout
+
+\begin_layout Itemize
+better fault isolation
+\end_layout
+
+\begin_layout Standard
+It also comes with a bundle of problems that are inherited from distributed
+ systems and from SOA, its predecessor.
+ The Microservices architecture still shows distinctive characteristics
+ that blend intosomething unique and different from SOA itself:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Size
+\series default
+.
+ The size is comparatively small wrt.
+ a typical service.
+ Idiomatic use of the microservices architecture suggests that if a service
+ is too large, it should be split into two or more services, thus preserving
+ granularity and maintaining focus on providing only a single business capabilit
+y
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+bounded context
+\series default
+.
+ Related functionalities are combined into a single business capability,
+ which is then implemented as a service
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+independency
+\series default
+.
+ Each service in microservice architecture is operationally independent
+ from other services and the only form of communication between services
+ is through their published interfaces
 \end_layout
 
 \begin_layout Section
