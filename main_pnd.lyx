@@ -3298,5 +3298,202 @@ The self-learning capability supports learning the patterns of network usage
  pattern evolution, and thus avoid raising false alarms.
 \end_layout
 
+\begin_layout Section
+SIEM
+\end_layout
+
+\begin_layout Standard
+Security Information and Event Management represent an approach to achieve
+ security combining: 
+\series bold
+SIM 
+\series default
+(security information management, which means collecting logs, forge alerts)
+ and 
+\series bold
+SEM 
+\series default
+(security event management, which means conduct real-time system monitoring,
+ admin notifications about important issues, establishing event correlations).
+\end_layout
+
+\begin_layout Standard
+A SIEM is generally made of multiple monitoring and analysis components
+ meant to help organizations detect and mitigate threats.
+ There is no standard SIEM protocol but most of them are able to:
+\end_layout
+
+\begin_layout Itemize
+collect process informations about distributed sources;
+\end_layout
+
+\begin_layout Itemize
+correlate between events
+\end_layout
+
+\begin_layout Itemize
+produce alerts and reports based on those infos;
+\end_layout
+
+\begin_layout Itemize
+help for compliance and security incident management (digital forensics)
+\end_layout
+
+\begin_layout Standard
+SIEM can be agent-based or agent-less and should provide the following collectio
+n of services:
+\end_layout
+
+\begin_layout Itemize
+Log management;
+\end_layout
+
+\begin_layout Itemize
+IT regulatory compliance;
+\end_layout
+
+\begin_layout Itemize
+Event correlation
+\end_layout
+
+\begin_layout Itemize
+Active response;
+\end_layout
+
+\begin_layout Itemize
+Endpoint security
+\end_layout
+
+\begin_layout Subsection
+Log management
+\end_layout
+
+\begin_layout Standard
+Nodes in a system generate logs which are sent to the SIEM database.
+ This database collects, analyzes and normalizes the data sent by the numerous
+ nodes and provides log storage, archival and retrieval services.
+\end_layout
+
+\begin_layout Standard
+The SIEM itself performs a near-real time system analysis to assess the
+ security status of the IT resources which are sending the logs.
+ The more logs the SIEM receives, the more accurate system check will be
+ performed.
+\end_layout
+
+\begin_layout Standard
+Logs are fundamental, they are needed to extract information about events
+ and without logs it is impossible to achieve any security management.
+ However, a few problems arises while implementing log management.
+ Which logs should you keep? For how long? 
+\end_layout
+
+\begin_layout Subsubsection
+Logging in practice
+\end_layout
+
+\begin_layout Standard
+Collection logs from critical nodes, IDS and also from network endpoints
+ is important.
+ Among all the events the debug infos, login records and config changes
+ should be checked more deeper.
+ 
+\end_layout
+
+\begin_layout Standard
+For the log lasting period there is no standard, you should agree on the
+ regulatory.
+ Log storage is also important, should you keep them in local or in cloud?
+ Those factors need to be well defined to achieve effective management.
+ To make a log server reliable for example you can use TCP and encrypted
+ storage, or you can sign the logs to provide authentication and integrity.
+\end_layout
+
+\begin_layout Subsection
+IT regulatory compliance
+\end_layout
+
+\begin_layout Standard
+Once the logs are stored you can build filters or rules to audit (monitor
+ against a standard) and validate compliance.
+ In this case compliance means that the system acts like it is supposed
+ to do.
+ A SIEM can generate reports which may be needed by businesses for self-auditing
+ or self compliance evaluations.
+\end_layout
+
+\begin_layout Subsection
+Event correlation
+\end_layout
+
+\begin_layout Standard
+The SIEM must consider various conditions before triggering an alarm.
+ The correlation engine on a SIEM can investigate and consider other events
+ that are not necessarily homogeneous.
+ It can provide a more complete picture of the health status of the system
+ to rule out specific theories on the cause of given events.
+\end_layout
+
+\begin_layout Standard
+The correlation engines are mainly closed-source and are the most distinguishing
+ feature of a SIEM.
+ Before they have to perform event normalization, different vendors means
+ different syntaxes.
+\end_layout
+
+\begin_layout Subsubsection
+Log correlation
+\end_layout
+
+\begin_layout Standard
+Monitoring the incoming logs for logical sequences, patterns, relationships
+ and values to identify events invisible to individual systems.
+ SIEM can also import other data to make comparative determinations.
+\end_layout
+
+\begin_layout Subsection
+Active response
+\end_layout
+
+\begin_layout Standard
+Activate procedures after the identification of given security events.
+ The response can be automatically or manually generated.
+ A SIEM triggered, automatic, reponse would probably occur faster.
+\end_layout
+
+\begin_layout Subsection
+Endpoint security
+\end_layout
+
+\begin_layout Standard
+Most SIEM can monitor endpoints to centrally evaluate the health.
+ Some SIEM can even manage endpoint security by making adjustments and improveme
+nts to the node's security on the remote system.
+ They can push down and install OS updates, update the firewall and anti-virus,
+ manage removable devices, perform Network Access Control, etc.
+\end_layout
+
+\begin_layout Subsection
+Operational tools
+\end_layout
+
+\begin_layout Standard
+SIEM can rely on threat intelligence feeds, which help officers in making
+ decisions concerning organizational security.
+ They perform analysis of data by using tools and techniques to generate
+ meaningful information about existing or emerging threats, helping organization
+s to adopt a proactive behaviour to combat the attacks.
+ 
+\end_layout
+
+\begin_layout Standard
+SIEM also have two main ways of information representation: dashboards and
+ maps, alerts.
+ The former is a pull of infos, a way to present informations that admins
+ can understand at a glance.
+ The latter is pushing of informations and does not require human diligence
+ to notice that something is going on.
+\end_layout
+
 \end_body
 \end_document
