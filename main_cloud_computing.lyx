@@ -3859,10 +3859,7 @@ The MapReduce is a programming model conceived for processing and generating
 \end_inset
 
  pairs.
-\end_layout
-
-\begin_layout Standard
-Call 
+ Call 
 \begin_inset Formula $M$
 \end_inset
 
@@ -3937,18 +3934,29 @@ when all Map and Reduce tasks have been completed, the master wakes up the
  user program
 \end_layout
 
+\begin_layout Subsubsection
+Fault tolerance
+\end_layout
+
 \begin_layout Standard
-The system is fault tolerant.
- For each Map and Reduce task, the master stores the state (idle, inprogress,
- or completed) and the identity of the worker machine.
- The master pings every worker periodically and marks the worker as failed
- if it does not respond.
- A task in progress on a failed worker is reset to idle and becomes eligible
- for rescheduling.
- The master writes periodic checkpoints of its control data structures and,
- if the task fails, it can be restarted from the last checkpoint.
- The data is stored using GFS.
- In case of master node failure, the entire computation has to be recomputed.
+Any map tasks completed by failed worker are reset back to their initial
+ idle state, and therefore become eligible for scheduling on other workers.
+ Similarly, any map task or reduce task in progress on a failed worker is
+ also reset to idle and becomes eligible for rescheduling.
+ Completed map tasks are re-executed on a failure because their output is
+ stored on the local disks of the failed machine and is therefore inaccessible.
+ Completed reduce tasks do not need to be re-executed since their output
+ is stored in a global file system.
+ 
+\end_layout
+
+\begin_layout Standard
+Given that there is only a single master, its failure is unlikely; therefore
+ standard implementations abort the MapReduce computation if the master
+ fails.
+ Clients can check for this condition and retry the MapReduce operation
+ if they desire.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -3992,10 +4000,7 @@ MapReduce makes the guarantee that the input to every reducer is sorted
 shuffle
 \series default
 .
-\end_layout
-
-\begin_layout Standard
-When the map function starts producing output, before it writes to disk,
+ When the map function starts producing output, before it writes to disk,
  the thread first divides the data into partitions corresponding to the
  reducers that they will ultimately be sent to.
  Within each partition, the background thread performs an in-memory sort
@@ -4017,6 +4022,35 @@ sort
  the sorted output.
  The output of this phase is written directly to the output filesystem,
  typically HDFS.
+\end_layout
+
+\begin_layout Subsubsection
+Grid computing
+\end_layout
+
+\begin_layout Standard
+The approach in high-performance computing is to distribute the work across
+ a cluster of machines, which access a shared filesystem.
+ This works well for predominantly compute-intensive jobs, but it becomes
+ a problem when nodes need to access larger data volumes, since the network
+ bandwidth is the bottleneck and compute nodes become idle.
+ Hadoop tries to co-locate the data with the compute nodes, so data access
+ is fast because it is local.
+\end_layout
+
+\begin_layout Standard
+This feature, known as 
+\series bold
+data locality
+\series default
+, is at the heart of data processing in Hadoop and is the reason for its
+ good performance.
+ Recognizing that network bandwidth is the most precious resource in a data
+ center environment (it is easy to saturate network links by copying data
+ around), Hadoop goes to great lengths to conserve it by explicitly modeling
+ network topology.
+ If for some reason data locality is not possible, Hadoop mapReduce fallback
+ to, in order, rack-local or off-rack deployment/execution.
 \end_layout
 
 \begin_layout Subsection
