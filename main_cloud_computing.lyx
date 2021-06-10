@@ -108,6 +108,55 @@ Cloud computing
 \end_layout
 
 \begin_layout Standard
+This cloud model is composed of five essential characteristics:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+on-demand self-service
+\series default
+.
+ A consumer can unilaterally provision computing capabilities, such as server
+ time and network storage, as needed automatically without requiring human
+ interaction with each service provider
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+broad network access
+\series default
+.
+ Capabilities are available over the network and accessed through standard
+ mechanisms
+\end_layout
+
+\begin_layout Itemize
+resource polling.
+ The provider computing resources are pooled to serve multiple consumers
+ using a multi-tenant model, with different physical and virtual resources
+ dynamically assigned and reassigned according to consumer demand
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+rapid elasticity
+\series default
+.
+ Capabilities can be elastically provisioned and released, in some cases
+ automatically, to scale rapidly outward and inward commensurate with demand
+\end_layout
+
+\begin_layout Itemize
+measured service.
+ Cloud systems automatically control and optimize resource use by leaveraging
+ a metering capability at some level of abstraction appropriate to the type
+ of service
+\end_layout
+
+\begin_layout Standard
 This definition describes cloud computing as aphenomenon touching on the
  entire stack: from the underlying hardware to the high-level software services
  and applications.
@@ -333,138 +382,6 @@ ture of less-than-ideal quality, thereby decreasing its ability to meet
 \end_layout
 
 \begin_layout Subsection
-Cloud characteristics
-\end_layout
-
-\begin_layout Standard
-An IT environment requires a specific set of characteristics to enable the
- remote provisioning of scalable and measured IT resources in an effective
- manner.
- These characteristics need to exist to a meaningful extent for the IT environme
-nt to be considered an effective cloud.
-\end_layout
-
-\begin_layout Subsubsection
-On-demand self-service
-\end_layout
-
-\begin_layout Standard
-A cloud consumer can unilaterally access cloud-based IT resources giving
- the cloud consumer the freedom to self-provision these IT resources.
- Once configured, usage of the self-provisioned IT resources can be automated,
- requiring no further human involvement by the cloud consumer or cloud provider.
- This 
-\series bold
-on-demand
-\series default
- service usage relies on
-\end_layout
-
-\begin_layout Itemize
-orchestration technologies, e.g.
- OpenStack and Kubernetes
-\end_layout
-
-\begin_layout Itemize
-web interface, e.g.
- OpenStack, AWS, Google Cloud
-\end_layout
-
-\begin_layout Itemize
-dedicated shell, e.g.
- AWS shell
-\end_layout
-
-\begin_layout Itemize
-programming API, e.g.
- AWS SDK for Java, Python, .Net, Ruby, Go
-\end_layout
-
-\begin_layout Subsubsection
-Broad network access
-\end_layout
-
-\begin_layout Standard
-Represents the ability for a cloud service to be widely accessible from
- the internet using different devices.
- Relies on broadband network access and internet technologies.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Multitenancy and resource pooling
-\end_layout
-
-\begin_layout Standard
-The characteristic of a software program that enables an instance of the
- program to serve different consumers (
-\series bold
-tenants
-\series default
-) whereby each is isolated from the other, is referred to as 
-\series bold
-multitenancy
-\series default
-.
- A cloud provider pools its IT resources to serve multiple cloud service
- consumers by using multitenancy models that frequently rely on the use
- of 
-\series bold
-virtualization
-\series default
- technologies.
- Through the use of multitenancy technology, IT resources can be dynamically
- assigned and reassigned, according to cloud service consumer demands.
- 
-\series bold
-Resource pooling
-\series default
- allows cloud providers to pool large-scale IT resources to serve multiple
- cloud consumers.
-\end_layout
-
-\begin_layout Subsubsection
-Rapid elasticity
-\end_layout
-
-\begin_layout Standard
-The automated ability of a cloud to transparently scale IT resources, as
- required in response to runtime conditions or as pre-determined by the
- cloud consumer or cloud provider.
-\end_layout
-
-\begin_layout Subsubsection
-Measured usage 
-\end_layout
-
-\begin_layout Standard
-The ability of a cloud platform to keep track of the usage of its IT resources,
- primarily by cloud consumers.
- Based on what is measured, the cloud provider can charge a cloud consumer
- only for the IT resources actually used and/or for the timeframe during
- which access to the IT resources was granted.
- In this context, measured usage is closely related to the on-demand characteris
-tic.
-\end_layout
-
-\begin_layout Subsubsection
-Resiliency 
-\end_layout
-
-\begin_layout Standard
-Computing is a form of failover that distributes redundant implementations
- of IT resources across physical locations.
- IT resources can be pre-configured so that if one becomes deficient, processing
- is automatically handed over to another redundant implementation.
- Within cloud computing, the characteristic of 
-\series bold
-resiliency
-\series default
- can refer to redundant IT resources within the same cloud (but in different
- physical locations) or across multiple clouds.
-\end_layout
-
-\begin_layout Subsection
 Risks and challanges
 \end_layout
 
@@ -635,7 +552,7 @@ The party responsible for providing the wire-level connectivity between
 \end_layout
 
 \begin_layout Subsection
-Cloud delivery models
+Cloud service models
 \end_layout
 
 \begin_layout Standard
@@ -952,29 +869,6 @@ s and services.
  user experience.
  Furthermore, applications can be “synthesized” simply by composing existing
  services and integrating them, thus providing added value.
-\end_layout
-
-\begin_layout Subsection
-Service-Oriented Computing 
-\end_layout
-
-\begin_layout Standard
-Service orientation is the core reference model for cloud computing systems.
- This approach adopts the concept of services as the main building blocks
- of application and system development.
- Service-Oriented Computing (
-\series bold
-SOC
-\series default
-) supports the development of rapid, low-cost, flexible, interoperable,
- and evolvable applications and systems.
- A service is an abstraction representing a self-describing and platform-agnosti
-c component that can perform any function.
- A service is supposed to be loosely-coupled, reusable, programming language
- independent, and location transparent.
- Loose coupling allows services to serve different scenarios more easily
- and makes them reusable.
- Independence from a specific platform increases services accessibility.
 \end_layout
 
 \begin_layout Section
@@ -1302,7 +1196,7 @@ Introduces a symmetric architecture in which all the components, called
 \end_layout
 
 \begin_layout Subsection
-Models for interprocess communication - message passing
+Models for interprocess communication: message passing
 \end_layout
 
 \begin_layout Standard
@@ -1361,10 +1255,9 @@ Distributed Object framework
 \end_layout
 
 \begin_layout Standard
-Distributed object frameworks extend object-oriented programming systems
- by allowing objects to be distributed across a heterogeneous network and
- provide facilities so that they can coherently act as though they were
- in the same address space.
+Extend object-oriented programming systems by allowing objects to be distributed
+ across a heterogeneous network and provide facilities so that they can
+ coherently act as though they were in the same address space.
  Distributed object frameworks leverage the basic mechanism introduced with
  RPC and extend it to enable the remote invocation of object methods and
  to keep track of references to objects made available through a network
@@ -1432,11 +1325,7 @@ Service-oriented computing
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-Service-oriented computing
-\series default
- organizes distributed systems in terms of services, which represent the
+Organizes distributed systems in terms of services, which represent the
  major abstraction for building systems.
  Service orientation expresses applications and software systems as aggregations
  of services that are coordinated within a service-oriented architecture
@@ -1488,34 +1377,21 @@ REST
 \end_layout
 
 \begin_layout Subsection
-Service-oriented architecture
+Service-Oriented Architecture
 \end_layout
 
 \begin_layout Standard
-SOA is an architectural style supporting service orientation.
- It organizes a software system into a collection of interacting services.
+
+\series bold
+SOA
+\series default
+ organizes a software system into a colletion of interacting services.
  SOA encompasses a set of design principles that structure system development
  and provide means for integrating components into a coherent and decentralized
  system.
  SOA-based computing packages functionalities into a set of interoperable
  services, which can be integrated into different software systems belonging
  to separate business domains.
- There are two major roles within SOA: the 
-\series bold
-service provider
-\series default
- and the 
-\series bold
-service consumer
-\series default
-.
- The service provider is the maintainer of the service and the organization
- that makes available one or more services for others to use.
- To advertise services, the provider can publish them in a registry, together
- with a service contract that specifies the nature of the service, how to
- use it, the requirements for the service, and the fees charged.
- The service consumer can locate the service metadata in the registry and
- develop the required client components to bind and use the service.
  
 \end_layout
 
@@ -1527,15 +1403,21 @@ Services might aggregate information and data retrieved from other services
 \series bold
 service orchestration
 \series default
-, which more generally describes the automated arrangement, coordination,
- and management of complex computer systems, middleware, and services.
- Another important interaction pattern is 
+, representing a single centralized executable business process (the orchestrato
+r) that coordinates the interaction among different services.
+ The orchestrator is responsible for invoking and combining the services.
+ On the other hand, 
 \series bold
 service choreography
 \series default
-, which is the coordinated interaction of services without a single point
- of control.
- SOA provides a reference model for architecting several software systems,
+ coordinates interaction of services in a distributed manner.
+ This means that a choreography differs from an orchestration with respect
+ to where the logic that controls the interactions between the services
+ involved should reside.
+\end_layout
+
+\begin_layout Standard
+SOA provides a reference model for architecting several software systems,
  especially enterprise business applications and systems.
  In this context, interoperability, standards, and service contracts play
  a fundamental role.
@@ -1549,9 +1431,7 @@ Web services
 \end_layout
 
 \begin_layout Standard
-Web services are the prominent technology for implementing SOA systems and
- applications.
- They leverage Internet technologies and standards for building distributed
+They leverage Internet technologies and standards for building distributed
  systems.
  Several aspects make Web services the technology of choice for SOA.
  First, they allow for interoperability across different platforms and programmi
@@ -1600,7 +1480,7 @@ REST provides a lightweight alternative to SOAP: data can be transmitted
  using XML, but often JSON is preferable, as part of the HTTP content.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Microservices
 \end_layout
 
@@ -1618,22 +1498,8 @@ microservice
 \series bold
 microservice architecture
 \series default
- is a distributed application whereall its modules are microservices.
-\end_layout
-
-\begin_layout Standard
-The microservices architecture appeared lately as a new paradigm for programming
- applications by means of the composition of small services, each running
- its own processes and communicating via lightweight mechanisms.
- This approach has been built on the concepts of SOA brought from crossing-bound
-aries workflows to the application level and into the applications architectures
-, i.e.
- its Service-Oriented Architecture and Programming from the large to the
- small.
-\end_layout
-
-\begin_layout Standard
-Microservices manage growing complexity by functionally decomposing large
+ is a distributed application where all its modules are microservices.
+ Microservices manage growing complexity by functionally decomposing large
  systems into a set of independent services.
  By making services completely independent in development and deployment,
  microservices emphasise loose coupling and high cohesion by taking modularity
@@ -1643,18 +1509,13 @@ Microservices manage growing complexity by functionally decomposing large
 \end_layout
 
 \begin_layout Itemize
-small and easily maintained services.
- Microservices implement a limited amount of functionalities, which makes
- their code base small and inherently limits the scope of a bug, which can
- be tested in isolation
+services are small and easily maintained, and can be independently deployable
+ and scalable
 \end_layout
 
 \begin_layout Itemize
 continuos integration.
- It is possible to plan gradual transitions to new versions of a microservice.
- The new version can be deployed “next” to the old one and the services
- that depend on the latter can be gradually modified to interact with the
- former
+ It is possible to plan gradual transitions to new versions of a microservice
 \end_layout
 
 \begin_layout Itemize
@@ -1662,10 +1523,7 @@ microservices naturally lend themselves to containerisation
 \end_layout
 
 \begin_layout Itemize
-loosely coupled services.
- Scaling a microservice architecture does not imply a duplication of all
- its components and developers can conveniently deploy/dispose instances
- of services with respect to their load
+the microservice architecture enables teams to be autonomous
 \end_layout
 
 \begin_layout Itemize
@@ -1673,45 +1531,72 @@ better fault isolation
 \end_layout
 
 \begin_layout Standard
-It also comes with a bundle of problems that are inherited from distributed
- systems and from SOA, its predecessor.
- The Microservices architecture still shows distinctive characteristics
- that blend intosomething unique and different from SOA itself:
+Like SOA, microservices architectures are made up of loosely coupled, reusable,
+ and specialized components that often work independently of one another.
+ Microservices also use a high degree of cohesion, otherwise known as bounded
+ context.
+ Bounded context refers to the relationship between a component and its
+ data as a standalone entity or unit with very few dependencies.
+ However, we can point out some key differences:
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-Size
+communication
 \series default
-.
- The size is comparatively small wrt.
- a typical service.
- Idiomatic use of the microservices architecture suggests that if a service
- is too large, it should be split into two or more services, thus preserving
- granularity and maintaining focus on providing only a single business capabilit
-y
+ and interoperability.
+ In a microservices architecture, each service is developed independently,
+ with its own communication protocol, using lightweight and open source
+ messaging protocols like HTTP/REST and gRPC.
+ On the other hand, each service in SOA must share a common Enterprise Service
+ Bus (ESB) middleware, which can be a single point of failure.
+ Furthermore, SOA tends to use more heavyweight technologies such as SOAP
+ and other WS standards
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-bounded context
+data handling
 \series default
 .
- Related functionalities are combined into a single business capability,
- which is then implemented as a service
+ SOA architecture typically includes a single data storage layer shared
+ by all services within a given application, whereas microservices will
+ dedicate a server or database for data storage for any service that needs
+ it
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-independency
+service size
 \series default
 .
- Each service in microservice architecture is operationally independent
- from other services and the only form of communication between services
- is through their published interfaces
+ Microservices architectures are made up of highly specialized services,
+ each of which is designed to do one thing very well.
+ The services that make up SOAs, on the other hand, can range from small,
+ specialized services to enterprise-wide services
+\end_layout
+
+\begin_layout Standard
+Microservices also comes with a bundle of problems that are inherited from
+ distributed systems and from SOA:
+\end_layout
+
+\begin_layout Itemize
+deciding when to adopt the microservice architecture, and finding the right
+ set of services, can be challenging
+\end_layout
+
+\begin_layout Itemize
+distributed systems are complex and so development, testing and deployment
+ can be problematic
+\end_layout
+
+\begin_layout Itemize
+deploying features that span multiple services requires careful coordination
+ (among development teams)
 \end_layout
 
 \begin_layout Section
@@ -1846,29 +1731,58 @@ live migration
 \end_layout
 
 \begin_layout Enumerate
-determine the migrating VM and the destination host.
+
+\series bold
+pre-migration
+\series default
+.
+ Determine the migrating VM and the destination host.
  This can be performed manually, but in most circumstances it is automatically
  started by strateges such as load balancing and server consolidation
 \end_layout
 
 \begin_layout Enumerate
-the whole execution state of the VM is stored in memory and set to the destinati
-on node, ensuring continuity of service
+
+\series bold
+reservation
+\series default
+ and 
+\series bold
+iterative pre-copy
+\series default
+.
+ The whole execution state of the VM is stored in memory and sent to the
+ destination node, ensuring continuity of service
 \end_layout
 
 \begin_layout Enumerate
-the VM is suspended and its apps no longer run (downtime).
+
+\series bold
+stop and copy
+\series default
+.
+ The VM is suspended and its apps no longer run (downtime).
  Other non-memory data such as CPU and network states should be sent as
  well 
 \end_layout
 
 \begin_layout Enumerate
-the VM reloads its state and recovers the execution of its programs.
+
+\series bold
+commitment
+\series default
+.
+ the VM reloads its state and recovers the execution of its programs.
  The services provided by this VM continues
 \end_layout
 
 \begin_layout Enumerate
-the network connection is redirected to the new VM and the dependency to
+
+\series bold
+activation
+\series default
+.
+ The network connection is redirected to the new VM and the dependency to
  the source host is cleared, removing the original VM from the source host
 \end_layout
 
@@ -3267,7 +3181,7 @@ The container runtime is the software that is responsible for running containers
 \end_layout
 
 \begin_layout Subsection
-Addons - resource monitoring
+Addons: resource monitoring
 \end_layout
 
 \begin_layout Standard
@@ -3763,10 +3677,7 @@ OLTP
  Moreover, these applications have to deal with extremely high data volumes
  and are expected to provide reliable services for very large communities
  of users.
-\end_layout
-
-\begin_layout Standard
-A major concern for the designers of OLTP systems is to reduce the 
+ A major concern for the designers of OLTP systems is to reduce the 
 \series bold
 response time
 \series default
@@ -3811,12 +3722,272 @@ NoSQL
  
 \end_layout
 
+\begin_layout Subsection
+Amazon Dynamo
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dynamo
+\series default
+ is used to manage the state of services that have very high reliability
+ requirements and need tight control over the tradeoffs between availability,
+ consistency, cost-effectiveness and performance.
+ There are many services on Amazon's platform that only need primary-key
+ access to a data store.
+ Dynamo uses a synthesis of well known techniques to achieve scalability
+ and availability: Data is partitioned and replicated using consistent hashing,
+ and consistency is facilitated by object versioning.
+ The consistency among replicas during updates is maintained by a quorum-like
+ technique and a decentralized replica synchronization protocol.
+\end_layout
+
+\begin_layout Subsubsection
+Query model
+\end_layout
+
+\begin_layout Standard
+Simple read and write operations to a data item that is uniquely identified
+ by a key.
+ State is stored as binary objects (i.e.
+ blobs) identified by unique keys.
+ No operations span multiple data items and there is no need for relational
+ schema.
+ This requirement is based on the observation that a significant portion
+ of Amazon's services can work with this simple query model and do not need
+ any relational schema.
+\end_layout
+
+\begin_layout Subsubsection
+ACID properties
+\end_layout
+
+\begin_layout Standard
+ACID (Atomicity, Consistency, Isolation, Durability) is a set of properties
+ that guarantee that database transactions are processed reliably.
+ In the context of databases, a single logical operation on the data is
+ called a transaction.
+ Experience at Amazon has shown that data stores that provide ACID guarantees
+ tend to have poor availability.
+ Dynamo targets applications that operate with weaker consistency (the “C”
+ in ACID) if this results in high availability.
+ Dynamo does not provide any isolation guarantees and permits only single
+ key updates.
+\end_layout
+
+\begin_layout Subsubsection
+Efficiency and other Assumptions
+\end_layout
+
+\begin_layout Standard
+The system needs to function on a commodity hardware infrastructure.
+ Services must be able to configure Dynamo such that they consistently achieve
+ their latency and throughput requirements.
+ The tradeoffs are in performance, cost efficiency, availability, and durability
+ guarantees.
+ Furthermore, Dynamo operation environment is assumed to be non-hostile
+ and there are no security related requirements such as authentication and
+ authorization.
+\end_layout
+
+\begin_layout Subsubsection
+Design considerations
+\end_layout
+
+\begin_layout Standard
+Dynamo is designed to be an eventually consistent data store; that is all
+ updates reach all replicas eventually.
+ An important design consideration is to decide when to perform the process
+ of resolving update conflicts, i.e., whether conflicts should be resolved
+ during reads or writes.
+ Dynamo targets the design space of an “always writeable” data store, forcing
+ the complexity of conflict resolution to the reads in order to ensure that
+ writes are never rejected.
+\end_layout
+
+\begin_layout Standard
+The next design choice is who performs the process of conflict resolution.
+ This can be done by the data store or the application.
+ If conflict resolution is done by the data store, its choices are rather
+ limited.
+ In such cases, the data store can only use simple policies, such as “last
+ write wins”, to resolve conflicting updates.
+ On the other hand, since the application is aware of the data schema it
+ can decide on the conflict resolution method that is best suited for its
+ client's experience.
+ Other considerations:
+\end_layout
+
+\begin_layout Itemize
+incremental scalability.
+ Dynamo should be able to scale out one storage host at a time, with minimal
+ impact on both operators of the system and the system itself
+\end_layout
+
+\begin_layout Itemize
+symmetry.
+ Every node in Dynamo should have the same set of responsibilities as its
+ peers
+\end_layout
+
+\begin_layout Itemize
+decentralization.
+ The design should favor decentralized peer-to-peer techniques over centralized
+ control
+\end_layout
+
+\begin_layout Itemize
+heterogeneity.
+ The system needs to be able to exploit heterogeneity in the infrastructure
+ it runs on.
+ e.g.
+ the work distribution must be proportional to the capabilities of the individua
+l servers
+\end_layout
+
+\begin_layout Standard
+Dynamo stores objects associated with a key through a simple interface;
+ it exposes two operations: 
+\begin_inset Formula $get(\,)$
+\end_inset
+
+ and 
+\begin_inset Formula $put(\,)$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $get(key)$
+\end_inset
+
+ operation locates the object replicas associated with the key in the storage
+ system and returns a single object or a list of objects with conflicting
+ versions along with a context.
+ The 
+\begin_inset Formula $put(key,context,object)$
+\end_inset
+
+ operation determines where the replicas of the object should be placed
+ based on the associated key, and writes the replicas to disk.
+ The context encodes system metadata about the object that is opaque to
+ the caller and includes information such as the version of the object.
+ The context information is stored along with the object so that the system
+ can verify the validity of the context object supplied in the put request.
+\end_layout
+
+\begin_layout Subsubsection
+Partitioning algorithm
+\end_layout
+
+\begin_layout Standard
+One of the key design requirements for Dynamo is that it must scale incrementall
+y.
+ This requires a mechanism to dynamically partition the data over the set
+ of nodes in the system.
+ Dynamo's partitioning scheme relies on consistent hashing to distribute
+ the load across multiple storage hosts.
+ In consistent hashing, the output range of a hash function is treated as
+ a fixed circular space or “ring”.
+ Each node in the system is assigned a random value within this space which
+ represents its “position” on the ring.
+ Each data item identified by a key is assigned to a node by hashing the
+ data item’s key to yield its position on the ring, and then walking the
+ ring clockwise to find the first node with a position larger than the item's
+ position.
+\end_layout
+
+\begin_layout Standard
+The basic consistent hashing algorithm presents some challenges.
+ First, the random position assignment of each node on the ring leads to
+ non-uniform data and load distribution.
+ Second, the basic algorithm is oblivious to the heterogeneity in the performanc
+e of nodes.
+ To address these issues, Dynamo uses a variant of consistent hashing: instead
+ of mapping a node to a single point in the circle, each node gets assigned
+ to multiple points in the ring.
+ To this end, Dynamo uses the concept of “virtual nodes”.
+ A virtual node looks like a single node in the system, but each node can
+ be responsible for more than one virtual node.
+ Effectively, when a new node is added to the system, it is assigned multiple
+ positions (henceforth, “tokens”) in the ring.
+\end_layout
+
+\begin_layout Subsubsection
+Replication
+\end_layout
+
+\begin_layout Standard
+To achieve high availability and durability, Dynamo replicates its data
+ on multiple hosts.
+ Each data item is replicated at 
+\begin_inset Formula $N$
+\end_inset
+
+ hosts, where 
+\begin_inset Formula $N$
+\end_inset
+
+ is a parameter configured “per-instance”.
+ Each key, 
+\begin_inset Formula $k$
+\end_inset
+
+, is assigned to a coordinator node.
+ The coordinator is in charge of the replication of the data items that
+ fall within its range.
+ In addition to locally storing each key within its range, the coordinator
+ replicates these keys at the 
+\begin_inset Formula $N-1$
+\end_inset
+
+ clockwise successor nodes in the ring.
+ This results in a system where each node is responsible for the region
+ of the ring between it and its 
+\begin_inset Formula $N_{th}$
+\end_inset
+
+ predecessor.
+\end_layout
+
+\begin_layout Subsubsection
+Data versioning
+\end_layout
+
+\begin_layout Standard
+Dynamo provides eventual consistency, which allows for updates to be propagated
+ to all replicas asynchronously.
+ A 
+\begin_inset Formula $put(\,)$
+\end_inset
+
+ call may return to its caller before the update has been applied at all
+ the replicas, which can result in scenarios where a subsequent 
+\begin_inset Formula $get(\,)$
+\end_inset
+
+ operation may return an object that does not have the latest updates.
+ There is a category of applications in Amazon's platform that can tolerate
+ such inconsistencies and can be constructed to operate under these conditions.
+\end_layout
+
+\begin_layout Standard
+In order to provide this kind of guarantee, Dynamo treats the result of
+ each modification as a new and immutable version of the data.
+ It allows for multiple versions of an object to be present in the system
+ at the same time.
+ Most of the time, new versions subsume the previous version(s), and the
+ system itself can determine the authoritative version.
+ Dynamo uses vector clocks in order to capture causality between different
+ versions of the same object.
+\end_layout
+
 \begin_layout Section
 Big data
 \end_layout
 
 \begin_layout Subsection
-MapReduce
+Google MapReduce
 \end_layout
 
 \begin_layout Standard
@@ -3960,7 +4131,7 @@ Given that there is only a single master, its failure is unlikely; therefore
 \end_layout
 
 \begin_layout Subsection
-Hadoop MapReduce
+Apache Hadoop MapReduce
 \end_layout
 
 \begin_layout Standard
@@ -4054,7 +4225,7 @@ data locality
 \end_layout
 
 \begin_layout Subsection
-Hadoop YARN
+Apache Hadoop YARN
 \end_layout
 
 \begin_layout Standard
@@ -4193,6 +4364,158 @@ The NodeManager is the “worker” daemon in YARN.
  at this node and allocated for YARN.
  After registering with the RM, the NM heartbeats its status and receives
  instructions.
+\end_layout
+
+\begin_layout Subsection
+Apache Spark
+\end_layout
+
+\begin_layout Standard
+Models of computing like MapReduce allow to execute data-parallel computations
+ on clusters of unreliable machines, by systems that automatically provide
+ locality-aware scheduling, fault tolerance, and load balancing.
+ While this data flow programming model is useful for a large class of applicati
+ons, others cannot be expressed efficiently, i.e.
+ those that reuse a working set of data across multiple parallel operations.
+ This includes two use cases such as iterative jobs - common in ML algorithms,
+ where a function is applied repeatedly on the same dataset - and interactive
+ analytics - run ad-hoc exploratory queries on large datasets, through SQL
+ interfaces.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Spark
+\series default
+ has a programming model similar to MapReduce but extends it with a data-sharing
+ abstraction called Resilient Distributed Datasets (
+\series bold
+RDD
+\series default
+), and support for parallel operations on these datasets.
+ To use Spark, developers write a driver program that implements the high-level
+ control flow of their application and launches various operations in parallel.
+ Spark is designed to be used with multiple external systems for persistent
+ storage.
+\end_layout
+
+\begin_layout Subsubsection
+Architecture
+\end_layout
+
+\begin_layout Subsubsection
+Resilient Distributed Datasets
+\end_layout
+
+\begin_layout Standard
+A RDD is a read-only collection of objects partitioned across a set of machines
+ that can be rebuilt if a partition is lost.
+ Spark lets programmers construct RDDs in different ways:
+\end_layout
+
+\begin_layout Itemize
+from a file in a shared file system, such as HDFS
+\end_layout
+
+\begin_layout Itemize
+by “parallelizing” a collection in the driver program, which means dividing
+ it into a number of slices that will be sent to multiple nodes
+\end_layout
+
+\begin_layout Itemize
+by transforming an existing RDD
+\end_layout
+
+\begin_layout Standard
+Spark evaluates RDDs lazily, allowing it to find an efficient plan for the
+ user's computation.
+ When an action is called, Spark looks at the whole graph of transformations
+ used to create an execution plan.
+ Finally, RDDs provide explicit support for data sharing among computations,
+ by avoiding replication of intermediate data.
+ RDDs are “ephemeral” by default, in that they get recomputed each time
+ they are used in an action.
+ However, users can also persist selected RDDs in storage memory or cache
+ them in main memory.
+\end_layout
+
+\begin_layout Standard
+RDDs also automatically recover from failures.
+ Traditionally, distributed computing systems have provided fault tolerance
+ through data replication or checkpointing.
+ Spark uses a different approach called 
+\series bold
+lineage
+\series default
+.
+ Each RDD tracks the graph of transformations that was used to build it
+ and reruns these operations on base data to reconstruct any lost partitions.
+ Lineage-based recovery is significantly more efficient than replication
+ in data-intensive workloads.
+\end_layout
+
+\begin_layout Standard
+RDDs are best suited for batch applications that apply the same operation
+ to all elements of a dataset.
+ In these cases, RDDs can efficiently remember each transformation as one
+ step in a lineage graph and can recover lost partitions without having
+ to log large amounts of data.
+ RDDs would be less suitable for applications that make asynchronous finegrained
+ updates to shared state, such as a storage system for a web application
+ or an incremental web crawler.
+ For these applications, it is more efficient to use systems that perform
+ traditional update logging and data checkpointing.
+\end_layout
+
+\begin_layout Subsubsection
+Higher-level libraries
+\end_layout
+
+\begin_layout Standard
+The RDD programming model provides only distributed collections of objects
+ and functions to run on them.
+ Using RDDs, Spark developers have built a variety of higher-level libraries,
+ targeting many of the use cases of specialized computing engines.
+\end_layout
+
+\begin_layout Standard
+One of the most common data processing paradigms is relational queries.
+ 
+\series bold
+Spark SQL
+\series default
+ implement such queries on Spark, using techniques similar to analytical
+ databases (compressed columnar storage).
+ Furthermore, Spark provides a higher-level abstraction for basic data transform
+ations called 
+\series bold
+DataFrames
+\series default
+, which are RDDs of records with a known schema.
+
+\series bold
+ Spark Streaming
+\series default
+ implements incremental stream processing using a model called “discretized
+ streams
+\begin_inset Quotes erd
+\end_inset
+
+.
+ To implement streaming over Spark, input data is split into small batches,
+ which is regularly combine with state stored inside RDDs to produce new
+ results.
+ 
+\series bold
+GraphX
+\series default
+ provides a graph computation interface.
+
+\series bold
+ MLlib
+\series default
+ for distributed machine learning model training.
 \end_layout
 
 \end_body
