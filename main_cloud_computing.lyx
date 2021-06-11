@@ -88,6 +88,22 @@ theorems-ams
 Cloud computing
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Fundamental concepts and models
 \end_layout
@@ -2723,6 +2739,39 @@ Kubernetes
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename kubernetes_components.png
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Kubernetes cluster with all the components tied together.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
 Kubernetes is a portable, extensible, open-source platform for managing
  containerized workloads and services, that facilitates both declarative
  configuration and automation.
@@ -2733,19 +2782,35 @@ Kubernetes is a portable, extensible, open-source platform for managing
 \end_layout
 
 \begin_layout Itemize
-service discovery and load balancing.
+
+\series bold
+service discovery
+\series default
+ and 
+\series bold
+load balancing
+\series default
+.
  If traffic to a container is high, Kubernetes is able to load balance and
  distribute the network traffic so that the deployment is stable
 \end_layout
 
 \begin_layout Itemize
-storage orchestration.
+
+\series bold
+storage orchestration
+\series default
+.
  Kubernetes allows you to automatically mount a storage system of your choice,
  such as local storages, public cloud providers, and more
 \end_layout
 
 \begin_layout Itemize
-automated rollouts and rollbacks.
+
+\series bold
+automated rollouts and rollbacks
+\series default
+.
  You can describe the desired state for your deployed containers using Kubernete
 s, and it can change the actual state to the desired state at a controlled
  rate.
@@ -2753,7 +2818,11 @@ s, and it can change the actual state to the desired state at a controlled
 \end_layout
 
 \begin_layout Itemize
-automatic bin packing.
+
+\series bold
+automatic bin packing
+\series default
+.
  You provide Kubernetes with a cluster of nodes that it can use to run container
 ized tasks.
  You tell Kubernetes how much CPU and memory (RAM) each container needs.
@@ -2762,14 +2831,22 @@ ized tasks.
 \end_layout
 
 \begin_layout Itemize
-self-healing.
+
+\series bold
+self-healing
+\series default
+.
  Kubernetes restarts containers that fail, replaces containers, kills containers
  that do not respond to your user-defined health check, and does not advertise
  them to clients until they are ready to serve
 \end_layout
 
 \begin_layout Itemize
-secret and configuration management.
+
+\series bold
+secret and configuration management
+\series default
+.
  Kubernetes lets you stare and manage sensitive information, such as passwords,
  OAuth tokens, and SSH keys
 \end_layout
@@ -3123,8 +3200,7 @@ scalability
 \series bold
 reliability
 \series default
- are critical features of the system; they must be considered from the beginning
- rather than at some stage of the design
+ are critical features of the system
 \end_layout
 
 \begin_layout Itemize
@@ -3153,42 +3229,51 @@ the users process the data in bulk and are less concerned with the response
 \end_layout
 
 \begin_layout Itemize
-the consistency model should be relaxed to simplify the system implementation,
- but without placing an additional burden on the application developers
+the consistency model should be relaxed to simplify the system implementation
 \end_layout
 
 \begin_layout Standard
-GFS files are collections of fixed-size segments called chunks; at the time
- of file creation each chunk is assigned a unique chunk handle.
- Chunks are stored on Linux filesystems and are replicated on multiple sites.
- The chunk size is 
+A GFS cluster consists of a single master and multiple chunk-servers and
+ is accessed by multiple clients.
+ Files are divided into fixed-size 
+\series bold
+chunks
+\series default
+.
+ Each chunk is identified by an immutable and globally unique handle assigned
+ by the master at the time of chunk creation.
+ For reliability, each chunk is replicated on multiple chunk-servers.
+ By default, three replicas are stored, though users can designate different
+ replication levels.
+\end_layout
+
+\begin_layout Standard
+The master maintains all file system metadata and also controls system-wide
+ activities such as chunk lease management, garbage collection of orphaned
+ chunks, and chunk migration between chunk-servers.
+ 
+\end_layout
+
+\begin_layout Standard
+Having a single master its involvement in reads and writes must be minimized,
+ so that it does not become a bottleneck.
+ Clients never read and write file data through the master.
+ Instead, a client asks the master which chunk-servers it should contact.
+ It caches this information for a limited time and interacts with the chunk-serv
+ers directly for many subsequent operations.
+ 
+\end_layout
+
+\begin_layout Standard
+A chunk size of 
 \series bold
 64 MB
 \series default
-; this choice is motivated by the desire to optimize performance for large
- files and to reduce the amount of metadata maintained by the system.
- A large chunk size increases the likelihood that multiple operations will
- be directed to the same chunk; thus it reduces the number of requests to
- locate the chunk and, at the same time, it allows the application to maintain
- a persistent network connection with the server where the chunk is located.
-\end_layout
-
-\begin_layout Standard
-A 
-\series bold
-master
-\series default
- controls a large number of 
-\series bold
-chunk servers
-\series default
-; it maintains metadata such as filenames, access control information, the
- location of all the replicas for every chunk of each file, and the state
- of individual chunk servers.
- The locations of the chunks are stored only in the the master memory and
- are updated at system startup or when a new chunk server joins the cluster.
- This strategy allows the master to have up-to-date information about the
- location of the chunks.
+ is one of the key design parameters, which is much larger than typical
+ file system block sizes.
+ A large chunk size is motivated by the desire to optimize performance for
+ large files and to reduce the amount of metadata maintained by the system.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3199,28 +3284,6 @@ System reliability is a major concern, and the operation log maintains a
  To minimize the recovery time, the master periodically checkpoints its
  state and at recovery time replays only the log records after the last
  checkpoint.
-\end_layout
-
-\begin_layout Standard
-Each chunk server is a commodity Linux system; it receives instructions
- from the master and responds with status information.
- To access a file, an application sends to the master the filename and the
- chunk index, the offset in the file for the read or write operation; the
- master responds with the chunk handle and the location of the chunk.
- Then the application communicates directly with the chunk server to carry
- out the desired file operation.
- 
-\end_layout
-
-\begin_layout Standard
-The consistency model is very effective and scalable.
- Operations, such as file creation, are atomic and are handled by the master.
- To ensure scalability, the master has minimal involvement in file mutations
- and operations such as write or append that occur frequently.
- In such cases the master grants a lease for a particular chunk to one of
- the chunk servers, called the primary; then, the primary creates a serial
- order for the updates of that chunk.
- 
 \end_layout
 
 \begin_layout Subsection
