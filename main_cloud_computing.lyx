@@ -3822,20 +3822,6 @@ Google MapReduce
 \end_layout
 
 \begin_layout Standard
-A main advantage of cloud computing is elasticity - the ability to use as
- many servers as necessary to optimally respond to the cost and the timing
- constraints of an application.
- In the case of transaction processing systems, typically a front-end system
- distributes the incoming transactions to a number of back-end systems and
- attempts to balance the load among them.
- As the workload increases, new back-end systems are added to the pool.
- For data-intensive batch applications, partitioning the workload is not
- always trivial.
- Only in some cases can the data be partitioned into blocks of arbitrary
- size and processed in parallel by servers in the cloud.
-\end_layout
-
-\begin_layout Standard
 
 \series bold
 MapReduce
@@ -3923,11 +3909,9 @@ a worker being assigned a Map task reads the corresponding input split,
 the locations of these buffered pairs on the local disk are passed back
  to the Master, who is responsible for forwarding these locations to the
  Reduce workers.
- A Reduce worker uses remote procedure calls to read the buffered data from
- the local disks of the Map workers; after reading all the intermediate
- data, it sorts it by the intermediate keys.
- For each unique intermediate key, the key and the corresponding set of
- intermediate values are passed to a user-defined Reduce function.
+ A Reduce worker uses RPCs to read the buffered data from the local disks
+ of the Map workers; after reading all the intermediate data, it sorts it
+ by the intermediate keys.
  The output of the Reduce function is appended to a final output file
 \end_layout
 
@@ -3978,17 +3962,6 @@ MapReduce constitutes a simplified model for processing large quantities
  model have been proposed.
 \end_layout
 
-\begin_layout Standard
-Apache Hadoop is a collection of software projects for reliable and scalable
- distributed computing.
- Taken together, the entire collection is an open-source implementation
- of the MapReduce framework supported by a GFS-like distributed filesystem.
- The initiative consists of mostly two projects: Hadoop Distributed File
- System (HDFS) and Hadoop MapReduce.
- Besides the core projects of Hadoop, a collection of other projects related
- to it provides services for distributed computing.
-\end_layout
-
 \begin_layout Subsubsection
 Shuffle and sort
 \end_layout
@@ -4011,15 +3984,14 @@ shuffle
 
 \begin_layout Standard
 The map tasks may finish at different times, so the reduce task starts copying
- their outputsas soon as each completes.
+ their outputs as soon as each completes.
  This is known as the copy phase of the reduce task.
  When all the map outputs have been copied, the reduce task moves into the
  
 \series bold
 sort
 \series default
- (or merge) phase, which merges the map outputs, maintaining their sort
- ordering.
+ phase, which merges the map outputs, maintaining their sort ordering.
  During the reduce phase, the reduce function is invoked for each key in
  the sorted output.
  The output of this phase is written directly to the output filesystem,
@@ -4063,7 +4035,11 @@ Apache Hadoop YARN
 Yet Another Resource Negotiator is the next generation of Hadoop compute
  platform, which departs from its familiar, monolithic architecture.
  By separating resource management functions from the programming model,
- YARN delegates many scheduling-related functions to per-job components.
+ 
+\series bold
+YARN
+\series default
+ delegates many scheduling-related functions to per-job components.
  In this new context, MapReduce is just one of the applications running
  on top of YARN.
  This separation provides a great deal of flexibility in the choice of programmi
@@ -4086,8 +4062,8 @@ ResourceManager
 \series default
  (RM) tracks resource usage and node liveness, enforces allocation invariants,
  and arbitrates contention among tenants.
- By separating these duties in the JobTracker’s charter, the central allocator
- can use an abstract description of tenants’ requirements, but remain ignorant
+ By separating these duties in the JobTracker's charter, the central allocator
+ can use an abstract description of tenants requirements, but remain ignorant
  of the semantics of each allocation.
  That responsibility is delegated to an 
 \series bold
@@ -4109,9 +4085,9 @@ The ResourceManager exposes two public interfaces towards clients submitting
  and resource access management.
  The RM matches a global model of the cluster state against the digest of
  resource requirements reported by running applications.
- This makes it possible to tightly enforce global scheduling propertiesfairness)
-, but it requires the scheduler to obtain an accurate understanding of applicati
-ons’ resource requirements.
+ This makes it possible to tightly enforce global scheduling properties
+ fairness, but it requires the scheduler to obtain an accurate understanding
+ of applications resource requirements.
  ApplicationMasters codify their need for resources in terms of one or more
  ResourceRequests, each of which tracks:
 \end_layout
@@ -4189,7 +4165,7 @@ NodeManager
 
 \begin_layout Standard
 The NodeManager is the “worker” daemon in YARN.
- It authenticates container leases, manages containers’ dependencies, monitors
+ It authenticates container leases, manages containers dependencies, monitors
  their execution, and provides a set of services to containers.
  Operators configure it to report memory, CPU, and other resources available
  at this node and allocated for YARN.
@@ -4225,14 +4201,35 @@ Spark
 RDD
 \series default
 ), and support for parallel operations on these datasets.
- To use Spark, developers write a driver program that implements the high-level
- control flow of their application and launches various operations in parallel.
- Spark is designed to be used with multiple external systems for persistent
- storage.
+ Spark is designed to support multiple external systems for persistent storage.
 \end_layout
 
 \begin_layout Subsubsection
-Architecture
+Cluster-mode architecture
+\end_layout
+
+\begin_layout Standard
+Spark applications run as independent sets of processes on a cluster, coordinate
+d by the 
+\series bold
+SparkContext
+\series default
+ object in the main program, called 
+\series bold
+Driver
+\series default
+.
+ Specifically, to run on a cluster, the SparkContext can connect to several
+ types of cluster managers, e.g.
+ YARN, Mesos, Kubernetes, which allocate resources across applications.
+ Once connected, Spark acquires 
+\series bold
+executors
+\series default
+ on nodes in the cluster, which are processes that run computations and
+ store data for your application.
+ Next, it sends your application code to the executors.
+ Finally, SparkContext sends tasks to the executors to run.
 \end_layout
 
 \begin_layout Subsubsection
@@ -4297,6 +4294,57 @@ RDDs are best suited for batch applications that apply the same operation
  or an incremental web crawler.
  For these applications, it is more efficient to use systems that perform
  traditional update logging and data checkpointing.
+\end_layout
+
+\begin_layout Subsubsection
+RDD Operations
+\end_layout
+
+\begin_layout Standard
+Recall that 
+\series bold
+transformations
+\series default
+ are lazy operations that define a new RDD, some examples are 
+\begin_inset Formula $map(\,)$
+\end_inset
+
+, 
+\begin_inset Formula $filter(\,)$
+\end_inset
+
+, 
+\begin_inset Formula $reduceByKey(\,)$
+\end_inset
+
+, and 
+\begin_inset Formula $sort(\,)$
+\end_inset
+
+.
+ 
+\series bold
+Actions
+\series default
+ instead launch a computation to return a value to the program or write
+ data to external storage, some examples are 
+\begin_inset Formula $count(\,)$
+\end_inset
+
+, 
+\begin_inset Formula $collect(\,)$
+\end_inset
+
+, 
+\begin_inset Formula $reduce(\,)$
+\end_inset
+
+, and 
+\begin_inset Formula $save(\,)$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsubsection
