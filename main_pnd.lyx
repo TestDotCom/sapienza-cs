@@ -156,13 +156,6 @@ LAN
  loop, broadband over a power line, or satellite.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 The network core
 \end_layout
@@ -324,11 +317,8 @@ host part
 \end_inset
 
  prefix or network ID.
- When both the subnet and host IDs are a 
-\begin_inset Formula $1$
-\end_inset
-
- bit, the resulting address 
+ When both the subnet and host IDs are all ones bit, the resulting address
+ 
 \begin_inset Formula $131.204.255.255$
 \end_inset
 
@@ -337,11 +327,8 @@ host part
 broadcast IP
 \series default
  address for that network.
- When both the subnet and host IDs are a 
-\begin_inset Formula $0$
-\end_inset
-
- bit, the resulting address 
+ When both the subnet and host IDs are all zeros bit, the resulting address
+ 
 \begin_inset Formula $131.204.0.0$
 \end_inset
 
@@ -483,22 +470,8 @@ CIDR
  prefix.
  The subnet mask is another representation for specifying the number of
  bits in the subnet part of the IP address or the IP address prefix.
- A subnet mask contains all 
-\begin_inset Formula $1$
-\end_inset
-
- in the subnet portion and all 
-\begin_inset Formula $0$
-\end_inset
-
- in host part.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
+ A subnet mask contains all ones in the subnet portion and all zeros in
+ host part.
 \end_layout
 
 \begin_layout Subsection
@@ -641,13 +614,6 @@ Basic NAT
  
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsubsection
 Network Address Port Translation
 \end_layout
@@ -751,13 +717,6 @@ DNAT
  According to the port accessed by the external interface, packets can be
  forwarded torward different internal hosts, but the service appears to
  be hosted by the firewall/router.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsubsection
@@ -893,10 +852,6 @@ The query message also includes the IP address and link-layer address of
 IPv6 primer
 \end_layout
 
-\begin_layout Subsection
-IPv4 address depletion
-\end_layout
-
 \begin_layout Standard
 The number of 
 \series bold
@@ -905,40 +860,32 @@ IP
  addresses needed today far exceeds the world's population for several reasons.
  First of all, IPv4 addresses are often allocated in groups of addresses,
  as network addresses.
- So, in most cases, you need a different IPv4 address wherever I go.
+ So, in most cases, you need a different IPv4 address wherever you go.
  But a much larger reason we need so many more IP addresses is the number
  of devices per person that are being connected to the Internet - and the
  number of people who still need access to the Internet.
  IPv4, with its 
-\begin_inset Formula $32\text{-bit}$
+\begin_inset Formula $32$
 \end_inset
 
- address space, provides for 
+ bit address space, provides for 
 \begin_inset Formula $2^{32}$
 \end_inset
 
  addresses.
  In comparison, the 
-\begin_inset Formula $128\text{-bit}$
+\begin_inset Formula $128$
 \end_inset
 
- IPv6 address space provides for 
+ bit IPv6 address space provides for 
 \begin_inset Formula $2^{128}$
 \end_inset
 
  addresses.
 \end_layout
 
-\begin_layout Subsection
-IPv6 advantages
-\end_layout
-
-\begin_layout Subsubsection
-Access to IPv6-only customers
-\end_layout
-
 \begin_layout Standard
-There are places in the world that are IPv6-only.
+There are also places in the world that are IPv6-only.
  In some areas of the world today, it is simply not possible to get an IPv4
  address.
  It is true that there are translation techniques that allow IPv4-only and
@@ -947,22 +894,6 @@ There are places in the world that are IPv6-only.
  Also, any sort of translation mechanism makes it difficult to measure the
  quality of the user experience and has the potential to break certain applicati
 ons.
-\end_layout
-
-\begin_layout Subsubsection
-Better performance
-\end_layout
-
-\begin_layout Standard
-Increased performance can be another benefit of transitioning to IPv6.
- Many content providers are seeing substantial increases in performance
- with IPv6.
- Studies on why IPv6 may be faster than IPv4 are still incomplete.
- However, the Internet Society (ISOC) has stated, “The reality is that connectio
-ns from users on IPv6 networks to services that run over IPv6 are going
- to be faster than connections to services still on legacy IPv4 networks
- that have to go through middleboxes such as NAT devices or application-layer
- gateways (ALGs).”
 \end_layout
 
 \begin_layout Subsection
@@ -989,7 +920,11 @@ prefix length
 , the number of most-significant or leftmost bits that define the prefix,
  the network portion of the address.
  This is equivalent to the subnet mask in IPv4.
- IPv6 addresses are 128 bits, so the prefix length can be 
+ IPv6 addresses are 
+\begin_inset Formula $128$
+\end_inset
+
+ bits, so the prefix length can be 
 \begin_inset Formula $/0$
 \end_inset
 
@@ -1044,58 +979,30 @@ IPv6 addresses are
 \end_inset
 
  sections, or hextets, for a total of 128 bits in the address.
+ Furthermore, there are three general rules to shorten an IPv6 address:
 \end_layout
 
-\begin_layout Subsubsection
-Rule 1: omit leading 0s
+\begin_layout Enumerate
+omit leading zeros.
+ This rule applies only to leading zeros and not to trailing zeros; being
+ able to omit both leading and trailing zeros would cause the address to
+ be ambiguous
 \end_layout
 
-\begin_layout Standard
-One way to shorten IPv6 addresses is to omit leading 
-\begin_inset Formula $0\text{s}$
-\end_inset
-
- in any hextet.
- This rule applies only to leading 
-\begin_inset Formula $0\text{s}$
-\end_inset
-
- and not to trailing 
-\begin_inset Formula $0\text{s}$
-\end_inset
-
-; being able to omit both leading and trailing 
-\begin_inset Formula $0\text{s}$
-\end_inset
-
- would cause the address to be ambiguous.
-\end_layout
-
-\begin_layout Subsubsection
-Rule 2: omit all-0s hextets 
-\end_layout
-
-\begin_layout Standard
-The second rule for shortening IPv6 addresses is that you can use a double
- colon, 
+\begin_layout Enumerate
+omit all zeros hextets.
+ You can use a double colon, 
 \begin_inset Formula $::$
 \end_inset
 
 , to represent any single, contiguous string of two or more hextets consisting
- of all 
-\begin_inset Formula $0\text{s}$
-\end_inset
-
-.
+ of all zeros
 \end_layout
 
-\begin_layout Subsubsection
-Combining Rule 1 and Rule 2 
-\end_layout
-
-\begin_layout Standard
-You can combine the two rules just discussed to reduce an address even further.
- 
+\begin_layout Enumerate
+combine rule 1-2.
+ You can combine the two rules just discussed to reduce an address even
+ further
 \end_layout
 
 \begin_layout Subsection
@@ -1216,99 +1123,7 @@ IPv4 embedded: an IPv6 address that carries an IPv4 address in the low-order
  bits of the address
 \end_layout
 
-\begin_layout Subsection
-Multicast address
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Multicast
-\series default
- is a technique in which a device sends a single packet to multiple destinations
- simultaneously (one-to-many).
- An IPv6 multicast address defines a group of devices known as a multicast
- group.
- IPv6 multicast addresses use the prefix 
-\begin_inset Formula $ff00::/8$
-\end_inset
-
-, which is equivalent to the IPv4 multicast address 
-\begin_inset Formula $224.0.0.0/4$
-\end_inset
-
-.
- A packet sent to a multicast group always has a unicast source address.
- A multicast address can never be the source address.
- Unlike IPv4, there is no broadcast address in IPv6.
- Instead, IPv6 uses multicast, including an all-IPv6 devices well-known
- multicast address and a solicited-node multicast address.
- There are two types of predefined multicast addresses:
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-well-known
-\series default
- multicast addresses have the prefix 
-\begin_inset Formula $ff00::/12$
-\end_inset
-
-.
- These are predefined or reserved multicast addresses for assigned groups
- of devices, and are equivalent to IPv4 well-known multicast addresses in
- the range 
-\begin_inset Formula $224.0.0.0$
-\end_inset
-
- to 
-\begin_inset Formula $239.255.255.255$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-solicited-node
-\series default
- multicast addresses are used as a more efficient approach to IPv4’s broadcast
- address.
- These are used in Layer 3-to-Layer 2 address resolution, similar to how
- Address Resolution Protocol (ARP) is used in IPv4.
- Solicited-node multicast addresses are automatically created using a special
- mapping of the device’s unicast address with the solicited-node multicast
- prefix 
-\begin_inset Formula $ff02:0:0:0:0:1:ff00::/104$
-\end_inset
-
-.
- Solicited-node multicast addresses are automatically created for every
- unicast address on a device
-\end_layout
-
-\begin_layout Subsection
-Anycast address
-\end_layout
-
-\begin_layout Standard
-An IPv6 anycast address is an address that can be assigned to more than
- one interface (typically different devices).
- In other words, multiple devices can have the same anycast address.
- A packet sent to an anycast address is routed to the “nearest” interface
- having that address, according to the router’s routing table.
- There is no special prefix for an IPv6 anycast address.
- An IPv6 anycast address uses the same address range as global unicast addresses.
- Each participating device is configured to have the same anycast address.
-\end_layout
-
-\begin_layout Section
-IPv6 addressing
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Subsubsection
 Link Local unicast address
 \end_layout
 
@@ -1323,15 +1138,12 @@ A link-local address is a unicast address that is confined to a single link,
 DAD
 \series default
 ) to determine whether or not the link-local address is unique.
- The range of the first hextet goes from 
-\begin_inset Formula $fe80$
-\end_inset
-
- to 
-\begin_inset Formula $febf$
+ Link-local unicast addresses are in the range of 
+\begin_inset Formula $fe80::/10$
 \end_inset
 
 .
+ The least-significant (rightmost) 64 bits are used as the Interface ID.
  With IPv6, during startup the device automatically gives itself a link-local
  address that is unique on that subnet.
  It can then use this address to communicate with any device on the network,
@@ -1349,8 +1161,8 @@ devices use the router's link-local address as their default gateway address
 \end_layout
 
 \begin_layout Itemize
-routers exchange IPv6 dynamic routing protocol (OSPFv3, EIGRP for IPv6,
- RIPng) messages from their IPv6 link-local address
+routers exchange IPv6 dynamic routing protocol messages from their IPv6
+ link-local address
 \end_layout
 
 \begin_layout Itemize
@@ -1358,7 +1170,7 @@ IPv6 routing table entries populated from dynamic routing protocols use
  the IPv6 link-local address as the next-hop address
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Global Unicast Address
 \end_layout
 
@@ -1372,15 +1184,6 @@ s, these are globally routable and reachable in the IPv6 Internet, similar
  The current global unicast address assignment from IANA begins with binary
  value 001, or the prefix 
 \begin_inset Formula $2000::/3$
-\end_inset
-
-.
- This results in a range of global unicast addresses of 
-\begin_inset Formula $2000::/3$
-\end_inset
-
- through 
-\begin_inset Formula $3fff::/16$
 \end_inset
 
 .
@@ -1427,19 +1230,6 @@ interface
  ID identifies the interface on the subnet, equivalent to the host portion
  of an IPv4 address.
  The Interface ID in most cases is 64 bits
-\end_layout
-
-\begin_layout Standard
-The global routing prefix is the prefix or network portion of the address
- assigned by the provider, such as an ISP, to a customer or site.
- This is a site’s prefix or network address, as seen by the provider (that
- is, the ISP).
- In some cases this prefix, the Global Routing Prefix, may be propagated
- to other ISPs or autonomous systems (ASs) throughout the Internet.
-\end_layout
-
-\begin_layout Subsubsection
-The 3–1–4 rule for recognizing parts of a GUA Address
 \end_layout
 
 \begin_layout Standard
@@ -1509,6 +1299,91 @@ Similar to IPv4, the IPv6 prefix length determines the number of subnets
 
  Interface ID is recommended for most end user networks to accommodate SLAAC
  and make the addressing plan easier to manage
+\end_layout
+
+\begin_layout Subsection
+Multicast address
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Multicast
+\series default
+ is a technique in which a device sends a single packet to multiple destinations
+ simultaneously (one-to-many).
+ An IPv6 multicast address defines a group of devices known as a multicast
+ group.
+ IPv6 multicast addresses use the prefix 
+\begin_inset Formula $ff00::/8$
+\end_inset
+
+, which is equivalent to the IPv4 multicast address 
+\begin_inset Formula $224.0.0.0/4$
+\end_inset
+
+.
+ A packet sent to a multicast group always has a unicast source address.
+ A multicast address can never be the source address.
+ Unlike IPv4, there is no broadcast address in IPv6.
+ Instead, IPv6 uses multicast, including an all-IPv6 devices well-known
+ multicast address and a solicited-node multicast address.
+ There are two types of predefined multicast addresses:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+well-known
+\series default
+ multicast addresses have the prefix 
+\begin_inset Formula $ff00::/12$
+\end_inset
+
+.
+ These are predefined or reserved multicast addresses for assigned groups
+ of devices, and are equivalent to IPv4 well-known multicast addresses in
+ the range 
+\begin_inset Formula $224.0.0.0$
+\end_inset
+
+ to 
+\begin_inset Formula $239.255.255.255$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+solicited-node
+\series default
+ multicast addresses are used as a more efficient approach to IPv4’s broadcast
+ address.
+ These are used in Layer 3-to-Layer 2 address resolution, similar to how
+ Address Resolution Protocol (ARP) is used in IPv4.
+ Solicited-node multicast addresses are automatically created for every
+ unicast address on a device
+\end_layout
+
+\begin_layout Subsection
+Anycast address
+\end_layout
+
+\begin_layout Standard
+An IPv6 anycast address is an address that can be assigned to more than
+ one interface (typically different devices).
+ In other words, multiple devices can have the same anycast address.
+ A packet sent to an anycast address is routed to the “nearest” interface
+ having that address, according to the router’s routing table.
+ There is no special prefix for an IPv6 anycast address.
+ An IPv6 anycast address uses the same address range as global unicast addresses.
+ Each participating device is configured to have the same anycast address.
+\end_layout
+
+\begin_layout Section
+IPv6 addressing
 \end_layout
 
 \begin_layout Subsection
@@ -1585,8 +1460,8 @@ Address Autoconfiguration (
 \series bold
 A flag
 \series default
-): when set to 1 (on), this flag tells the receiving host to use SLAAC to
- create its global unicast address
+): when set to 1, this flag tells the receiving host to use SLAAC to create
+ its global unicast address
 \end_layout
 
 \begin_layout Itemize
@@ -1594,9 +1469,8 @@ Other Configuration (
 \series bold
 O flag
 \series default
-): When set to 1 (on), this flag tells the host to get other addressing
- information, other than its global unicast address, from a stateless DHCPv6
- server
+): When set to 1, this flag tells the host to get other addressing information,
+ other than its global unicast address, from a stateless DHCPv6 server
 \end_layout
 
 \begin_layout Itemize
@@ -1604,8 +1478,8 @@ Managed Address Configuration (
 \series bold
 M flag
 \series default
-): When set to 1 (on), this flag tells the host to use a stateful DHCPv6
- server for its global unicast address and all other addressing information
+): When set to 1, this flag tells the host to use a stateful DHCPv6 server
+ for its global unicast address and all other addressing information
 \end_layout
 
 \begin_layout Standard
@@ -1733,15 +1607,6 @@ After a device generates one or more addresses using SLAAC, it contacts
  A stateless server only provides common network information that is available
  to all devices on the network, such as a list of DNS server addresses or
  a domain name.
- Implementing SLAAC with stateless DHCPv6 requires the following:
-\end_layout
-
-\begin_layout Itemize
-setting the router’s RA message’s O flag to 1
-\end_layout
-
-\begin_layout Itemize
-configuring a stateless DHCPv6 server 
 \end_layout
 
 \begin_layout Subsubsection
@@ -1781,15 +1646,13 @@ DHCPv6-PD
  address to a limited number of public IPv4 addresses.
  DHCPv6-PD provides the customer with more than enough global unicast address
  space to make NAT unnecessary.
- Implementing stateful DHCPv6 requires the following: 
 \end_layout
 
-\begin_layout Itemize
-setting the router’s RA message’s M flag to 1 and the A flag to 0
-\end_layout
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
 
-\begin_layout Itemize
-configuring a stateful DHCPv6 server 
+
 \end_layout
 
 \begin_layout Section
@@ -1806,12 +1669,6 @@ With this model, you enforce the security of each host machine separately,
  problems that might affect that particular host.
  The major impediment to effective host security in modern computing environment
 s is the complexity and diversity of those environments.
- Most modern environments include machines from multiple vendors, each with
- its own operating system, and each with its own set of security problems.
- Even if the site has machines from only one vendor, different releases
- of the same operating system often have significantly different security
- problems.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1824,8 +1681,6 @@ It takes a significant amount of up-front and ongoing work to effectively
  who has privileged access to any machine.
  As the number of machines increases, the number of privileged users generally
  increases as well.
- Securing a machine is much more difficult than attaching it to a network,
- so insecure machines may appear on your network as unexpected surprises.
  A host security model may be highly appropriate for small sites, or sites
  with extreme security requirements.
  Indeed, all sites should include some level of host security in their overall
@@ -1850,7 +1705,7 @@ As environments grow larger and more diverse, and as securing them on a
  data as it transits the network.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Internet firewalls
 \end_layout
 
@@ -1879,8 +1734,7 @@ All traffic coming from the Internet or going out from your internal network
  Logically, a firewall is a separator, a restricter, an analyzer.
  The physical implementation of the firewall varies from site to site.
  Most often, a firewall is a set of hardware components - a router, a host
- computer, or some combination of routers, computers, and networks with
- appropriate software.
+ computer, or some combination with appropriate software.
  A firewall is very rarely a single physical object, although some commercial
  products attempt to put everything into the same box.
  Usually, a firewall has multiple parts, and some of these parts may do
@@ -1888,7 +1742,11 @@ All traffic coming from the Internet or going out from your internal network
 \end_layout
 
 \begin_layout Standard
-Think of a firewall as a choke point.
+Think of a firewall as a 
+\series bold
+choke point
+\series default
+.
  All traffic in and out must pass through this single, narrow choke point.
  A firewall gives you an enormous amount of leverage for network security
  because it lets you concentrate your security measures on this choke point:
@@ -1949,8 +1807,6 @@ Basically, the principle of least privilege means that any object (user,
  the object needs to perform its assigned tasks - and no more.
  Least privilege is an important principle for limiting your exposure to
  attacks and for limiting the damage caused by particular attacks.
- Many of the common security problems on the Internet can be viewed as failures
- to follow the principle of least privilege.
  However, there are two problems with trying to enforce least privilege.
  First, it can be complex to implement when it isn't already a design feature
  of the programs and protocols you're using.
@@ -1967,28 +1823,10 @@ Do not depend on just one security mechanism, however strong it may seem
  to be; instead, install multiple mechanisms that back each other up.
  You don't want the failure of any single security mechanism to totally
  compromise your security.
- Any security - even the most seemingly impenetrable firewall - can be breached
- by attackers who are willing to take enough risk and bring enough power
- to bear.
  The trick is to make the attempt too risky or too expensive for the attackers
  you expect to face.
  You can do this by adopting multiple mechanisms that provide backup and
- redundancy for each other: network security (a firewall), host security
- (particularly for your bastion host
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-A computer system that must be highly secured because it is vulnerable to
- attack, usually because it is exposed to the Internet and is a main point
- of contact for users of internal networks.
-\end_layout
-
-\end_inset
-
-), and human security (user education, careful system administration).
- All of these mechanisms are important and can be highly effective, but
- don't place absolute faith in any one of them.
+ redundancy for each other.
  These redundant defenses aren't solely, or even primarily, to protect from
  attackers; they mostly provide protection against failures of one level
  of defense.
@@ -1999,18 +1837,13 @@ Choke point
 \end_layout
 
 \begin_layout Standard
-A choke point forces attackers to use a narrow channel, which you can monitor
- and control.
- In network security, the firewall between your site and the Internet (assuming
- that it's the only connection between your site and the Internet) is such
- a choke point; anyone who's going to attack your site from the Internet
- is going to have to come through that channel, which should be defended
- against such attacks.
+In network security, the firewall between your site and the Internet (assuming
+ that it's the only connection between your site and the Internet) is a
+ choke point: anyone who's going to attack your site from the Internet is
+ going to have to come through that channel, which should be defended against
+ such attacks.
  A choke point is useless if there's an effective way for an attacker to
  go around it.
- A second Internet connection - even an indirect one, like a connection
- to another company that has its own Internet connection elsewhere - is
- an even more threatening breach.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2028,8 +1861,6 @@ A fundamental tenet of security is that a chain is only as strong as its
  You should try to pay attention equally to all aspects of your security,
  so that there is no large difference in how insecure one thing is as compared
  to another.
- There is always going to be a weakest link, however; the trick is to make
- that link strong enough and to keep the strength proportional to the risk.
  
 \end_layout
 
@@ -2065,23 +1896,13 @@ Diversity of defense
 \end_layout
 
 \begin_layout Standard
-closely related to depth of defense, it's the idea that you need not only
+Closely related to depth of defense, it's the idea that you need not only
  multiple layers of defense, but different kinds of defense.
- Properly implemented, diversity of defense makes a significant difference
- to the security of a system.
- However, many attempts to create diversity of defense are not particularly
- effective.
  A popular theory is to use different types of systems - for instance, in
  an architecture that has two packet filtering systems, you can increase
  diversity of defense by using systems from different vendors.
  After all, if all of your systems are the same, somebody who knows how
  to break into one of them probably knows how to break into all of them.
- 
-\end_layout
-
-\begin_layout Standard
-Using security systems from different vendors may reduce the chances of
- a common bug or configuration error that compromises them all.
  There is a trade-off in terms of complexity and cost, however.
  Procuring and installing multiple different systems is going to be more
  difficult, take longer, and be more expensive than procuring and installing
@@ -2102,7 +1923,6 @@ First, keeping things simple makes them easier to understand; if you don't
  Complex programs have more bugs, any of which may be security problems.
  Effective security is inherently complex.
  You want a system you can explain, but you still want it to work.
- Don't sacrifice security in order to get simplicity.
  
 \end_layout
 
@@ -2566,6 +2386,13 @@ Others use this architecture to provide administrative access to machines
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Virtual Private Network
 \end_layout
@@ -2601,7 +2428,10 @@ Encryption can be done as a transport method, where a host decides to encrypt
  This is especially easy if you're doing tunneling, because all the tunneled
  packets will be addressed to the same remote address and port number at
  the other end of the tunnel (the decryption unit).
- On the other hand, doing the encryption and decryption inside your filtering
+\end_layout
+
+\begin_layout Standard
+On the other hand, doing the encryption and decryption inside your filtering
  perimeter means that packets arriving encrypted are not subject to the
  scrutiny of the packet filters.
  This leaves you vulnerable to attack from the other site if that site has
@@ -2610,8 +2440,8 @@ Encryption can be done as a transport method, where a host decides to encrypt
  (i.e., on your perimeter net or in your exterior router), then the packets
  coming in from the other site can be subjected to the full scrutiny of
  your packet filtering system.
- On the other hand, they can also be subjected to the full scrutiny of anyone
- who can read traffic on your perimeter net, including intruders.
+ However, packets can also be subjected to the full scrutiny of anyone who
+ can read traffic on your perimeter net, including intruders.
 \end_layout
 
 \begin_layout Subsection
@@ -2651,7 +2481,7 @@ Secure Socket Layer
 \end_layout
 
 \begin_layout Standard
-the Secure Socket Layer/Transport Layer Security (
+The Secure Socket Layer/Transport Layer Security (
 \series bold
 SSL
 \series default
@@ -2659,10 +2489,10 @@ SSL
 \series bold
 TLS
 \series default
-) that provides a secure tunnel between two hosts at the the transport layers.
+) provides a secure tunnel between two hosts at the the transport layers.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 The handshake protocol
 \end_layout
 
@@ -2672,90 +2502,51 @@ In the SSL/TLS handshake, the specific protocol version and set of cryptographic
  implementations, must be negotiated.
  The server is authenticated using a certificate, which is an option that
  may be used by the client as well.
- However, a public key is used to establish a shared secret for symmetrical
- cryptography in the record protocol.
- 
+ A public key is used to establish a shared secret for symmetrical cryptography
+ in the record protocol.
+ The communication involves:
 \end_layout
 
-\begin_layout Standard
-The communication involves the Hello, key exchange, certificate request
- and verification, and the negotiated cipher.
- The 
-\begin_inset Quotes eld
-\end_inset
+\begin_layout Enumerate
 
-ClientHello
-\begin_inset Quotes erd
-\end_inset
-
- and 
-\begin_inset Quotes eld
-\end_inset
-
-ServerHello
-\begin_inset Quotes erd
-\end_inset
-
- are used to establish security capabilities between client and server.
- Additionally, two nonces are generated and exchanged: 
-\begin_inset Quotes eld
-\end_inset
-
-ClientHello.random
-\begin_inset Quotes erd
-\end_inset
-
- and 
-\begin_inset Quotes eld
-\end_inset
-
-ServerHello.random
-\begin_inset Quotes erd
-\end_inset
-
-, for deriving fresh session keys.
- Following the ClientHello message, the server will send its certificate,
- which is to be authenticated.
- Additionally, a server key exchange message may be sent, if it is required
- when the server has no certificate, or if its certificate is for signing
- only.
- If the server is authenticated, it may request a certificate from the client,
- if that is appropriate.
- If the server has sent a certificate request message, the client must send
- either the certificate or a no certificate alert.
- 
+\series bold
+hello phase
+\series default
+.
+ The client sends a list of cryptographic algorithms that it supports, and
+ the server responds choosing a single combination
 \end_layout
 
-\begin_layout Standard
-The client key exchange message is now sent, and the content of that message
- will depend on the public key algorithm selected between the ClientHello
- and the ServerHello.
- At this point, a change cipher spec message is sent by the client, and
- the client copies the pending Cipher Spec into the current Cipher Spec.
- The client then immediately sends the Finished message under the new symmetric
- key cipher algorithms, keys, and secrets.
- In response, the server will send its own change cipher spec message, transfer
- the pending to the current Cipher Spec, and send its Finished message under
- the new Cipher Spec.
- 
+\begin_layout Enumerate
+
+\series bold
+server authentication phase
+\series default
+.
+ The server executes selected key exchange protocol (if needed) and sends
+ its authentication informations
 \end_layout
 
-\begin_layout Standard
-A Finished message is always sent immediately after a change cipher specs
- message to verify that the key exchange and authentication processes were
- successful.
- The Finished message is first pro- tected with the just-negotiated symmetric-ke
-y algorithms, and new keys.
- Recipients of Finished messages must verify that the contents are correct
- using MAC.
- The switch to a symmetric key cipher completes the handshake protocol.
- At this point, the handshake is complete and the client and server may
- begin to exchange application layer data.
- 
+\begin_layout Enumerate
+
+\series bold
+client authentication phase
+\series default
+.
+ The client executes selected key exchange protocol and sends its authentication
+ informations (if needed)
 \end_layout
 
-\begin_layout Subsection
-Heartbeat and heartbleed
+\begin_layout Enumerate
+
+\series bold
+termination phase
+\series default
+.
+ The shared secret key is derived from phase 2 and 3.
+ The Change Cipher Specification protocol is activated.
+ Finally, an authenticated and encripted summary of the Handshake Protocol
+ is exchanged and checked by both parties
 \end_layout
 
 \begin_layout Subsection
@@ -2958,6 +2749,13 @@ rs, and prevents the replay of old key material as well as a denial of service.
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Proxy
 \end_layout
@@ -2968,6 +2766,13 @@ Forward proxy
 
 \begin_layout Subsection
 Reverse proxy
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -3298,33 +3103,48 @@ The self-learning capability supports learning the patterns of network usage
  pattern evolution, and thus avoid raising false alarms.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-SIEM
+Pentesting and vulnerability assessment
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Security Information and Event Management
 \end_layout
 
 \begin_layout Standard
 Security Information and Event Management represent an approach to achieve
- security combining: 
+ security combining 
 \series bold
-SIM 
+SIM
 \series default
-(security information management, which means collecting logs, forge alerts)
- and 
+ (i.e.
+ collecting logs, forge alerts) and 
 \series bold
-SEM 
+SEM
 \series default
-(security event management, which means conduct real-time system monitoring,
- admin notifications about important issues, establishing event correlations).
-\end_layout
-
-\begin_layout Standard
-A SIEM is generally made of multiple monitoring and analysis components
+ (i.e.
+ real-time system monitoring, admin notifications, event correlations).
+ A SIEM is generally made of multiple monitoring and analysis components
  meant to help organizations detect and mitigate threats.
  There is no standard SIEM protocol but most of them are able to:
 \end_layout
 
 \begin_layout Itemize
-collect process informations about distributed sources;
+collect process informations about distributed sources
 \end_layout
 
 \begin_layout Itemize
@@ -3332,7 +3152,7 @@ correlate between events
 \end_layout
 
 \begin_layout Itemize
-produce alerts and reports based on those infos;
+produce alerts and reports based on those infos
 \end_layout
 
 \begin_layout Itemize
@@ -3340,28 +3160,7 @@ help for compliance and security incident management (digital forensics)
 \end_layout
 
 \begin_layout Standard
-SIEM can be agent-based or agent-less and should provide the following collectio
-n of services:
-\end_layout
-
-\begin_layout Itemize
-Log management;
-\end_layout
-
-\begin_layout Itemize
-IT regulatory compliance;
-\end_layout
-
-\begin_layout Itemize
-Event correlation
-\end_layout
-
-\begin_layout Itemize
-Active response;
-\end_layout
-
-\begin_layout Itemize
-Endpoint security
+Furthermore, SIEMs can be agent-based or agentless.
 \end_layout
 
 \begin_layout Subsection
@@ -3372,41 +3171,10 @@ Log management
 Nodes in a system generate logs which are sent to the SIEM database.
  This database collects, analyzes and normalizes the data sent by the numerous
  nodes and provides log storage, archival and retrieval services.
-\end_layout
-
-\begin_layout Standard
-The SIEM itself performs a near-real time system analysis to assess the
+ The SIEM itself performs a near-real time system analysis to assess the
  security status of the IT resources which are sending the logs.
  The more logs the SIEM receives, the more accurate system check will be
  performed.
-\end_layout
-
-\begin_layout Standard
-Logs are fundamental, they are needed to extract information about events
- and without logs it is impossible to achieve any security management.
- However, a few problems arises while implementing log management.
- Which logs should you keep? For how long? 
-\end_layout
-
-\begin_layout Subsubsection
-Logging in practice
-\end_layout
-
-\begin_layout Standard
-Collection logs from critical nodes, IDS and also from network endpoints
- is important.
- Among all the events the debug infos, login records and config changes
- should be checked more deeper.
- 
-\end_layout
-
-\begin_layout Standard
-For the log lasting period there is no standard, you should agree on the
- regulatory.
- Log storage is also important, should you keep them in local or in cloud?
- Those factors need to be well defined to achieve effective management.
- To make a log server reliable for example you can use TCP and encrypted
- storage, or you can sign the logs to provide authentication and integrity.
 \end_layout
 
 \begin_layout Subsection
@@ -3432,23 +3200,10 @@ The SIEM must consider various conditions before triggering an alarm.
  that are not necessarily homogeneous.
  It can provide a more complete picture of the health status of the system
  to rule out specific theories on the cause of given events.
-\end_layout
-
-\begin_layout Standard
-The correlation engines are mainly closed-source and are the most distinguishing
- feature of a SIEM.
+ The correlation engines are mainly closed-source and are the most distinguishin
+g feature of a SIEM.
  Before they have to perform event normalization, different vendors means
  different syntaxes.
-\end_layout
-
-\begin_layout Subsubsection
-Log correlation
-\end_layout
-
-\begin_layout Standard
-Monitoring the incoming logs for logical sequences, patterns, relationships
- and values to identify events invisible to individual systems.
- SIEM can also import other data to make comparative determinations.
 \end_layout
 
 \begin_layout Subsection
@@ -3483,12 +3238,8 @@ SIEM can rely on threat intelligence feeds, which help officers in making
  They perform analysis of data by using tools and techniques to generate
  meaningful information about existing or emerging threats, helping organization
 s to adopt a proactive behaviour to combat the attacks.
- 
-\end_layout
-
-\begin_layout Standard
-SIEM also have two main ways of information representation: dashboards and
- maps, alerts.
+ SIEM also have two main ways of information representation: dashboards
+ and maps, alerts.
  The former is a pull of infos, a way to present informations that admins
  can understand at a glance.
  The latter is pushing of informations and does not require human diligence
