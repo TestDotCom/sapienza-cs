@@ -173,10 +173,6 @@ everything as a service
 XaaS
 \series default
 .
- This new approach significantly influences not only the way that we build
- software but also the way we deploy it, make it accessible, and design
- our IT infrastructure, and even the way companies allocate the costs for
- IT needs.
  Another important aspect of cloud computing is its 
 \series bold
 utility-oriented
@@ -185,9 +181,6 @@ utility-oriented
  More than any other trend in distributed computing, cloud computing focuses
  on delivering services with a given pricing model, in most cases a “pay-per-use
 ” strategy.
- It makes it possible to access online storage, rent virtual hardware, or
- use development platforms and pay only for their effective usage, with
- no or minimal up-front costs.
  Even though many cloud computing services are freely available for single
  users, enterprise-class services are delivered according a specific pricing
  scheme.
@@ -393,66 +386,29 @@ vertical scaling
  required while the replacement is taking place.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Business drivers
 \end_layout
 
 \begin_layout Standard
 The most common economic rationale for investing in cloud-based IT resources
- is in the reduction or outright elimination of up-front IT investments,
- namely hardware and software purchases and ownership costs.
- This elimination or minimization of up-front financial commitments allows
- enterprises to start small and accordingly increase IT resource allocation
- as required.
- Pooled IT resources are made available to and shared by multiple cloud
- consumers, resulting in increased or even maximum possible utilization.
- By providing pools of IT resources, along with tools and technologies designed
- to leverage them collectively, clouds can instantly and dynamically allocate
- IT resources to cloud consumers, on-demand or via the cloud consumer direct
- configuration.
-\end_layout
-
-\begin_layout Itemize
-
+ is in the up-front 
 \series bold
-on-demand
+cost reduction
 \series default
- access to pay-as-you-go computing resources on a short-term basis (such
- as processors by the hour), and the ability to release these computing
- resources when they are no longer needed.
- 
-\end_layout
-
-\begin_layout Itemize
-zero capital expenditure necessary to get started 
-\end_layout
-
-\begin_layout Itemize
-the ability to add or remove IT resources at a fine-grained level
-\end_layout
-
-\begin_layout Itemize
-service accessible through a web browser or a web API
+ - or outright elimination - of IT investments, namely hardware and software
+ purchases and ownership costs.
+ This allows enterprises to start small and accordingly increase IT resource
+ allocation as required.
 \end_layout
 
 \begin_layout Standard
-A hallmark of the typical cloud environment is its intrinsic ability to
- provide extensive support for increasing the availability of a cloud-based
- IT resource to minimize or even eliminate outages, and for increasing its
- 
-\series bold
-reliability
-\series default
- so as to minimize the impact of runtime failure conditions.
-\end_layout
 
-\begin_layout Subsubsection
+\series bold
 Capacity planning
-\end_layout
-
-\begin_layout Standard
-The process of determining and fulfilling future demands of an organization
- IT resources, products, and services.
+\series default
+ allows cloud users to determe and fulfill future demands of IT resources,
+ products, and services.
  Within this context, capacity represents the maximum amount of work that
  an IT resource is capable of delivering in a given period of time.
  A discrepancy between the capacity of an IT resource and its demand can
@@ -465,12 +421,8 @@ over-provisioning
 under-provisioning
 \series default
 ).
- 
-\series bold
-Capacity planning
-\series default
- is focused on minimizing this discrepancy to achieve predictable efficiency
- and performance.
+ Capacity planning is focused on minimizing this discrepancy to achieve
+ predictable efficiency and performance.
  Cloud services prefer 
 \series bold
 lag strategy
@@ -482,29 +434,20 @@ lag strategy
  over-expenditure on infrastructure.
 \end_layout
 
-\begin_layout Subsubsection
-Organizational agility 
-\end_layout
-
 \begin_layout Standard
-Businesses need the ability to adapt and evolve to successfully face change
- caused by both internal and external factors.
- Organizational agility is the measure of an organization's responsiveness
- to change.
+Finally, businesses need the ability to adapt and evolve to successfully
+ face change caused by both internal and external factors.
+ 
+\series bold
+Organizational agility
+\series default
+ is the measure of an organization's responsiveness to change.
  An IT enterprise often needs to respond to business change by scaling its
  IT resources beyond the scope of what was previously predicted or planned
  for.
- Due to a lack of reliability controls within the infrastructure, responsiveness
- to consumer or customer requirements may be reduced to a point whereby
- a business overall continuity is threatened.
- On a broader scale, the up-front investments and infrastructure ownership
- costs that are required to enable new or expanded business automation solutions
- may themselves be prohibitive enough for a business to settle for IT infrastruc
-ture of less-than-ideal quality, thereby decreasing its ability to meet
- real-world requirements.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Risks and challanges
 \end_layout
 
@@ -513,65 +456,60 @@ Several of the most critical cloud computing challenges pertaining mostly
  to cloud consumers that use IT resources located in public clouds.
 \end_layout
 
-\begin_layout Subsubsection
-Increased security vulnerabilities
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-The moving of business data to the cloud means that the responsibility over
- data security becomes shared with the cloud provider.
+\series bold
+increased security vulnerabilities
+\series default
+.
  There can be overlapping trust boundaries from different cloud consumers
  due to the fact that cloud-based IT resources are commonly shared.
- Furthermore, another consequence of overlapping trust boundaries relates
- to the cloud provider privileged access to cloud consumer data.
- The overlapping of trust boundaries and the increased exposure of data
- can provide malicious cloud consumers (human and automated) with greater
- opportunities to attack IT resources and steal or damage business data.
+ Furthermore, cloud providers have a privileged access to cloud consumer
+ data.
+ This overlapping of trust boundaries and the increased exposure of data
+ can provide malicious cloud consumers with greater opportunities to attack
+ IT resources
 \end_layout
 
-\begin_layout Subsubsection
-Reduced Operational Governance Control
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-Cloud consumers are usually allotted a level of governance control that
+\series bold
+reduced operational governance control
+\series default
+.
+ Cloud consumers are usually allotted a level of governance control that
  is lower than that over on-premise IT resources.
  This can introduce risks associated with how the cloud provider operates
  its cloud, as well as the external connections that are required for communicat
 ion between the cloud and the cloud consumer.
  Legal contracts, when combined with SLAs, technology inspections, and monitorin
-g, can mitigate governance risks and issues.
- A cloud governance system is established through SLAs, given the “as-a-service”
- nature of cloud computing.
- 
+g, can mitigate governance risks and issues
 \end_layout
 
-\begin_layout Subsubsection
-Limited Portability Between Cloud Providers 
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-Due to a lack of established industry standards within the cloud computing
+\series bold
+limited portability
+\series default
+ between cloud providers.
+ Due to a lack of established industry standards within the cloud computing
  industry, public clouds are commonly proprietary to various extents.
  For cloud consumers that have custom-built solutions with dependencies
  on these proprietary environments, it can be challenging to move from one
- cloud provider to another.
+ cloud provider to another
 \end_layout
 
-\begin_layout Subsubsection
-Multi-Regional Compliance and Legal Issues 
-\end_layout
-
-\begin_layout Standard
-Third-party cloud providers will frequently establish data centers in affordable
- or convenient geographical locations.
+\begin_layout Itemize
+multi-regional compliance and 
+\series bold
+legal issues
+\series default
+.
  Cloud consumers will often not be aware of the physical location of their
  IT resources and data when hosted by public clouds.
  For some organizations, this can pose serious legal concerns pertaining
  to industry or government regulations that specify data privacy and storage
- policies.
- Another potential legal issue pertains to the accessibility and disclosure
- of data.
+ policies
 \end_layout
 
 \begin_layout Section
@@ -603,8 +541,7 @@ Virtualization
 \end_layout
 
 \begin_layout Standard
-Another core technology for cloud computing.
- It encompasses a collection of solutions allowing the abstraction of some
+It encompasses a collection of solutions allowing the abstraction of some
  of the fundamental elements for computing, such as hardware, storage, and
  networking.
  Virtualization is essentially a technology that allows creation of different
@@ -629,7 +566,11 @@ virtual machine instances
 process virtual machines
 \series default
 , instead of being executed by the operating system, are run by a specific
- program called a virtual machine.
+ program called a 
+\series bold
+virtual machine
+\series default
+.
  This technique allows isolating the execution of applications and providing
  a finer control on the resource they access.
  Process virtual machines offer a higher level of abstraction with respect
@@ -745,8 +686,6 @@ web 2.0
 s and services.
  Web 2.0 brings interactivity and flexibility into web pages, providing enhanced
  user experience.
- Furthermore, applications can be “synthesized” simply by composing existing
- services and integrating them, thus providing added value.
 \end_layout
 
 \begin_layout Section
@@ -918,18 +857,12 @@ top-down
  style.
  Systems developed according to this style are composed of one large main
  program that accomplishes its tasks by invoking subprograms or procedures.
- The calling program passes information with parameters and receives data
- from return values or parameters.
  Method calls can also extend beyond the boundary of a single process by
- leveraging techniques for remote method invocation, such as remote procedure
- call (
+ leveraging techniques such as remote procedure call (
 \series bold
 RPC
 \series default
 ) and all its descendants.
- The overall structure of the program execution at any point in time is
- characterized by a tree, the root of which constitutes the main function
- of the principal program.
  This architectural style is quite intuitive from a design point of view
  but hard to maintain and manage in large systems
 \end_layout
@@ -943,21 +876,15 @@ layered
  Each layer generally operates with at most two layers: the one that provides
  a lower abstraction level and the one that provides a higher abstraction
  layer.
- Specific protocols and interfaces define how adjacent layers interact.
- It is possible to model such systems as a stack of layers, one for each
- level of abstraction.
- Therefore, the components are the layers and the connectors are the interfaces
- and protocols used between adjacent layers.
  A user or client generally interacts with the layer at the highest abstraction,
  which, in order to carry its activity, interacts and uses the services
  of the lower layer.
  It is also possible to have the opposite behavior: events and callbacks
  from the lower layers can trigger the activity of the higher layer and
  propagate information up through the stack.
- The advantages of the layered style are that, as happens for the object-oriente
-d style, it supports a modular design of systems and allows us to decompose
- the system according to different levels of abstractions by encapsulating
- together all the operations that belong to a specific level.
+ The advantage is that it supports a modular design of systems and allows
+ to decompose the system by encapsulating together all the operations that
+ belong to a specific level.
  Layers can be replaced as long as they are compliant with the expected
  protocols and interfaces, thus making the system flexible.
  The main disadvantage is constituted by the lack of extensibility, since
@@ -1001,8 +928,6 @@ event systems
  In addition to exposing operations for data and state manipulation, each
  component also publishes (or announces) a collection of events with which
  other components can register.
- In general, other components provide a callback that will be executed when
- the event is activated.
  The main advantage of such an architectural style is that it fosters the
  development of open systems: new modules can be added and easily integrated
  into the system as long as they have compliant interfaces for registering
@@ -1063,9 +988,6 @@ Introduces a symmetric architecture in which all the components, called
  of the client/server model.
  More precisely, each peer acts as a server when it processes requests from
  other peers and as a client when it issues requests to other peers.
- With respect to the client/server model that partitions the responsibilities
- of the IPC between server and clients, the peer-to-peer model attributes
- the same responsibilities to each component.
  Therefore, this model is quite suitable for highly decentralized architecture,
  which can scale better along the dimension of the number of peers.
  The disadvantage of this approach is that the management of the implementation
@@ -1080,21 +1002,13 @@ Models for interprocess communication: message passing
 \begin_layout Standard
 Distributed systems are composed of a collection of concurrent processes
  interacting with each other by means of a network connection.
- Therefore, IPC is a fundamental aspect of distributed systems design and
- implementation.
- IPC is used to either exchange data and information or coordinate the activity
- of processes.
  IPC is what ties together the different components of a distributed system,
  thus making them act as a single system.
  There are several different models in which processes can interact with
  each other; these map to different abstractions for IPC.
  At a lower level, IPC is realized through the fundamental tools of network
- programming.
- Sockets are the most popular IPC primitive for implementing communication
- channels between distributed processes.
- They facilitate interaction patterns that, at the lower level, mimic the
- client/server abstraction and are based on a request-reply communication
- model.
+ programming, with sockets being the most popular IPC primitive for implementing
+ communication channels between distributed processes.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1162,9 +1076,7 @@ the client process invokes the methods on the active object by calling them
 \end_layout
 
 \begin_layout Standard
-Distributed object frameworks give the illusion of interaction with a local
- instance while invoking remote methods.
- Distributed object frameworks introduce objects as first-class entities
+Distributed object frameworks introduce objects as first-class entities
  for IPC.
  They are the principal gateway for invoking remote methods but can also
  be passed as parameters and return values.
@@ -1175,8 +1087,6 @@ Distributed object frameworks give the illusion of interaction with a local
  This operation leads to two separate objects whose state evolves independently.
  The duplication becomes necessary since the instance needs to trespass
  the boundaries of the process.
- This is an important aspect to take into account in designing distributed
- object systems, because it might lead to inconsistencies.
 \end_layout
 
 \begin_layout Standard
@@ -1215,10 +1125,6 @@ SOA
  Even though there is no designed technology for the development of service-orie
 nted software systems, Web services are the de facto approach for developing
  SOA.
- Web services, the fundamental component enabling cloud computing systems,
- leverage the Internet as the main interaction channel between users and
- the system.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1234,24 +1140,6 @@ service
  by four major characteristics: boundaries are explicit, services are autonomous
 , services share schema and contracts (not class or interface definitions),
  services compatibility is based on policy.
-\end_layout
-
-\begin_layout Standard
-Web service technology provides an implementation of the RPC concept over
- HTTP, thus allowing the interaction of components that are developed with
- different technologies.
- A Web service is exposed as a remote object hosted on a Web server, and
- method invocations are transformed in HTTP requests, opportunely packaged
- using specific protocols such as Simple Object Access Protocol (
-\series bold
-SOAP
-\series default
-) or Representational State Transfer (
-\series bold
-REST
-\series default
-).
- 
 \end_layout
 
 \begin_layout Subsection
@@ -1327,7 +1215,11 @@ ng languages.
 \end_layout
 
 \begin_layout Itemize
-SOAP structures the interaction in terms of messages that are XML documents,
+
+\series bold
+SOAP
+\series default
+ structures the interaction in terms of messages that are XML documents,
  and leverages the transport level, most commonly HTTP, for IPC.
  These messages can be used for method invocation and result retrieval.
  SOAP has often been considered quite inefficient because of the excessive
@@ -1336,7 +1228,11 @@ d document
 \end_layout
 
 \begin_layout Itemize
-REST provides a model for designing network-based software systems utilizing
+
+\series bold
+REST
+\series default
+ provides a model for designing network-based software systems utilizing
  the client/server model and leverages the facilities provided by HTTP for
  IPC without additional burden.
  In a 
@@ -1344,18 +1240,13 @@ REST provides a model for designing network-based software systems utilizing
 RESTful
 \series default
  system, a client sends a request over HTTP using the standard HTTP methods
- (PUT, GET, POST, and DELETE), and the server issues a response that includes
- the representation of the resource.
+ and the server issues a response that includes the representation of the
+ resource.
  By relying on this minimal support, it is possible to provide whatever
  it needed to replace the basic and most important functionality provided
  by SOAP, which is method invocation.
  Together with an appropriate URI organization to identify resources, all
  the atomic operations required by a Web service are implemented
-\end_layout
-
-\begin_layout Standard
-REST provides a lightweight alternative to SOAP: data can be transmitted
- using XML, but often JSON is preferable, as part of the HTTP content.
 \end_layout
 
 \begin_layout Subsection
@@ -1532,14 +1423,6 @@ virtual machine manager
  The host is instead represented by the physical hardware, and in some cases
  the operating system, that defines the environment where the virtual machine
  manager is running.
- In the case of virtual storage, the guest might be client applications
- or users that interact with the virtual storage management software deployed
- on top of the real storage system.
- The case of virtual networking is also similar: The guest - applications
- and users - interacts with a virtual network.
- The main common characteristic of all these different implementations is
- the fact that the virtual environment is created by means of a software
- program.
  The technologies of today allow profitable use of virtualization and make
  it possible to fully exploit the advantages that come with it, such as:
 \end_layout
@@ -1551,11 +1434,7 @@ increased security.
  This level of indirection allows the virtual machine manager to control
  and filter the activity of the guest, thus preventing some harmful operations
  from being performed.
- Resources exposed by the host can then be hidden or simply protected from
- the guest.
- Sensitive information that is contained in the host can be naturally hidden
- without the need to install complex security policies.
- Increased security is a requirement when dealing with untrusted code
+ This is a requirement when dealing with untrusted code
 \end_layout
 
 \begin_layout Itemize
@@ -1583,8 +1462,11 @@ Virtualization and cloud computing
 \begin_layout Standard
 Besides being an enabler for computation on demand, virtualization also
  gives the opportunity to design more efficient computing systems by means
- of consolidation, which is performed transparently to cloud computing service
- users.
+ of 
+\series bold
+consolidation
+\series default
+, which is performed transparently to cloud computing service users.
  Since virtualization allows us to create isolated and controllable environments
 , it is possible to serve these environments with the same resource without
  them interfering with each other.
@@ -1706,7 +1588,7 @@ Privileged instructions
 Some types of architecture feature more than one class of privileged instruction
 s and implement a finer control of how these instructions can be accessed.
  For instance, a possible implementation features a hierarchy of privileges
- in the form of ring-based security: Ring 0, Ring 1, Ring 2, and Ring 3;
+ in the form of ring-based security.
  
 \series bold
 Ring 0
@@ -1938,13 +1820,21 @@ This offers the opportunity to create different and separated execution
  A user space instance in general contains a proper view of the file system,
  which is completely isolated, and separate IP addresses, software configuration
 s, and access to devices.
- This virtualization technique can be considered an evolution of the chroot
+ 
+\end_layout
+
+\begin_layout Standard
+This virtualization technique can be considered an evolution of the chroot
  mechanism in Unix systems.
  Because Unix systems also expose devices as parts of the file system, by
  using this method it is possible to completely isolate a set of processes.
  Following the same principle, operating system-level virtualization aims
  to provide separated and multiple execution containers for running applications.
- Compared to hardware virtualization, this strategy imposes little or no
+ 
+\end_layout
+
+\begin_layout Standard
+Compared to hardware virtualization, this strategy imposes little or no
  overhead because applications directly use OS system calls and there is
  no need for emulation.
  There is no need to modify applications to run them, nor to modify any
@@ -2386,9 +2276,19 @@ Computations M, A, P, and E may be made by multiple components that coordinate
 \end_layout
 
 \begin_layout Standard
-AWS implements these componets through CloudWatch (Monitor), alarms (Analyze),
- dynamic scaling (Plan), internal mechanisms or CLI commands (Execution),
- metrics (knowedge).
+AWS implements these componets through 
+\series bold
+CloudWatch
+\series default
+ (Monitor), 
+\series bold
+alarms
+\series default
+ (Analyze), 
+\series bold
+dynamic scaling
+\series default
+ (Plan), internal mechanisms or CLI commands (Execution), metrics (Knowedge).
 \end_layout
 
 \begin_layout Section
