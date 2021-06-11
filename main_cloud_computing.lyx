@@ -1528,7 +1528,9 @@ iterative pre-copy
 \series default
 .
  The whole execution state of the VM is stored in memory and sent to the
- destination node, ensuring continuity of service
+ destination node, ensuring continuity of service.
+ Dirty memory is copied iteratively until its last portion is small enough
+ to be handled
 \end_layout
 
 \begin_layout Enumerate
@@ -3233,34 +3235,41 @@ the consistency model should be relaxed to simplify the system implementation
 \end_layout
 
 \begin_layout Standard
-A GFS cluster consists of a single master and multiple chunk-servers and
- is accessed by multiple clients.
+A GFS cluster consists of a single 
+\series bold
+Master
+\series default
+ and multiple 
+\series bold
+ChunkServers
+\series default
+ and is accessed by multiple clients.
  Files are divided into fixed-size 
 \series bold
 chunks
 \series default
 .
  Each chunk is identified by an immutable and globally unique handle assigned
- by the master at the time of chunk creation.
- For reliability, each chunk is replicated on multiple chunk-servers.
+ by the Master at the time of chunk creation.
+ For reliability, each chunk is replicated on multiple ChunkServers.
  By default, three replicas are stored, though users can designate different
  replication levels.
 \end_layout
 
 \begin_layout Standard
-The master maintains all file system metadata and also controls system-wide
+The Master maintains all file system metadata and also controls system-wide
  activities such as chunk lease management, garbage collection of orphaned
- chunks, and chunk migration between chunk-servers.
+ chunks, and chunk migration between ChunkServers.
  
 \end_layout
 
 \begin_layout Standard
-Having a single master its involvement in reads and writes must be minimized,
+Having a single Master its involvement in reads and writes must be minimized,
  so that it does not become a bottleneck.
- Clients never read and write file data through the master.
- Instead, a client asks the master which chunk-servers it should contact.
- It caches this information for a limited time and interacts with the chunk-serv
-ers directly for many subsequent operations.
+ Clients never read and write file data through the Master.
+ Instead, a client asks the Master which ChunkServers it should contact.
+ It caches this information for a limited time and interacts with the ChunkServe
+rs directly for many subsequent operations.
  
 \end_layout
 
@@ -3278,10 +3287,10 @@ A chunk size of
 
 \begin_layout Standard
 System reliability is a major concern, and the operation log maintains a
- historical record of metadata changes, enabling the master to recover in
+ historical record of metadata changes, enabling the Master to recover in
  case of a failure.
- To recover from a failure, the master replays the operation log.
- To minimize the recovery time, the master periodically checkpoints its
+ To recover from a failure, the Master replays the operation log.
+ To minimize the recovery time, the Master periodically checkpoints its
  state and at recovery time replays only the log records after the last
  checkpoint.
 \end_layout
@@ -3291,37 +3300,35 @@ Apache Hadoop filesystem
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-Hadoop
-\series default
- is an open-source, Java-based software system, which supports distributed
- applications handling extremely large volumes of data.
- A Hadoop system has two components, a MapReduce engine and a database.
- The database could be the Hadoop File System (HDFS), Amazon S3, or CloudStore,
- an implementation of the Google File System.
-\end_layout
-
-\begin_layout Standard
-
+As in other distributed file systems, like GFS, 
 \series bold
 HDFS
 \series default
- is a distributed file system which replicates data on multiple nodes.
- The default is three replicas; a large dataset is distributed over many
- nodes.
- The 
+ stores metadata on a dedicated Master server, called the 
 \series bold
-nameNode
+NameNode
 \series default
-, running on the master node, manages the data distribution and data replication
- and communicates with 
+.
+ Application data is stored on other slave servers called 
 \series bold
-dataNodes
+DataNodes
 \series default
- running on all cluster nodes; it shares with the job tracker information
- about data placement to minimize communication between the nodes on which
- data is located and the ones where it is needed.
+.
+ Typically each block of the file is independently replicated over three
+ DataNodes, but this is user selectable file-by-file.
+ 
+\end_layout
+
+\begin_layout Standard
+The NameNode maintains the namespace tree and the mapping of file blocks
+ to DataNodes.
+ An HDFS client wanting to read a file first contacts the NameNode for the
+ locations of data blocks comprising the file and then reads block contents
+ from the DataNode closest to the client.
+ When writing data, the cli- ent requests the NameNode to nominate a suite
+ of three DataNodes to host the block replicas.
+ The client then writes data to the DataNodes in a pipeline fashion.
+ The current design has a single NameNode for each cluster.
 \end_layout
 
 \begin_layout Subsubsection
@@ -3335,6 +3342,9 @@ An application adds data to HDFS by creating a new file and writing the
  except that new data can be added to the file by reopening the file for
  append.
  HDFS implements a single-writer, multiple-reader model.
+ The design of HDFS I/O is particularly optimized for batch processing systems,
+ like MapReduce, which require high throughput for sequential reads and
+ writes.
 \end_layout
 
 \begin_layout Standard
@@ -3348,17 +3358,8 @@ pipeline
 , the order of which minimizes the total network distance from the client
  to the last DataNode.
  Bytes are pushed to the pipeline as a sequence of packets.
- After a packet buffer is filled (typically 64 KB), the data are pushed
- to the pipeline.
- The next packet can be pushed to the pipeline before receiving the acknowledgem
-ent for the previous packets.
- After data are written to an HDFS file, HDFS does not pro- vide any guarantee
- that data are visible to a new reader until the file is closed.
- If a user application needs the visibility guarantee, it can explicitly
- call the hflush operation.
- Then the current packet is immediately pushed to the pipeline, and the
- hflush operation will wait until all dataNodes in the pipeline acknowledge
- the successful transmission of the packet.
+ The client is then reponsible for sending an acknowledgement message to
+ the DataNode.
 \end_layout
 
 \begin_layout Standard
@@ -3371,74 +3372,91 @@ When a client opens a file to read, it fetches the list of blocks and the
  
 \end_layout
 
-\begin_layout Standard
-The design of HDFS I/O is particularly optimized for batch processing systems,
- like MapReduce, which require high throughput for sequential reads and
- writes.
-\end_layout
-
-\begin_layout Subsubsection
-Block Placement and replicas
-\end_layout
-
-\begin_layout Standard
-For a large cluster, it may not be practical to connect all nodes in a flat
- topology.
- A common practice is to spread the nodes across multiple racks.
- In most cases, network bandwidth between nodes in the same rack is greater
- than network band- width between nodes in different racks.
-\end_layout
-
-\begin_layout Standard
-The placement of replicas is critical to HDFS data reliability and read/write
- performance.
- A good replica placement policy should improve data reliability, availability,
- and network bandwidth utilization.
- The default HDFS block placement policy provides a tradeoff between minimizing
- the write cost, and maximizing data reliability, availability and aggregate
- read bandwidth.
- When a new block is created, HDFS places the first replica on the node
- where the writer is located, the second and the third replicas on two different
- nodes in a different rack, and the rest are placed on random nodes with
- some restrictions:
-\end_layout
-
-\begin_layout Itemize
-no datanode contains more than one replica of any block
-\end_layout
-
-\begin_layout Itemize
-no rack contains more than two replicas of the same block, provided there
- are sufficient racks on the cluster
-\end_layout
-
-\begin_layout Standard
-This policy reduces the inter-rack and inter-node write traffic and generally
- improves write performance.
- Because the chance of a rack failure is far less than that of a node failure,
- this policy does not impact data reliability and availability guarantees.
-\end_layout
-
 \begin_layout Subsection
 BigTable 
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-BigTable
-\series default
- is a distributed storage system developed by Google to store massive amounts
- of data and to scale up to thousands of storage servers.
- The system uses the GFS to store user data as well as system information.
- To guarantee atomic read and write operations, it uses the Chubby distributed
- lock service.
+Bigtable is built upon GFS, employes the Google SSTable file format to store
+ internal data, and relies on a highly-available and persistent distributed
+ lock service called Chubby.
  A Bigtable is a sparse, distributed, persistent multi-dimensional sorted
- map 
-\begin_inset Formula $(\text{row}:string,\text{column}:string,\text{timestamp}:int64)\rightarrow string$
+ map.
+ The map is indexed by a row key, column key, and a timestamp; each value
+ in the map is an uninterpreted array of bytes.
+ 
+\begin_inset Formula 
+\[
+(\text{row:}string,\text{column:}string,\text{time:}int64)\rightarrow string
+\]
+
 \end_inset
 
+
+\end_layout
+
+\begin_layout Subsubsection
+Indexes
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+row keys
+\series default
+ in a table are arbitrary strings and every read or write of data under
+ a single row key is atomic, a design decision that makes it easier for
+ clients to reason about the system's behavior in the presence of concurrent
+ updates to the same row.
+ Bigtable maintains data in lexicographic order by row key.
+ The row range for a table is dynamically partitioned.
+ Each row range is called a 
+\series bold
+tablet
+\series default
+, which is the unit of distribution and load balancing.
+ Clients can exploit this property by selecting their row keys so that they
+ get good locality for their data accesses.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Column keys
+\series default
+ are grouped into sets called column families, which form the basic unit
+ of access control.
+ All data stored in a column family is usually of the same type and compressed
+ together.
+ A column family must be created before data can be stored under any column
+ key in that family; after a family has been created, any column key within
+ the family can be used.
+ The number of distinct column families in a table is small (in the hundreds
+ at most), and that families rarely change during operation.
+ In contrast, a table may have an unbounded number of columns.
+\end_layout
+
+\begin_layout Standard
+Each cell in a Bigtable can contain multiple versions of the same data;
+ these versions are indexed by 
+\series bold
+timestamp
+\series default
 .
+ Different versions of a cell are stored in decreasing timestamp or- der,
+ so that the most recent versions can be read first.
+ To make the management of versioned data less onerous, Bigtable garbage-collect
+s cell versions automatically.
+ The client can specify either that only the last 
+\begin_inset Formula $n$
+\end_inset
+
+ versions of a cell be kept, or that only new-enough versions be kept.
+\end_layout
+
+\begin_layout Subsubsection
+Implementation
 \end_layout
 
 \begin_layout Standard
@@ -3446,63 +3464,32 @@ The
 \series bold
 master
 \series default
- is responsible for assigning tablets to tablet servers, detecting the addition
- and expiration of tablet servers, balancing tablet-server load, and garbage
+ is responsible for assigning tablets to TabletServers, detecting the addition
+ and expiration of TabletServers, balancing tablet-server load, and garbage
  collection of files in GFS.
  In addition, it handles schema changes such as table and column family
  creations.
- As with many single-master distributed storage systems, client data does
- not move through the master: clients communicate directly with tablet servers
- for reads and writes.
-\end_layout
-
-\begin_layout Standard
-A Bigtable cluster stores a number of 
-\series bold
-tables
-\series default
-.
- Each table consists of a set of 
-\series bold
-tablets
-\series default
-, and each tablet contains all data associated with a row range.
- Initially, each table consists of just one tablet.
- As a table grows, it is automatically split into multiple tablets.
  Each 
 \series bold
-tablet server
+TabletServer
 \series default
- manages a set of tablets (typically we have somewhere between ten to a
- thousand tablets per tablet server).
+ manages a set of tablets.
  The tablet server handles read and write requests to the tablets that it
  has loaded, and also splits tablets that have grown too large.
  
 \end_layout
 
 \begin_layout Standard
-Each tablet is assigned to one 
-\series bold
-tablet server
-\series default
- at a time.
- The 
-\series bold
-master
-\series default
- keeps track of the set of live tablet servers, and the current assignment
- of tablets to tablet servers, including which tablets are unassigned.
- The master is responsible for detecting when a tablet server is no longer
- serving its tablets, and for reassigning those tablets as soon as possible.
- When a master is started by the cluster management system, it needs to
- discover the current tablet assignments before it can change them.
-\end_layout
-
-\begin_layout Standard
-To make the management of versioned data less onerous, BigTable can garbage-coll
-ect cell versions automatically.
- The client can specify either that only the last n versions of a cell be
- kept, or that only new-enough versions be kept.
+As with many single-master distributed storage systems, client data does
+ not move through the mas- ter: clients communicate directly with TabletServers
+ for reads and writes.
+ Because Bigtable clients do not rely on the master for tablet location
+ information, most clients never communicate with the master.
+ A Bigtable cluster stores a number of tables.
+ Each table consists of a set of tablets, and each tablet contains all data
+ associated with a row range.
+ Initially, each table consists of just one tablet.
+ As a table grows, it is automatically split into multiple tablets.
 \end_layout
 
 \begin_layout Subsection
@@ -3523,14 +3510,6 @@ OLTP
 response time
 \series default
 .
- The term 
-\series bold
-memcaching
-\series default
- refers to a general-purpose distributed memory system that caches objects
- in main memory.
- The memcached system is based on a client-server architecture and runs
- under several operating systems.
  
 \series bold
 Scalability
@@ -3584,52 +3563,47 @@ Dynamo
  technique and a decentralized replica synchronization protocol.
 \end_layout
 
-\begin_layout Subsubsection
-Query model
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-Simple read and write operations to a data item that is uniquely identified
+\series bold
+query model
+\series default
+.
+ Simple read and write operations to a data item that is uniquely identified
  by a key.
- State is stored as binary objects (i.e.
- blobs) identified by unique keys.
  No operations span multiple data items and there is no need for relational
  schema.
  This requirement is based on the observation that a significant portion
  of Amazon's services can work with this simple query model and do not need
- any relational schema.
+ any relational schema
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Itemize
+
+\series bold
 ACID properties
-\end_layout
-
-\begin_layout Standard
-ACID (Atomicity, Consistency, Isolation, Durability) is a set of properties
- that guarantee that database transactions are processed reliably.
- In the context of databases, a single logical operation on the data is
- called a transaction.
+\series default
+.
  Experience at Amazon has shown that data stores that provide ACID guarantees
  tend to have poor availability.
  Dynamo targets applications that operate with weaker consistency (the “C”
  in ACID) if this results in high availability.
  Dynamo does not provide any isolation guarantees and permits only single
- key updates.
+ key updates
 \end_layout
 
-\begin_layout Subsubsection
-Efficiency and other Assumptions
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-The system needs to function on a commodity hardware infrastructure.
- Services must be able to configure Dynamo such that they consistently achieve
- their latency and throughput requirements.
+\series bold
+efficiency
+\series default
+ and other assumptions.
+ The system needs to function on a commodity hardware infrastructure.
  The tradeoffs are in performance, cost efficiency, availability, and durability
  guarantees.
  Furthermore, Dynamo operation environment is assumed to be non-hostile
  and there are no security related requirements such as authentication and
- authorization.
+ authorization
 \end_layout
 
 \begin_layout Subsubsection
@@ -3661,25 +3635,41 @@ The next design choice is who performs the process of conflict resolution.
 \end_layout
 
 \begin_layout Itemize
-incremental scalability.
+
+\series bold
+incremental scalability
+\series default
+.
  Dynamo should be able to scale out one storage host at a time, with minimal
  impact on both operators of the system and the system itself
 \end_layout
 
 \begin_layout Itemize
-symmetry.
+
+\series bold
+symmetry
+\series default
+.
  Every node in Dynamo should have the same set of responsibilities as its
  peers
 \end_layout
 
 \begin_layout Itemize
-decentralization.
+
+\series bold
+decentralization
+\series default
+.
  The design should favor decentralized peer-to-peer techniques over centralized
  control
 \end_layout
 
 \begin_layout Itemize
-heterogeneity.
+
+\series bold
+heterogeneity
+\series default
+.
  The system needs to be able to exploit heterogeneity in the infrastructure
  it runs on.
  e.g.
@@ -3907,7 +3897,7 @@ the run-time library splits the input files into
 
  of systems to run, and starts multiple copies of the program, one of the
  system being a master and the others workers.
- The master assigns to each idle system either a Map or a Reduce task
+ The Master assigns to each idle system either a Map or a Reduce task
 \end_layout
 
 \begin_layout Enumerate
@@ -3931,7 +3921,7 @@ a worker being assigned a Map task reads the corresponding input split,
 
 \begin_layout Enumerate
 the locations of these buffered pairs on the local disk are passed back
- to the master, who is responsible for forwarding these locations to the
+ to the Master, who is responsible for forwarding these locations to the
  Reduce workers.
  A Reduce worker uses remote procedure calls to read the buffered data from
  the local disks of the Map workers; after reading all the intermediate
@@ -3942,7 +3932,7 @@ the locations of these buffered pairs on the local disk are passed back
 \end_layout
 
 \begin_layout Enumerate
-when all Map and Reduce tasks have been completed, the master wakes up the
+when all Map and Reduce tasks have been completed, the Master wakes up the
  user program
 \end_layout
 
@@ -3963,8 +3953,8 @@ Any map tasks completed by failed worker are reset back to their initial
 \end_layout
 
 \begin_layout Standard
-Given that there is only a single master, its failure is unlikely; therefore
- standard implementations abort the MapReduce computation if the master
+Given that there is only a single Master, its failure is unlikely; therefore
+ standard implementations abort the MapReduce computation if the Master
  fails.
  Clients can check for this condition and retry the MapReduce operation
  if they desire.
