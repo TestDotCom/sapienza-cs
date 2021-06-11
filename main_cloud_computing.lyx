@@ -201,20 +201,17 @@ SLA
 \end_layout
 
 \begin_layout Subsubsection
-Cloud services
+Services models
 \end_layout
 
 \begin_layout Standard
-Any IT resource that is made remotely accessible via a cloud.
- The driving motivation behind cloud computing is to provide IT resources
+The driving motivation behind cloud computing is to provide IT resources
  as 
 \series bold
 services
 \series default
  that encapsulate other IT resources, while offering functions for clients
  to use and leverage remotely.
- As a distinct and remotely accessible environment, a cloud represents an
- option for the deployment of IT resources.
  In contrast IT resources hosted in a conventional IT enterprise, within
  an organizational boundary, are considered 
 \series bold
@@ -225,18 +222,146 @@ on-premise
 \end_layout
 
 \begin_layout Itemize
-an on-premise IT resource can access and interact with a cloud-based IT
- resource
+Software as a Service (
+\series bold
+SaaS
+\series default
+).
+ The capability provided to the consumer is to use the provider's applications
+ running on a cloud infrastructure
 \end_layout
 
 \begin_layout Itemize
-an on-premise IT resource can be moved to a cloud, thereby changing it to
- a cloud-based IT resource
+Platform as a Service (
+\series bold
+PaaS
+\series default
+).
+ The capability provided to the consumer is to deploy onto the cloud infrastruct
+ure consumer-created or acquired applications developed using programming
+ languages, libraries, services, and tools supported by the provider
 \end_layout
 
 \begin_layout Itemize
-redundant deployments of an IT resource can exist in both on-premise and
- cloud-based environments
+Infrastructure as a Service (
+\series bold
+IaaS
+\series default
+).
+ The capability provided to the consumer is to provision processing, storage,
+ network, and other foundamental computing resources where the consumer
+ is able to deploy and run arbitrary software, which can include OS and
+ applications
+\end_layout
+
+\begin_layout Subsubsection
+Deployment models
+\end_layout
+
+\begin_layout Standard
+A cloud deployment model represents a specific type of cloud environment,
+ primarily distinguished by ownership, size, and access.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+private cloud
+\series default
+.
+ The cloud infrastructure is provisioned for exclusive use by a single organizat
+ion comprising multiple consumers
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+community cloud
+\series default
+.
+ The cloud infrastructure is provisioned for exclusive use by a specific
+ community of consumers from organizations that have shared concerns 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+public cloud
+\series default
+.
+ The cloud infrastructure is provisioned for open use by the general public
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+hybrid cloud
+\series default
+.
+ The cloud infrastructure is a composition of two or more distinct cloud
+ infrastructures that remain unique entities, but are bound together by
+ standardized or proprietary technology that enables data and application
+ portability
+\end_layout
+
+\begin_layout Subsubsection
+Main roles 
+\end_layout
+
+\begin_layout Standard
+Organizations and humans can assume different types of pre-defined roles
+ depending on how they relate to and/or interact with a cloud and its hosted
+ IT resources.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+cloud consumer
+\series default
+.
+ Person or organization that maintains a business relationship withm and
+ uses services from, cloud service providers
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+cloud provider
+\series default
+.
+ Person, organization or entity responsible for making a service available
+ to service consumers
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+cloud carrier
+\series default
+.
+ The intermediary that provides connectivity and transport of cloud services
+ between cloud providers and cloud consumers
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+cloud broker
+\series default
+.
+ An entity that manages the use, performance and delivery of cloud services,
+ and negotiates relationships between cloud providers and cloud consumers
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+cloud auditor
+\series default
+.
+ A party that can conduct independent assessment of cloud services, information
+ system operations, performance and security of the cloud implementation
 \end_layout
 
 \begin_layout Subsubsection
@@ -279,8 +404,6 @@ The most common economic rationale for investing in cloud-based IT resources
  This elimination or minimization of up-front financial commitments allows
  enterprises to start small and accordingly increase IT resource allocation
  as required.
- The same rationale applies to operating systems, middleware or platform
- software, and application software.
  Pooled IT resources are made available to and shared by multiple cloud
  consumers, resulting in increased or even maximum possible utilization.
  By providing pools of IT resources, along with tools and technologies designed
@@ -366,14 +489,14 @@ Organizational agility
 \begin_layout Standard
 Businesses need the ability to adapt and evolve to successfully face change
  caused by both internal and external factors.
- Organizational agility is the measure of an organization’s responsiveness
+ Organizational agility is the measure of an organization's responsiveness
  to change.
  An IT enterprise often needs to respond to business change by scaling its
  IT resources beyond the scope of what was previously predicted or planned
  for.
  Due to a lack of reliability controls within the infrastructure, responsiveness
  to consumer or customer requirements may be reduced to a point whereby
- a business’ overall continuity is threatened.
+ a business overall continuity is threatened.
  On a broader scale, the up-front investments and infrastructure ownership
  costs that are required to enable new or expanded business automation solutions
  may themselves be prohibitive enough for a business to settle for IT infrastruc
@@ -401,8 +524,6 @@ The moving of business data to the cloud means that the responsibility over
  due to the fact that cloud-based IT resources are commonly shared.
  Furthermore, another consequence of overlapping trust boundaries relates
  to the cloud provider privileged access to cloud consumer data.
- The extent to which the data is secure is now limited to the security controls
- and policies applied by both the cloud consumer and cloud provider.
  The overlapping of trust boundaries and the increased exposure of data
  can provide malicious cloud consumers (human and automated) with greater
  opportunities to attack IT resources and steal or damage business data.
@@ -422,8 +543,7 @@ ion between the cloud and the cloud consumer.
 g, can mitigate governance risks and issues.
  A cloud governance system is established through SLAs, given the “as-a-service”
  nature of cloud computing.
- A cloud consumer must keep track of the actual service level being offered
- and the other warranties that are made by the cloud provider.
+ 
 \end_layout
 
 \begin_layout Subsubsection
@@ -452,256 +572,6 @@ Third-party cloud providers will frequently establish data centers in affordable
  policies.
  Another potential legal issue pertains to the accessibility and disclosure
  of data.
- Countries have laws that require some types of data to be disclosed to
- certain government agencies or to the subject of the data.
-\end_layout
-
-\begin_layout Subsection
-Main roles 
-\end_layout
-
-\begin_layout Standard
-Organizations and humans can assume different types of pre-defined roles
- depending on how they relate to and/or interact with a cloud and its hosted
- IT resources.
-\end_layout
-
-\begin_layout Subsubsection
-Cloud provider
-\end_layout
-
-\begin_layout Standard
-The organization that provides cloud-based IT resources is the cloud provider.
- When assuming the role of cloud provider, an organization is responsible
- for making cloud services available to cloud consumers, as per agreed upon
- SLA guarantees.
- The cloud provider is further tasked with any required management and administr
-ative duties to ensure the on-going operation of the overall cloud infrastructur
-e.
-\end_layout
-
-\begin_layout Subsubsection
-Cloud consumer
-\end_layout
-
-\begin_layout Standard
-An organization (or a human) that has a formal contract or arrangement with
- a cloud provider to use IT resources made available by the cloud provider.
- Specifically, the cloud consumer uses a cloud service consumer to access
- a cloud service
-\end_layout
-
-\begin_layout Subsubsection
-Cloud service owner
-\end_layout
-
-\begin_layout Standard
-The person or organization that legally owns a cloud service is called a
- cloud service owner.
- The cloud service owner can be the cloud consumer, or the cloud provider
- that owns the cloud within which the cloud service resides.
- Note that a cloud consumer that owns a cloud service hosted by a third-party
- cloud does not necessarily need to be the user (or consumer) of the cloud
- service.
-\end_layout
-
-\begin_layout Subsubsection
-Cloud Resource Administrator 
-\end_layout
-
-\begin_layout Standard
-The person or organization responsible for administering a cloud-based IT
- resource (including cloud services).
- The cloud resource administrator can be (or belong to) the cloud consumer
- or cloud provider of the cloud within which the cloud service resides.
- Alternatively, it can be (or belong to) a third-party organization contracted
- to administer the cloud-based IT resource.
-\end_layout
-
-\begin_layout Subsubsection
-Cloud Auditor
-\end_layout
-
-\begin_layout Standard
-A third-party (often accredited) that conducts independent assessments of
- cloud environments assumes the role of the cloud auditor.
- The typical responsibilities associated with this role include the evaluation
- of security controls, privacy impacts, and performance.
-\end_layout
-
-\begin_layout Subsubsection
-Cloud Broker
-\end_layout
-
-\begin_layout Standard
-This role is assumed by a party that assumes the responsibility of managing
- and negotiating the usage of cloud services between cloud consumers and
- cloud providers.
- Mediation services provided by cloud brokers include service intermediation,
- aggregation, and arbitrage.
-\end_layout
-
-\begin_layout Subsubsection
-Cloud Carrier
-\end_layout
-
-\begin_layout Standard
-The party responsible for providing the wire-level connectivity between
- cloud consumers and cloud providers assumes the role of the cloud carrier.
- This role is often assumed by network and telecommunication providers.
-\end_layout
-
-\begin_layout Subsection
-Cloud service models
-\end_layout
-
-\begin_layout Standard
-A cloud delivery model represents a specific, pre-packaged combination of
- IT resources offered by a cloud provider.
-\end_layout
-
-\begin_layout Subsubsection
-Infrastructure-as-a-Service
-\end_layout
-
-\begin_layout Standard
-The 
-\series bold
-IaaS
-\series default
- delivery model represents a self-contained IT environment comprised of
- infrastructure-centric IT resources that can be accessed and managed via
- cloud service-based interfaces and tools.
- In contrast to traditional hosting or outsourcing environments, with IaaS,
- IT resources are typically virtualized and packaged into bundles that simplify
- up-front runtime scaling and customization of the infrastructure.
- The general purpose of an IaaS environment is to provide cloud consumers
- with a high level of control and responsibility over its configuration
- and utilization.
- Sometimes cloud providers will contract IaaS offerings from other cloud
- providers in order to scale their own cloud environments.
-\end_layout
-
-\begin_layout Subsubsection
-Platform-as-a-Service
-\end_layout
-
-\begin_layout Standard
-The 
-\series bold
-PaaS
-\series default
- delivery model represents a pre-defined “ready-to-use” environment typically
- comprised of already deployed and configured IT resources.
- Specifically, PaaS relies on (and is primarily defined by) the usage of
- a ready-made environment that establishes a set of pre-packaged products
- and tools used to support the entire delivery lifecycle of custom applications.
- By working within a ready-made platform, the cloud consumer is spared the
- administrative burden of setting up and maintaining the bare infrastructure
- IT resources provided via the IaaS model.
- Conversely, the cloud consumer is granted a lower level of control over
- the underlying IT resources that host and provision the platform.
-\end_layout
-
-\begin_layout Subsubsection
-Software-as-a-Service
-\end_layout
-
-\begin_layout Standard
-A software program positioned as a shared cloud service and made available
- as a “product” or generic utility represents the typical profile of a 
-\series bold
-SaaS
-\series default
- offering.
- The SaaS delivery model is typically used to make a reusable cloud service
- widely available (often commercially) to a range of cloud consumers.
- A cloud consumer is generally granted very limited administrative control
- over a SaaS implementation.
- It is most often provisioned by the cloud provider, but it can be legally
- owned by whichever entity assumes the cloud service owner role.
-\end_layout
-
-\begin_layout Subsection
-Cloud deployment models
-\end_layout
-
-\begin_layout Standard
-A cloud deployment model represents a specific type of cloud environment,
- primarily distinguished by ownership, size, and access.
-\end_layout
-
-\begin_layout Subsubsection
-Public clouds
-\end_layout
-
-\begin_layout Standard
-A publicly accessible cloud environment owned by a third-party cloud provider.
- The IT resources on public clouds are usually provisioned via the previously
- described cloud delivery models and are generally offered to cloud consumers
- at a cost or are commercialized via other avenues.
-\end_layout
-
-\begin_layout Subsubsection
-Community clouds
-\end_layout
-
-\begin_layout Standard
-Similar to a public cloud, except that its access is limited to a specific
- community of cloud consumers.
- The community cloud may be jointly owned by the community members or by
- a third-party cloud provider that provisions a public cloud with limited
- access.
- The member cloud consumers of the community typically share the responsibility
- for defining and evolving the community cloud
-\end_layout
-
-\begin_layout Subsubsection
-Private clouds
-\end_layout
-
-\begin_layout Standard
-Enable an organization to use cloud computing technology as a means of centraliz
-ing access to IT resources by different parts, locations, or departments
- of the organization.
- When a private cloud exists as a controlled environment, the problems described
- in 
-\begin_inset Quotes eld
-\end_inset
-
-Risks and challenges
-\begin_inset Quotes erd
-\end_inset
-
- section do not tend to apply.
- The same organization is technically both the cloud consumer and cloud
- provider.
-\end_layout
-
-\begin_layout Itemize
-a separate organizational department typically assumes the responsibility
- for provisioning the cloud (and therefore assumes the cloud provider role)
- 
-\end_layout
-
-\begin_layout Itemize
-departments requiring access to the private cloud assume the cloud consumer
- role
-\end_layout
-
-\begin_layout Subsubsection
-Hybrid Clouds
-\end_layout
-
-\begin_layout Standard
-An environment comprised of two or more different cloud deployment models.
- For example, a cloud consumer may choose to deploy cloud services processing
- sensitive data to a private cloud and other, less sensitive cloud services
- to a public cloud.
- Hybrid deployment architectures can be complex and challenging to create
- and maintain due to the potential disparity in cloud environments and the
- fact that management responsibilities are typically split between the private
- cloud provider organization and the public cloud provider.
 \end_layout
 
 \begin_layout Section
@@ -821,14 +691,22 @@ Autonomic systems are commonly modeled as closed-loop control systems where
 \end_layout
 
 \begin_layout Itemize
-elasticity.
+
+\series bold
+elasticity
+\series default
+.
  Autonomic systems can monitor usage conditions and leverage cloudbased
  IT resources to automatically acquire and free IT resources as needed for
  the purpose of maintaining required service levels
 \end_layout
 
 \begin_layout Itemize
-resiliency.
+
+\series bold
+resiliency
+\series default
+.
  Autonomic systems can automatically detect unavailable IT resources and
  self-respond to allocate alternative IT resources as required
 \end_layout
