@@ -1797,133 +1797,99 @@ firewalls interfere with the way the Internet is supposed to work, introducing
 Security strategies 
 \end_layout
 
-\begin_layout Subsubsection
-Least privilege
-\end_layout
-
 \begin_layout Standard
-Basically, the principle of least privilege means that any object (user,
- administrator, program, system, whatever) should have only the privileges
- the object needs to perform its assigned tasks - and no more.
- Least privilege is an important principle for limiting your exposure to
- attacks and for limiting the damage caused by particular attacks.
- However, there are two problems with trying to enforce least privilege.
- First, it can be complex to implement when it isn't already a design feature
- of the programs and protocols you're using.
- Trying to add it on may be very difficult to get right.
- Second, you may end up implementing something less than least privilege.
+These are some of the basic strategies employed in building firewalls and
+ in enforcing security at your site:
 \end_layout
 
-\begin_layout Subsubsection
-Defense in depth
+\begin_layout Itemize
+
+\series bold
+least privilege
+\series default
+.
+ Any object (user, administrator, program, system, whatever) should have
+ only the privileges the object needs to perform its assigned tasks, and
+ no more
 \end_layout
 
-\begin_layout Standard
-Do not depend on just one security mechanism, however strong it may seem
- to be; instead, install multiple mechanisms that back each other up.
- You don't want the failure of any single security mechanism to totally
- compromise your security.
- The trick is to make the attempt too risky or too expensive for the attackers
- you expect to face.
- You can do this by adopting multiple mechanisms that provide backup and
- redundancy for each other.
- These redundant defenses aren't solely, or even primarily, to protect from
- attackers; they mostly provide protection against failures of one level
- of defense.
+\begin_layout Itemize
+
+\series bold
+defense in depth
+\series default
+.
+ Do not depend on just one security mechanism.
+ Instead, install multiple mechanisms that back each other up
 \end_layout
 
-\begin_layout Subsubsection
-Choke point
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-In network security, the firewall between your site and the Internet (assuming
+\series bold
+choke point
+\series default
+.
+ In network security, the firewall between your site and the Internet (assuming
  that it's the only connection between your site and the Internet) is a
  choke point: anyone who's going to attack your site from the Internet is
  going to have to come through that channel, which should be defended against
- such attacks.
- A choke point is useless if there's an effective way for an attacker to
- go around it.
+ such attacks
 \end_layout
 
-\begin_layout Subsubsection
-Weakest link
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-A fundamental tenet of security is that a chain is only as strong as its
+\series bold
+weakest link
+\series default
+.
+ A fundamental tenet of security is that a chain is only as strong as its
  weakest link and a wall is only as strong as its weakest point.
  Smart attackers are going to seek out that weak point and concentrate their
- attentions there.
- You need to be aware of the weak points of your defense so that you can
- take steps to eliminate them, and so that you can carefully monitor those
- you can't eliminate.
- You should try to pay attention equally to all aspects of your security,
- so that there is no large difference in how insecure one thing is as compared
- to another.
- 
+ attentions there
 \end_layout
 
-\begin_layout Subsubsection
-Fail-Safe stance
+\begin_layout Itemize
+
+\series bold
+fail-safe stance
+\series default
+.
+ If your system is going to fail, it should fail in such a way that they
+ deny access to an attacker, rather than letting the attacker in
 \end_layout
 
-\begin_layout Standard
-Another fundamental principle of security is that, to the extent possible,
- systems should fail safe; that is, if they're going to fail, they should
- fail in such a way that they deny access to an attacker, rather than letting
- the attacker in.
- The failure may also result in denying access to legitimate users as well,
- until repairs are made, but this is usually an acceptable trade-off.
- 
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Subsubsection
-Universal participation
-\end_layout
-
-\begin_layout Standard
-In order to be fully effective, most security systems require the universal
+\series bold
+universal partecipation
+\series default
+.
+ In order to be fully effective, most security systems require the universal
  participation (or at least the absence of active opposition) of a site's
- personnel.
- If someone can simply opt out of your security mechanisms, then an attacker
- may be able to attack you by first attacking that exempt person's system
- and then attacking your site from the inside.
+ personnel
 \end_layout
 
-\begin_layout Subsubsection
-Diversity of defense
+\begin_layout Itemize
+
+\series bold
+diversity of defense
+\series default
+.
+ Closely related to depth of defense, it's the idea that you need not only
+ multiple layers of defense, but different kinds of defense
 \end_layout
 
-\begin_layout Standard
-Closely related to depth of defense, it's the idea that you need not only
- multiple layers of defense, but different kinds of defense.
- A popular theory is to use different types of systems - for instance, in
- an architecture that has two packet filtering systems, you can increase
- diversity of defense by using systems from different vendors.
- After all, if all of your systems are the same, somebody who knows how
- to break into one of them probably knows how to break into all of them.
- There is a trade-off in terms of complexity and cost, however.
- Procuring and installing multiple different systems is going to be more
- difficult, take longer, and be more expensive than procuring and installing
- a single system (or even several identical systems).
- If you're not careful, you can create diversity of weakness instead of
- diversity of defense.
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Subsubsection
-Simplicity
-\end_layout
-
-\begin_layout Standard
-First, keeping things simple makes them easier to understand; if you don't
+\series bold
+simplicity
+\series default
+.
+ First, keeping things simple makes them easier to understand; if you don't
  understand something, you can't really know whether or not it's secure.
  Second, complexity provides nooks and crannies for all sorts of things
  to hide in.
- Complex programs have more bugs, any of which may be security problems.
- Effective security is inherently complex.
- You want a system you can explain, but you still want it to work.
- 
+ Complex programs have more bugs, any of which may be security problems
 \end_layout
 
 \begin_layout Subsection
@@ -1990,8 +1956,6 @@ An ordinary router simply looks at the destination address of each packet
  A screening router, on the other hand, looks at packets more closely.
  In addition to determining whether or not it can route a packet towards
  its destination, a screening router also determines whether or not it should.
- "Should" or "should not" are determined by the site's security policy,
- which the screening router has been configured to enforce.
  Once it has looked at all the information, a straightforward packet filtering
  router can do any of the following things:
 \end_layout
@@ -2020,7 +1984,8 @@ More sophisticated routers might also be able to do one or more of these
 \end_layout
 
 \begin_layout Itemize
-modify the packet (for instance, to do network address translation)
+modify the packet, i.e.
+ do NAT
 \end_layout
 
 \begin_layout Itemize
@@ -2041,15 +2006,8 @@ Packet filtering devices that keep track of packets that they see are frequently
 stateful packet filters
 \series default
  (because they keep information about the state of transactions).
- They may also be called dynamic packet filters because they change their
- handling of packets dynamically depending on the traffic they see.
- A packet filtering system is also a logical place to provide virtual private
- network or network address translation services.
- Since the packet filter is already looking at all of the packets, it can
- easily identify packets that are intended for a destination that is part
- of the virtual private network, encrypt those packets, and encapsulate
- them in another packet bound for the appropriate destination.
- 
+ A packet filtering system is also a logical place to provide VPN or NAT
+ services, since the packet filter is already looking at all of the packets.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2057,12 +2015,12 @@ Proxy services
 \end_layout
 
 \begin_layout Standard
-In general, a proxy is something or someone who does something on somebody
- else's behalf.
- Proxy services are specialized application or server programs that take
- users' requests for Internet services and forward them to the actual services.
- The proxies provide replacement connections and act as gateways to the
- services.
+In general, a 
+\series bold
+proxy
+\series default
+ is something or someone who does something on somebody else's behalf.
+ A proxy provide replacement connections and act as gateways to the services.
  For this reason, proxies are sometimes known as application-level gateways.
  Transparency is the major benefit of proxy services.
  To the user, a proxy server presents the illusion that the user is dealing
@@ -2074,39 +2032,28 @@ In general, a proxy is something or someone who does something on somebody
  a mechanism that restricts direct communications between the internal and
  external hosts.
  Dual-homed hosts and packet filtering are two such mechanisms.
-\end_layout
-
-\begin_layout Standard
-The proxy server doesn't always just forward users' requests on to the real
+ The proxy server doesn't always just forward users requests on to the real
  Internet services.
  The proxy server can control what users do because it can make decisions
- about the requests it processes.
- Depending on your site's security policy, requests might be allowed or
- refused.
- Some proxy servers do in fact just forward requests on, no matter what
- they are.
- These may be called generic proxies or port forwarders.
+ about the requests it processes, denying or allowing them.
  
 \end_layout
 
 \begin_layout Standard
 Some excellent software is available for proxying.
- SOCKS is a proxy construction toolkit, designed to make it easy to convert
- existing client/server applications into proxy versions of those same applicati
-ons.
+ 
+\series bold
+SOCKS
+\series default
+ is a proxy construction toolkit, designed to make it easy to convert existing
+ client/server applications into proxy versions of those same applications.
  In order to make it easy to support new clients, SOCKS is extremely generic.
  This limits the features that it can provide.
- SOCKS doesn't do any protocol-specific control or logging.
  SOCKS does log connection requests on the server; provide access control
  by user, by source host and port number, or by destination host and port
  number; and allow configurable responses to access denials.
- The prime advantage of SOCKS is its popularity.
  Because SOCKS is widely used, server implementations and SOCKS-ified clients
  are commonly available, and help is easy to find.
-\end_layout
-
-\begin_layout Subsubsection
-Application-Level versus Circuit-Level Proxies
 \end_layout
 
 \begin_layout Standard
@@ -2117,18 +2064,20 @@ application-level proxy
  is one that knows about the particular application it is providing proxy
  services for; it understands and interprets the commands in the application
  protocol.
- A circuit-level proxy is one that creates a circuit between the client
- and the server without interpreting the application protocol.
+ A
+\series bold
+ circuit-level proxy
+\series default
+ is one that creates a circuit between the client and the server without
+ interpreting the application protocol.
  The advantage of a circuit-level proxy is that it provides service for
  a wide variety of different protocols.
- Most circuit-level proxy servers are also generic proxy servers; they can
- be adapted to serve almost any protocol.
  Not every protocol can easily be handled by a circuit-level proxy, however.
  Protocols like FTP, which communicate port data from the client to the
  server, require some protocol-level intervention, and thus some application-lev
 el knowledge.
- The disadvantage of a circuit-level proxy server is that it provides very
- little control over what happens through the proxy.
+ The main disadvantage of a circuit-level proxy server is that it provides
+ very little control over what happens through the proxy.
  Like a packet filter, it controls connections on the basis of their source
  and destination and can't easily determine whether the commands going through
  it are safe or even in the expected protocol.
@@ -2188,32 +2137,15 @@ Dual-Homed Host
 \end_layout
 
 \begin_layout Standard
-Built around the dual-homed host computer, a computer that has at least
- two network interfaces.
- Such a host could act as a router between the networks these interfaces
- are attached to; it is capable of routing IP packets from one network to
- another.
- However, to use a dual-homed host as a firewall, you disable this routing
- function.
- Thus, IP packets from one network (e.g.
- the Internet) are not directly routed to the other network (e.g.
- the internal, protected network).
+This sits between, and is connected to, the Internet and the internal network.
+ Thus, it needs at least two network interfaces, and acts as a router between
+ the networks these interfaces are attached to.
  Systems inside the firewall can communicate with the dual-homed host, and
  systems outside the firewall (on the Internet) can communicate with the
  dual-homed host, but these systems can't communicate directly with each
  other.
  IP traffic between them is completely blocked.
- Some variations on the dual-homed host architecture use IP to the Internet
- and some other network protocol on the internal network.
- This helps to enforce the separation between the two networks, making it
- less likely that host misconfigurations will let traffic slip from one
- interface to another, and also reducing the chance that if this does happen
- there will be vulnerable clients.
- However, it does not make a significant difference to the overall security
- of the firewall.
- The network architecture for a dual-homed host firewall is pretty simple:
- the dual-homed host sits between, and is connected to, the Internet and
- the internal network.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2221,13 +2153,9 @@ Dual-homed hosts can provide a very high level of control.
  If you aren't allowing packets to go between external and internal networks
  at all, you can be sure that any packet on the internal network that has
  an external source is evidence of some kind of security problem.
- On the other hand, dual-homed hosts aren't high-performance devices.
- A dual-homed host has more work to do for each connection than a packet
- filter does, and correspondingly needs more resources.
- A dual-homed host won't support as much traffic as an equivalent packet
- filtering system.
- Since a dual-homed host is a single point of failure, it's important to
- make certain that its host security is absolutely impeccable.
+ On the other hand, dual-homed hosts aren't high-performance devices, since
+ they have more work to do for each connection than a packet filter does.
+ Furthermore, a dual-homed host is a single point of failure.
  An attacker who can compromise the dual-homed host has full access to your
  site.
  An attacker who crashes the dual-homed host has cut you off from the Internet.
@@ -2235,8 +2163,6 @@ Dual-homed hosts can provide a very high level of control.
  is critical to your business.
  These problems exist with packet filtering routers as well, but they are
  less frequent and usually easier to fix.
- Architectures that involve multiple devices are usually more resilient
- because multiple different IP implementations are involved.
  A dual-homed host is an appropriate firewall for a situation where: 
 \end_layout
 
@@ -2275,8 +2201,7 @@ Whereas a dual-homed host architecture provides services from a host that's
  have to connect to this host.
  The bastion host thus needs to maintain a high level of host security.
  Packet filtering also permits the bastion host to open allowable connections
- (what is "allowable" will be determined by your site's particular security
- policy) to the outside world.
+ to the outside world.
  The packet filtering configuration in the screening router may do one of
  the following:
 \end_layout
@@ -2316,8 +2241,8 @@ Screened subnet
 \end_layout
 
 \begin_layout Standard
-The screened subnet architecture adds an extra layer of security to the
- screened host architecture by adding a perimeter network
+There is an extra layer of security to the screened host architecture by
+ adding a perimeter network
 \begin_inset Foot
 status open
 
@@ -2332,17 +2257,8 @@ A network added between a protected network and an external network, in
  that further isolates the internal network from the Internet.
  This because, by their nature, bastion hosts are the most vulnerable machines
  on your network.
- Despite your best efforts to protect them, they are the machines most likely
- to be attacked because they're the machines that can be attacked.
- If, as in a screened host architecture, your internal network is wide open
- to attack from your bastion host, then your bastion host is a very tempting
- target.
- No other defenses are between it and your other internal machines (besides
- whatever host security they may have, which is usually very little).
  By isolating the bastion host on a perimeter network, you can reduce the
  impact of a break-in on the bastion host.
- It is no longer an instantaneous jackpot; it gives an intruder some access
- but not all.
  With the simplest type of screened subnet architecture, there are two screening
  routers, each connected to the perimeter net.
  One sits between the perimeter net and the internal network, and the other
@@ -2359,8 +2275,8 @@ Split-screened subnet
 \end_layout
 
 \begin_layout Standard
-In a split-screened subnet, there is still a single interior router and
- an exterior router, but multiple networks are between the two routers.
+There is still a single interior router and an exterior router, but multiple
+ networks are between the two routers.
  In general, the screened networks are connected to each other by one or
  more dual- homed hosts, not by yet another router.
  Some sites use this architecture purely to provide defense in depth, protecting
@@ -2419,9 +2335,17 @@ Where to encrypt
 \end_layout
 
 \begin_layout Standard
-Encryption can be done as a transport method, where a host decides to encrypt
- traffic when it is generated, or as a tunnel, where traffic is encrypted
- and decrypted somewhere in between the source and the destination.
+Encryption can be done as a 
+\series bold
+transport method
+\series default
+, where a host decides to encrypt traffic when it is generated, or as a
+ 
+\series bold
+tunnel
+\series default
+, where traffic is encrypted and decrypted somewhere in between the source
+ and the destination.
  If you do the encryption and decryption inside the packet filtering perimeter
  (i.e., on your internal net), then the filters just have to allow the encrypted
  packets in and out.
@@ -2464,10 +2388,6 @@ A VPN runs over an actual network, which is presumably not a private network.
  The hosts on the virtual private network must be connected to that actual
  network, and if you're not careful, they will be vulnerable to attack from
  that network.
- It's important to choose a system that will allow you to force this on
- the remote system.
- When you attach something via a VPN, you are making it part of your internal
- network.
  If a machine on the virtual private network is broken into, the attacker
  will then be able to use the virtual private network to attack the rest
  of your site, from something that's treated as if it were inside of your
@@ -2598,9 +2518,8 @@ tunnel mode
 .
  In the former mode, protection is afforded from host-to-host and host-to-gatewa
 y.
- The latter mode provides protec- tion from gateway-to-gateway when the
- same organization owns the two gateways as well as the host-to-gateway
- connection.
+ The latter mode provides protection from gateway-to-gateway when the same
+ organization owns the two gateways as well as the host-to-gateway connection.
  The tunnel mode is rarely used between hosts in the same network.
  
 \end_layout
@@ -2614,138 +2533,6 @@ The differences between the transport mode and the tunnel mode can be seen
  the IP header and the payload in an IPsec payload.
  It is harder for attackers to identify valuable targets when using the
  unexposed IP header.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Security Association
-\end_layout
-
-\begin_layout Standard
-The SA specifies the manner in which packets are protected.
- The methods employed include cryptographic algorithms, keys, IVs, lifetimes,
- sequence numbers and the mode, i.e., transport or tunnel.
- In a one-way relationship between a sender and recipient, two SAs are required
- for two-way communication.
- Each SA is uniquely identified by a Security Parameter Index (SPI).
- Each IPsec host maintains a database of SAs, indexed by SPI, and the SPI
- is sent with the packet so that the recipient uses the SA to validate and
- extract information.
- 
-\end_layout
-
-\begin_layout Standard
-IKE phase 1 creates an IKE SA; IKE phase 2 creates an IPsec SA through a
- channel protected by the IKE SA.
- The IPsec SAs for ESP or AH that get set up through that IKE SA are called
- Child SAs.
- 
-\end_layout
-
-\begin_layout Subsubsection
-The Encapsulating Security Protocol
-\end_layout
-
-\begin_layout Standard
-The Encapsulating Security Payload (ESP) adds new header and trailer fields
- to every packet.
- In the transport mode there is a confidentiality arrangement for packets
- between (1) two hosts, and (2) a host and gateway.
- In addition, firewalls in the path must be configured to permit the encrypted
- flow of ESP packets.
- However, the transport mode with ESP is rarely used.
- In the tun- nel mode, the confidentiality arrangement for packets resides
- between (1) two gateways, and (2) a host and gateway.
- VPN tunnels are implemented between those two entities.
- It is the location of the IPSec software/hardware that helps determine
- the mode to use.
- 
-\end_layout
-
-\begin_layout Standard
-Both confidentiality and integrity are pro- vided for the packet payload,
- and a symmetric cipher is negotiated as part of the SA during the IKE.
- The difference between the two modes is clearly indicated in the figure.
- In the transport mode, the original IP header is used, the TCP/UDP segment
- and ESP trailer are encrypted, and that combination, together with the
- ESP header, are authenticated using the ESP auth trailer.
- In the tunnel mode, a new header is employed, the TCP/UDP segment and ESP
- trailer are encrypted, and that combination, together with the ESP header,
- are authenticated using the ESP auth trailer.
- Use of the tunnel mode makes it harder for attackers to identify valuable
- targets using the unexposed IP header.
-\end_layout
-
-\begin_layout Standard
-ESP is often used to provide a VPN tunnel for secure communication, between
- two sites of the same organization, over the public unsecure Internet.
- The path traversed by the packets is the following.
- As packets proceed from the internal network to a gateway, the TCP/IP headers
- contain source and destination IP addresses.
- From the sending gateway to the receiving gateway, the entire packet is
- hidden by encryption, which includes the original headers so that source
- and destination IP addresses are unidentifiable.
-\end_layout
-
-\begin_layout Standard
-The new IP header generated by the sending gateway indicates the source
- and destination IP addresses as the sending gateway and receiving gateway,
- respectively.
- As packets travel from the receiving gateway to the receiving host, the
- gateway decrypts the packets and forwards the original IP packet to the
- receiving host in the network it protects.
- 
-\end_layout
-
-\begin_layout Subsubsection
-The Authentication Header
-\end_layout
-
-\begin_layout Standard
-The Authentication Header (AH), employed by the sender for support of the
- authentication pro- cess, uses the HMAC.
- It provides integrity for datagram payloads as well as the IP header.
- The sender and receiver share a secret key used in the HMAC computation,
- and the key is set up by the IKE key establishment protocol.
- The key is recorded in the Security Association (SA), which also records
- the protocol, i.e., AH or ESP, as well as the mode, i.e., transport or tunnel.
-\end_layout
-
-\begin_layout Standard
-Depending on whether transport or tunnel mode is used, the AH header inserted
- after the outermost IP header.
- Integrity check, and thus authentication, does not cover any mutable, unpredict
-able header fields.
- 
-\end_layout
-
-\begin_layout Subsubsection
-The Internet Exchange Key
-\end_layout
-
-\begin_layout Standard
-Key management in IPsec may be performed in a manual mode, through the use
- of pre-shared symmetric keys or in an online manner.
- With manual key management, the keys and parameters used in the cryptographic
- algorithms are exchanged offline, e.g., by phone or face-to-face, and the
- security associations are established by hand.
- 
-\end_layout
-
-\begin_layout Standard
-There is a need to dynamically generate a shared session key and authenticate
- identities.
- Authentication will ensure the identity of the other party, and secrecy
- is maintained by ensuring that the generated shared key is fresh and known
- only to the sender and receiver.
- 
-\series bold
-Forward secrecy
-\series default
- ensures that the compromise of one session key does not lead to the compromise
- of keys in other sessions.
- In addition, this process protects the identity of the parties from eavesdroppe
-rs, and prevents the replay of old key material as well as a denial of service.
  
 \end_layout
 
@@ -2764,8 +2551,43 @@ Proxy
 Forward proxy
 \end_layout
 
+\begin_layout Standard
+An ordinary 
+\series bold
+forward proxy
+\series default
+ is an intermediate server that sits between the client and the origin server.
+ In order to get content from the origin server, the client sends a request
+ to the proxy naming the origin server as the target.
+ The proxy then requests the content from the origin server and returns
+ it to the client.
+ The client must be specially configured to use the forward proxy to access
+ other sites.
+ A typical usage of a forward proxy is to provide Internet access to internal
+ clients that are otherwise restricted by a firewall.
+ The forward proxy can also use caching to reduce network usage.
+\end_layout
+
 \begin_layout Subsection
 Reverse proxy
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+reverse proxy
+\series default
+ (or gateway), by contrast, appears to the client just like an ordinary
+ web server.
+ No special configuration on the client is necessary.
+ The client makes ordinary requests for content in the namespace of the
+ reverse proxy.
+ The reverse proxy then decides where to send those requests and returns
+ the content as if it were itself the origin.
+ A typical usage of a reverse proxy is to provide Internet users access
+ to a server that is behind a firewall.
+ Reverse proxies can also be used to balance load among several back-end
+ servers or to provide caching for a slower back-end server.
 \end_layout
 
 \begin_layout Standard
@@ -2780,17 +2602,20 @@ Intrusion Detection systems
 \end_layout
 
 \begin_layout Standard
-The Intrusion Detection System/Intrusion Prevention System is positioned
- behind the firewall; the VPN is permitted to pass firewall and IDS/IPS
- since the traffic is usually encrypted and authenticated.
+The
+\series bold
+ Intrusion Detection System
+\series default
+ / 
+\series bold
+Intrusion Prevention System
+\series default
+ is positioned behind the firewall; a VPN is permitted to pass firewall
+ and IDS/IPS since the traffic is usually encrypted and authenticated.
  The IDS/IPS provides deep packet inspection for the payload, IDS is based
- on out-of-band detection of intrusions and their reporting, and IPS is
- in-band filtering to block intrusions.
- IDS is performed through a wire tap, and is clearly an out-of-band operation.
- In contrast, IPS is performed inline.
- And by preventing intrusions, IPSs eliminate the need for keeping and reading
- extensive intrusion-incident logs, which contributes to IDSs’ considerable
- CPU, memory, and I/O overhead.
+ on out-of-band (via wiretap) detection of intrusions and their reporting,
+ and IPS is in-band filtering to block intrusions.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2801,7 +2626,7 @@ Being out-of-band, an IDS does not interfere with the traffic, and an IDS
  that was actually benign.
  Since an IDS false positive may cause a security analyst to expend unnecessary
  effort, the false alarm must be minimized whenever possible.
- IPS, on the other hand, is in band, and an IPS false positive blocks legitimate
+ IPS, on the other hand, is in-band, and an IPS false positive blocks legitimate
  traffic.
  IPS cannot have false positives in order to avoid user complaints.
  Therefore, IPS is designed to use a narrow set of rules to block the 
@@ -2812,8 +2637,15 @@ Being out-of-band, an IDS does not interfere with the traffic, and an IDS
 \end_layout
 
 \begin_layout Standard
-IDS/IPS can be either host-based or network-based, in which case it is labeled
- as HIDS/HIPS or NIDS/NIPS, respectively.
+IDS/IPS can be either 
+\series bold
+host-based
+\series default
+ or 
+\series bold
+network-based
+\series default
+, in which case it is labeled as HIDS/HIPS or NIDS/NIPS, respectively.
  In the former case, the monitoring and blocking activity is performed on
  a single host.
  HIDS/HIPS has the advantage that it provides better visibility into the
@@ -2834,28 +2666,6 @@ IDS/IPS can be either host-based or network-based, in which case it is labeled
 \end_layout
 
 \begin_layout Standard
-There are various types of IPS products.
- Host-based application firewalls perform the IPS function independently
- of the operating system and block the entry of application-level and web-based
- intrusions, much like network firewalls bar entry to unwanted traffic.
- A network-based IPS blocks network-level intrusions, such as denial-of-service
- attacks, and may use anomaly detection to recognize threats based on their
- behavior.
- Combining network- and host-based IPSs provides the best protection against
- all types of intrusions.
-\end_layout
-
-\begin_layout Standard
-The basic attack methodology involves the following: reconnaissance and
- scanning, gain access, escalate privilege, maintain access and finally
- cover tracks.
- The growing awareness of the intruder problem has been instrumental in
- the establishment of a number of computer emergency response teams (CERTs).
- These cooperative ventures collect information about system vulnerabilities
- and disseminate it to system managers.
-\end_layout
-
-\begin_layout Standard
 IDS/IPS monitors many activities and can capture an occurrence of any event
  that is deemed to be a security concern.
  Some typical intrusions include reconnaissance; patterns of specific commands
@@ -2872,7 +2682,7 @@ IDS/IPS monitors many activities and can capture an occurrence of any event
 HIDS/HIPS monitoring also includes attacks by legitimate users/insiders.
  These include illegitimate use of root privileges; unauthorized access
  to resources and data; command and program execution, which involves items
- such as the mouse, keyboard, CPU, disks and I/O; programs/ system calls
+ such as the mouse, keyboard, CPU, disks and I/O; programs / system calls
  and process execution frequencies; field/database access activity; and
  the frequency of read/write/create/delete.
 \end_layout
@@ -2901,50 +2711,54 @@ Approaches for IDS/IPS
 
 \begin_layout Standard
 The approaches to intrusion detection can generally be classified as either
- anomaly/behaviorbased or signature-based.
- Anomaly-based detectors generate the normal behavior/pattern (aka profile)
- of the protected system, and deliver an anomaly/outlier alarm if the observed
- behavior at an instant does not conform to expected behavior.
- Anomaly-based IDS/IPS are more prone to generating false positives due
+ behavior-based or signature-based.
+ 
+\series bold
+Behavior-based
+\series default
+ detectors generate the normal behavior/pattern (i.e.
+ profile) of the protected system, and deliver an anomaly/outlier alarm
+ if the observed behavior at an instant does not conform to expected behavior.
+ Behavior-based IDS/IPS are more prone to generating false positives due
  to the dynamic nature of networks, applications and exploits.
- Because of the difficulty of manually setting the profiles for complicated
- and dynamic traffic, anomaly-based detection should be applied at various
- levels of traffic aggregation, such as a single server, a server farm,
- an operation unit, or an enterprise, in order to achieve the accurate protectio
-n.
  According to the type of processing, anomaly detection techniques can be
  classified into three main categories: statistical-based, knowledge-based,
  and machine learning-based.
- Signature-based schemes (aka misuse-based) capture defined patterns, or
- signatures, within the analyzed data in order to create a signature database
- corresponding to known attacks.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Signature-based
+\series default
+ schemes (i.e.
+ misuse-based) capture defined patterns, or signatures, within the analyzed
+ data in order to create a signature database corresponding to known attacks.
  It is efficient and accurate for signature-based detector to identify known
  attacks using a signature database.
  Combined anomaly-based and signature-based IDS/IPS provides the best protection.
 \end_layout
 
 \begin_layout Subsubsection
-Anomaly-based detection methods
+Behavior-based detection methods
 \end_layout
 
 \begin_layout Standard
 Legitimate traffic in networks may contain anomalies.
- For example, protocol anomalies arise from custom applications that use
- off-the-shelf protocol libraries, but employ them in an unexpected manner,
- and behavioral anomalies come from exceptional, but often critical, business
- processes.
  While IDS filters create alerts on suspicious activity that would be later
  pursued by an expert, IPS filters are used for automatic blocking traffic
  or quarantining an endpoint.
- Anomalybased detection mechanisms are useful for IDS to generate alerts.
- When anomaly filters are used by IPS for blocking, the settings must be
- tuned to avoid incorrect actions.
 \end_layout
 
 \begin_layout Standard
-In the statistical-based IDS/IPS, the behavior of the system is represented
- from the captured network traffic activity and a profile representing its
- stochastic behavior is created.
+In the 
+\series bold
+statistical-based
+\series default
+ IDS/IPS, the behavior of the system is represented from the captured network
+ traffic activity and a profile representing its stochastic behavior is
+ created.
  This profile is based on metrics such as the traffic rate, the number of
  packets for each protocol, the rate of connections, the number of different
  IP addresses, etc.
@@ -2958,123 +2772,42 @@ In the statistical-based IDS/IPS, the behavior of the system is represented
  The score normally indicates the degree of deviation for a specific event,
  and the IDS/IPS will flag the occurrence of an anomaly when the score surpasses
  a certain threshold.
- The threshold detection uses thresholds that are independent of users for
- examining the frequency of occurrence of events.
- In contrast, profile detection uses a profile of activity of each user/device
- to detect abnormal behavior.
- Profiles can be established at both global and granular session levels,
- short and long time periods.
 \end_layout
 
 \begin_layout Standard
-With threshold-based detection, network security managers can utilize pre-progra
-mmed limits based on the types of traffic to ensure that servers will not
- become overloaded.
- When a statistical distribution relationship exists among the different
- types of TCP packets, for example, a 3-way handshake, 4-way close and data
- transfer, this relationship can be learned for establishing profiles.
- These profiles can be established upon statistical measures of time-of-day
- and day-ofweek variations in traffic volume.
- Profiles can also be developed for packet rate distributions on a multi-week
- scale for normal network environments.
- Then the profiles can be used to detect denial of service and distributed
- denial of service (DoS/DDoS) anomalies based upon the difference between
- the long-and short-term distributions or rare occurrences of long bursts
- of highrate traffic.
-\end_layout
 
-\begin_layout Standard
-Statistical approaches have a number of advantages.
- First, they do not require prior knowledge about the normal activity of
- the target system; instead, they have the ability to learn the expected
- behavior of the system from observations.
- Second, statistical methods can provide accurate notification of malicious
- activities occurring over long periods of time.
- However, the drawbacks include setting the values of the thresholds, parameters
-/metrics that is a difficult task, especially because the balance between
- false positives and false negatives is affected.
- Not all behaviors can be modeled by using stochastic methods.
-\end_layout
-
-\begin_layout Subsubsection
-Knowledge-/expert-based IDS/IPS
-\end_layout
-
-\begin_layout Standard
-Knowledge-based IDS/IPS captures the normal behavior from available information,
- including expert knowledge, protocol specifications, network traffic instances,
- etc.
+\series bold
+Knowledge-based
+\series default
+ IDS/IPS captures the normal behavior from available information, including
+ expert knowledge, protocol specifications, network traffic instances, etc.
  The normal behavior is represented as a set of rules.
- Attributes and classes are identified from the training data or specifications.
  Then a set of classification rules, parameters or procedures are generated.
  The rules are used for detecting anomaly behaviors.
+ 
+\series bold
+Protocol anomaly
+\series default
+ is based on the inspection of layers 2-7 by specifications-generated rules.
+ Some examples of protocol anomaly are:
 \end_layout
 
-\begin_layout Standard
-Specification-based anomaly methods require that the model is manually construct
-ed by human experts in terms of a set of rules (the specifications) that
- describing the system behavior.
- Specification-based techniques have been shown to produce a low rate of
- false alarms, but are not as effective as other anomaly detection methods
- in detecting novel attacks, especially when it comes to network probing
- and denial-of-service attacks.
- Protocol anomaly is based on the inspection of layers 2-7 by specifications-gen
-erated rules.
+\begin_layout Itemize
+a protocol or service is used for a non-standard purpose or on a non-standard
+ port
 \end_layout
 
-\begin_layout Subsubsection
-ML-based IDS/IPS
+\begin_layout Itemize
+IP defragmentation overlaps and suspicious IP options
 \end_layout
 
-\begin_layout Standard
-Machine learning IDS/IPS schemes are based on the establishment of an explicit
- or implicit model that allows the patterns analyzed to be categorized.
- Machine learning is different from statistical-based methods because machine
- learning discovers the characteristics for building a model of behaviors.
- As more learning is performed, the model will become more accurate.
- The discovery and learning process is the advantage of machine learning;
- however, it requires a significant amount of computational resources.
-\end_layout
-
-\begin_layout Subsubsection
-Signature-based IDS/IPS
-\end_layout
-
-\begin_layout Standard
-Signature-based detection is used to detect patterns of specific known exploits
- and vulnerabilities.
- The exploits include patterns of codes, scripts, registration-key-modification
- and buffer overflow.
- The vulnerabilities include payload content or requests to a known vulnerabilit
-y, which is used to create vulnerability-based signatures.
- Content signature is often a string of characters that appear in the payload
- of packets as part of the attack.
- Once a new vulnerability is disclosed, signatures are developed by researchers
- to counter threats.
- Signature-based systems take a look at the payload and identify whether
- it contains a matched signature.
- While this signature-based detection usually has a lower false positive
- rate, it may not detect zero-day and mutated attacks.
- Malware can be stealthy by embedding its communications into protocols
- that are likely to be present in normal network operations or incorporate
- polymorphism and metamorphism to avoid a fixed signature.
- A Botnet might coordinate with its C&C at irregular intervals and at low
- rates to avoid generating significant anomalies.
- The big challenges to signature-based IDS/IPS are the size of signature
- database, and the processing time of packets against all entries in the
- signature database.
- These can make the IDS vulnerable to DoS attacks.
- Some IDS evasion tools flood signature-based IDSs with too many packets,
- thus making the IDS drop packets and fail detection.
-\end_layout
-
-\begin_layout Subsubsection
-Adaptive profile
+\begin_layout Itemize
+unusual TCP segmentation overlaps and illegal TCP options and usage
 \end_layout
 
 \begin_layout Standard
 With behavior-based detection, the behavior is characterized by the state
- of the protected host/ network.
+ of the protected host/network.
  A baseline of normal behavior is developed, and then when an event falls
  outside this normal behavior pattern, it is flagged and logged.
  The profile of normal behavior consists of a comprehensive list of parameters
@@ -3082,14 +2815,6 @@ With behavior-based detection, the behavior is characterized by the state
  During IDS/IPS installation, the administrator can select an appropriate
  profile (aka policy template) based on the network zone’s mission or service
  types.
- A profile/policy template, provided by the IDS/IPS vendor, is a collection
- of policy construction rules that the IDS/IPS uses to create the zone policies
- during the policy construction phase of the learning process.
- Based on the characteristics of the zone traffic, each policy template
- enables the IDS/IPS to produce a group of policies during the policy constructi
-on phase.
- The IDS/IPS uses the policies to monitor the zone traffic for anomalies
- that indicate an attack on the zone.
  The zone policies are configured to take action against a particular traffic
  flow if the flow exceeds the policy thresholds.
  However, due to the ever-changing nature of network traffic, applications
@@ -3103,6 +2828,117 @@ The self-learning capability supports learning the patterns of network usage
  pattern evolution, and thus avoid raising false alarms.
 \end_layout
 
+\begin_layout Subsubsection
+Signature-based detection methods
+\end_layout
+
+\begin_layout Standard
+Used to detect patterns of specific known exploits and vulnerabilities.
+ The exploits include patterns of codes, scripts, registration-key-modification
+ and buffer overflow.
+ The vulnerabilities include payload content or requests to a known vulnerabilit
+y, which is used to create vulnerability-based signatures.
+ Content signature is often a string of characters that appear in the payload
+ of packets as part of the attack.
+ Once a new vulnerability is disclosed, signatures are developed by researchers
+ to counter threats.
+ 
+\end_layout
+
+\begin_layout Standard
+Signature-based systems take a look at the payload and identify whether
+ it contains a matched signature.
+ While this signature-based detection usually has a lower false positive
+ rate, it may not detect zero-day and mutated attacks.
+ For example, malware can be stealthy by embedding its communications into
+ protocols that are likely to be present in normal network operations or
+ incorporate polymorphism and metamorphism to avoid a fixed signature.
+ The big challenges to signature-based IDS/IPS are the size of signature
+ database, and the processing time of packets against all entries in the
+ signature database.
+ These can make the IDS vulnerable to DoS attacks.
+ Some IDS evasion tools flood signature-based IDSs with too many packets,
+ thus making the IDS drop packets and fail detection.
+\end_layout
+
+\begin_layout Subsection
+Distributed IDS: Security Information and Event Management
+\end_layout
+
+\begin_layout Standard
+Security Information and Event Management (
+\series bold
+SIEM
+\series default
+) technology provides real-time analysis of security alerts generated by
+ the network hardware and software.
+ SIEM solutions come in the form of software, appliances or managed services,
+ and are also used to log security data and generate reports for compliance
+ purposes.
+ SIEM’s capabilities are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+data aggregation
+\series default
+.
+ Log management aggregates data from many sources, including network switches,
+ the firewall, IDS/IPS, servers, databases, and applications in order to
+ consolidate data in an attempt to avoid missing crucial events
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+correlation
+\series default
+.
+ This entity performs a variety of correlation techniques for the integration
+ of different sources, in order to turn data into useful information by
+ using common attributes which link events together in groups
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+alerting
+\series default
+.
+ The automated analysis correlates events and generates alerts when a specific
+ condition is satisfied in order to notify recipients of immediate issues
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+dashboards
+\series default
+.
+ The event data can be summarized in tables and charts to identify abnormal
+ activity
+\end_layout
+
+\begin_layout Standard
+Once logs are stored, you can build filters or rules and timers to audit
+ (monitor against a standard) and validate 
+\series bold
+IT regulatory compliance
+\series default
+, or to identify violations of compliance requirements imposed upon the
+ organization.
+ SIEM generally can produce reports often needed by businesses to provide
+ evidence of self-auditing and to validate their level of compliance.
+\end_layout
+
+\begin_layout Standard
+The correlation engine on a SIEM can investigate and consider (correlate)
+ other events that are not necessarily homogeneous, and can provide a more
+ complete picture of the health status of the system to rule out specific
+ theories on the cause of given events.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -3112,138 +2948,6 @@ The self-learning capability supports learning the patterns of network usage
 
 \begin_layout Section
 Pentesting and vulnerability assessment
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Security Information and Event Management
-\end_layout
-
-\begin_layout Standard
-Security Information and Event Management represent an approach to achieve
- security combining 
-\series bold
-SIM
-\series default
- (i.e.
- collecting logs, forge alerts) and 
-\series bold
-SEM
-\series default
- (i.e.
- real-time system monitoring, admin notifications, event correlations).
- A SIEM is generally made of multiple monitoring and analysis components
- meant to help organizations detect and mitigate threats.
- There is no standard SIEM protocol but most of them are able to:
-\end_layout
-
-\begin_layout Itemize
-collect process informations about distributed sources
-\end_layout
-
-\begin_layout Itemize
-correlate between events
-\end_layout
-
-\begin_layout Itemize
-produce alerts and reports based on those infos
-\end_layout
-
-\begin_layout Itemize
-help for compliance and security incident management (digital forensics)
-\end_layout
-
-\begin_layout Standard
-Furthermore, SIEMs can be agent-based or agentless.
-\end_layout
-
-\begin_layout Subsection
-Log management
-\end_layout
-
-\begin_layout Standard
-Nodes in a system generate logs which are sent to the SIEM database.
- This database collects, analyzes and normalizes the data sent by the numerous
- nodes and provides log storage, archival and retrieval services.
- The SIEM itself performs a near-real time system analysis to assess the
- security status of the IT resources which are sending the logs.
- The more logs the SIEM receives, the more accurate system check will be
- performed.
-\end_layout
-
-\begin_layout Subsection
-IT regulatory compliance
-\end_layout
-
-\begin_layout Standard
-Once the logs are stored you can build filters or rules to audit (monitor
- against a standard) and validate compliance.
- In this case compliance means that the system acts like it is supposed
- to do.
- A SIEM can generate reports which may be needed by businesses for self-auditing
- or self compliance evaluations.
-\end_layout
-
-\begin_layout Subsection
-Event correlation
-\end_layout
-
-\begin_layout Standard
-The SIEM must consider various conditions before triggering an alarm.
- The correlation engine on a SIEM can investigate and consider other events
- that are not necessarily homogeneous.
- It can provide a more complete picture of the health status of the system
- to rule out specific theories on the cause of given events.
- The correlation engines are mainly closed-source and are the most distinguishin
-g feature of a SIEM.
- Before they have to perform event normalization, different vendors means
- different syntaxes.
-\end_layout
-
-\begin_layout Subsection
-Active response
-\end_layout
-
-\begin_layout Standard
-Activate procedures after the identification of given security events.
- The response can be automatically or manually generated.
- A SIEM triggered, automatic, reponse would probably occur faster.
-\end_layout
-
-\begin_layout Subsection
-Endpoint security
-\end_layout
-
-\begin_layout Standard
-Most SIEM can monitor endpoints to centrally evaluate the health.
- Some SIEM can even manage endpoint security by making adjustments and improveme
-nts to the node's security on the remote system.
- They can push down and install OS updates, update the firewall and anti-virus,
- manage removable devices, perform Network Access Control, etc.
-\end_layout
-
-\begin_layout Subsection
-Operational tools
-\end_layout
-
-\begin_layout Standard
-SIEM can rely on threat intelligence feeds, which help officers in making
- decisions concerning organizational security.
- They perform analysis of data by using tools and techniques to generate
- meaningful information about existing or emerging threats, helping organization
-s to adopt a proactive behaviour to combat the attacks.
- SIEM also have two main ways of information representation: dashboards
- and maps, alerts.
- The former is a pull of infos, a way to present informations that admins
- can understand at a glance.
- The latter is pushing of informations and does not require human diligence
- to notice that something is going on.
 \end_layout
 
 \end_body
