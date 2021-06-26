@@ -874,34 +874,15 @@ IP
 
  addresses.
  In comparison, the 
-\begin_inset Formula $128$
+\begin_inset Formula $128\text{-bit}$
 \end_inset
 
- bit IPv6 address space provides for 
+ IPv6 address space provides for 
 \begin_inset Formula $2^{128}$
 \end_inset
 
  addresses.
-\end_layout
-
-\begin_layout Standard
-There are also places in the world that are IPv6-only.
- In some areas of the world today, it is simply not possible to get an IPv4
- address.
- It is true that there are translation techniques that allow IPv4-only and
- IPv6-only networks to communicate with each other, but they are not always
- reliable, and they are often accompanied by degraded performance.
- Also, any sort of translation mechanism makes it difficult to measure the
- quality of the user experience and has the potential to break certain applicati
-ons.
-\end_layout
-
-\begin_layout Subsection
-IPv6 address terminology
-\end_layout
-
-\begin_layout Standard
-The following are a few terms which IPv6 uses: 
+ The following are a few terms which IPv6 uses: 
 \end_layout
 
 \begin_layout Itemize
@@ -921,10 +902,10 @@ prefix length
  the network portion of the address.
  This is equivalent to the subnet mask in IPv4.
  IPv6 addresses are 
-\begin_inset Formula $128$
+\begin_inset Formula $128\text{-bit}$
 \end_inset
 
- bits, so the prefix length can be 
+, so the prefix length can be 
 \begin_inset Formula $/0$
 \end_inset
 
@@ -951,17 +932,17 @@ Representation of IPv6 Addresses
 
 \begin_layout Standard
 IPv6 addresses are 
-\begin_inset Formula $128$
+\begin_inset Formula $128\text{-bit}$
 \end_inset
 
- bits in length and written as a string of hexadecimal digits.
+ in length and written as a string of hexadecimal digits.
  Every 
 \begin_inset Formula $4$
 \end_inset
 
  bits can be represented by a single hexadecimal digit.
  The preferred form is 
-\begin_inset Formula $x:x:x:x:x:x:x:x$
+\begin_inset Formula $x\text{:}x\text{:}x\text{:}x\text{:}x\text{:}x\text{:}x\text{:}x$
 \end_inset
 
 , where each 
@@ -978,7 +959,11 @@ IPv6 addresses are
 \begin_inset Formula $16\text{-bit}$
 \end_inset
 
- sections, or hextets, for a total of 128 bits in the address.
+ sections, or hextets, for a total of 
+\begin_inset Formula $128\text{-bit}$
+\end_inset
+
+ in the address.
  Furthermore, there are three general rules to shorten an IPv6 address:
 \end_layout
 
@@ -1000,7 +985,7 @@ omit all zeros hextets.
 \end_layout
 
 \begin_layout Enumerate
-combine rule 1-2.
+combine rule 1&2.
  You can combine the two rules just discussed to reduce an address even
  further
 \end_layout
@@ -1065,6 +1050,196 @@ IPv6 address prefixes can be represented much the same way that IPv4 address
 \end_layout
 
 \begin_layout Subsection
+Ipv4 vs IPv6 header
+\end_layout
+
+\begin_layout Standard
+The IPv4 
+\series bold
+Internet Header Length
+\series default
+ (IHL) field, is the length of the IPv4 header in 
+\begin_inset Formula $32\text{-bit}$
+\end_inset
+
+ words, including any optional fields or padding.
+ In effect, this points to where the IPv4 header ends and the data or payload
+ begins.
+ IPv6 doesn't have an IHL field because the main IPv6 header has a fixed
+ length of 40 bytes, which allows for more efficient processing.
+\end_layout
+
+\begin_layout Standard
+The IPv4 
+\series bold
+Type of Service
+\series default
+ (ToS) field and the IPv6 
+\series bold
+Traffic Class
+\series default
+ field are identical fields, only the name was changed in IPv6.
+ IPv4 ToS and IPv6 Traffic Class are used to specify what type of treatment
+ the packet should receive from routers.
+ This information helps provide Quality of Service (QoS) features by offering
+ different degrees of precedence.
+\end_layout
+
+\begin_layout Standard
+The IPv6 
+\series bold
+Flow Label
+\series default
+ field, is a new field used to tag a sequence or flow of IPv6 packets sent
+ from a source to one or more destination nodes.
+ This flow can be used by a source to label sequences of packets for which
+ it requests special handling by the IPv6 routers, such as “real-time” service.
+\end_layout
+
+\begin_layout Standard
+The IPv4 
+\series bold
+Total Length
+\series default
+ field is the length of the entire IPv4 packet, measured in bytes, including
+ the IPv4 header and the data.
+ The IPv6 
+\series bold
+Payload Length
+\series default
+ field indicates the length in bytes of just the payload following the main
+ IPv6 header.
+ If the IPv6 packet has one or more extension headers, they are included
+ in the number of bytes contained in the Payload Length field.
+ Extension headers are considered part of the payload.
+ The IPv4 header can vary in length because of the Padding and Options fields,
+ whereas the IPv6 header is fixed at 40 bytes.
+\end_layout
+
+\begin_layout Standard
+IPv4 was designed for a wide variety of transmission links, and allows routers
+ to 
+\series bold
+fragment
+\series default
+ IPv4 packets when an MTU along the path is smaller than the sender's MTU.
+ The final destination of the IPv4 packet is responsible for reassembling
+ the fragments into the original full-size IPv4 packet.
+ Unlike in IPv4, an IPv6 router does not fragment a packet unless it is
+ the source of the packet.
+ When an IPv6 router receives a packet larger than the MTU of the egress
+ interface, the router drops the packet and sends an ICMPv6 Packet Too Big
+ message back to the source.
+ The Packet Too Big message includes the MTU size of the link in bytes so
+ that the source can change the size of the packet for retransmission.
+\end_layout
+
+\begin_layout Standard
+The IPv4 
+\series bold
+Protocol
+\series default
+ field indicates the protocol carried in the data portion of the IPv4 packet.
+ IPv6 has a similar field, the 
+\series bold
+Next Header
+\series default
+ field, that specifies the type of header expected after the main IPv6 header.
+ In a situation when there is only the main IPv6 header and no extension
+ headers, the Next Header field specifies the protocol carried in the data
+ portion of the IPv6 packet.
+\end_layout
+
+\begin_layout Standard
+The IPv4 
+\series bold
+Time to Live
+\series default
+ (TTL) and IPv6 
+\series bold
+Hop Limit
+\series default
+ fields ensure that packets do not transit between networks for an indefinite
+ period of time.
+ The IPv4 Time to Live field was changed to Hop Limit in IPv6 to more accurately
+ reflect the way routers treat this field by decrementing the field by 1.
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+checksum
+\series default
+ for the IPv4 header is provided for protection against any corruption in
+ transit.
+ The designers of IPv6 did not include a Checksum field because Layer 2
+ data link technologies such as Ethernet perform their own checksum and
+ error control.
+ Also, upper-layer protocols such as TCP and UDP have their own checksums,
+ and therefore a checksum at Layer 3 is redundant and unnecessary.
+ Because there is no Checksum field in IPv6, the UDP checksum, which is
+ optional in IPv4, is therefore mandatory in IPv6.
+\end_layout
+
+\begin_layout Standard
+The most notable and recognizable difference in IPv6 compared to IPv4 is
+ the expansion of the source and destination addresses from a 32-bit address
+ in IPv4 to a 
+\begin_inset Formula $128\text{-bit}$
+\end_inset
+
+ address in IPv6.
+\end_layout
+
+\begin_layout Subsubsection
+Extension headers
+\end_layout
+
+\begin_layout Standard
+These are optional headers that add flexibility and allow for future enhancement
+s to IPv6.
+ Extension headers are optional and follow the main IPv6 header.
+ As discussed previously, the main IPv6 header includes a Next Header field,
+ which has one of two purposes: 
+\end_layout
+
+\begin_layout Itemize
+to identify the protocol carried in the data portion of the packet
+\end_layout
+
+\begin_layout Itemize
+to identify the presence of an extension header 
+\end_layout
+
+\begin_layout Standard
+The first purpose of the Next Header field is similar to that of the IPv4
+ Protocol field - to indicate which protocol is being carried in the data
+ portion of the IPv6 packet.
+ The second purpose is one of the more important additions to the IPv6 header:
+ The Next Header field indicates an additional header known as an extension
+ header.
+ Immediately following the mandatory main IPv6 header, there can be zero,
+ one, or several extension headers.
+ 
+\begin_inset Formula $\text{RFC }2460$
+\end_inset
+
+ recommends that when multiple extension headers are used in the same packet,
+ those headers should appear in a specific order.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+IPv6 addresses
+\end_layout
+
+\begin_layout Subsection
 Unicast address
 \end_layout
 
@@ -1108,19 +1283,26 @@ unspecified address: used only as a source address and indicates the absence
 \series bold
 unique local
 \series default
-: similar to a private address in IPv4 (RFC 1918) and not intended to be
- routable in the IPv6 Internet.
- However, unlike RFC 1918 addresses, these addresses are not intended to
- be statefully translated to a global unicast address
+: similar to a private address in IPv4 (
+\begin_inset Formula $\text{RFC }1918$
+\end_inset
+
+) and not intended to be routable in the IPv6 Internet.
+ However, unlike 
+\begin_inset Formula $\text{RFC }1918$
+\end_inset
+
+ addresses, these addresses are not intended to be statefully translated
+ to a global unicast address
 \end_layout
 
 \begin_layout Itemize
 IPv4 embedded: an IPv6 address that carries an IPv4 address in the low-order
  
-\begin_inset Formula $32$
+\begin_inset Formula $32\text{-bit}$
 \end_inset
 
- bits of the address
+ of the address
 \end_layout
 
 \begin_layout Subsubsection
@@ -1128,10 +1310,13 @@ Link Local unicast address
 \end_layout
 
 \begin_layout Standard
-A link-local address is a unicast address that is confined to a single link,
- a single subnet.
- Link-local addresses only need to be unique on the link (subnet) and do
- not need to be unique beyond the link.
+This is confined to a single link, a single subnet.
+ 
+\series bold
+Link-local
+\series default
+ addresses only need to be unique on the link (subnet) and do not need to
+ be unique beyond the link.
  Therefore, routers do not forward packets with a link-local address.
  Devices can use Duplicate Address Detection (
 \series bold
@@ -1139,11 +1324,15 @@ DAD
 \series default
 ) to determine whether or not the link-local address is unique.
  Link-local unicast addresses are in the range of 
-\begin_inset Formula $fe80::/10$
+\begin_inset Formula $\text{fe}80\text{::}/10$
 \end_inset
 
 .
- The least-significant (rightmost) 64 bits are used as the Interface ID.
+ The least-significant (rightmost) 
+\begin_inset Formula $64\text{-bit}$
+\end_inset
+
+ are used as the Interface ID.
  With IPv6, during startup the device automatically gives itself a link-local
  address that is unique on that subnet.
  It can then use this address to communicate with any device on the network,
@@ -1183,7 +1372,7 @@ s, these are globally routable and reachable in the IPv6 Internet, similar
  to public IPv4 addresses.
  The current global unicast address assignment from IANA begins with binary
  value 001, or the prefix 
-\begin_inset Formula $2000::/3$
+\begin_inset Formula $2000\text{::}/3$
 \end_inset
 
 .
@@ -1267,10 +1456,10 @@ Similar to IPv4, the IPv6 prefix length determines the number of subnets
 \end_inset
 
  hextets, or 
-\begin_inset Formula $48$
+\begin_inset Formula $48\text{-bit}$
 \end_inset
 
- bits, of the Global Routing Prefix
+, of the Global Routing Prefix
 \end_layout
 
 \begin_layout Itemize
@@ -1278,7 +1467,7 @@ Similar to IPv4, the IPv6 prefix length determines the number of subnets
 \end_inset
 
  hextet, or 
-\begin_inset Formula $16$
+\begin_inset Formula $16\text{-bit}$
 \end_inset
 
  bits, of the Subnet ID
@@ -1289,7 +1478,7 @@ Similar to IPv4, the IPv6 prefix length determines the number of subnets
 \end_inset
 
  hextets, or 
-\begin_inset Formula $64$
+\begin_inset Formula $64\text{-bit}$
 \end_inset
 
  bits, of the Interface ID.
@@ -1315,7 +1504,7 @@ Multicast
  An IPv6 multicast address defines a group of devices known as a multicast
  group.
  IPv6 multicast addresses use the prefix 
-\begin_inset Formula $ff00::/8$
+\begin_inset Formula $\text{ff}00\text{\text{::}}/8$
 \end_inset
 
 , which is equivalent to the IPv4 multicast address 
@@ -1337,7 +1526,7 @@ Multicast
 well-known
 \series default
  multicast addresses have the prefix 
-\begin_inset Formula $ff00::/12$
+\begin_inset Formula $\text{ff}00\text{::}/12$
 \end_inset
 
 .
@@ -1359,7 +1548,7 @@ well-known
 \series bold
 solicited-node
 \series default
- multicast addresses are used as a more efficient approach to IPv4’s broadcast
+ multicast addresses are used as a more efficient approach to IPv4 broadcast
  address.
  These are used in Layer 3-to-Layer 2 address resolution, similar to how
  Address Resolution Protocol (ARP) is used in IPv4.
@@ -1382,12 +1571,140 @@ An IPv6 anycast address is an address that can be assigned to more than
  Each participating device is configured to have the same anycast address.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-IPv6 addressing
+ICMPv6 Neighbor Discovery Protocol
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ICMPv6
+\series default
+ has its roots in ICMPv4.
+ ICMPv6 informational and error messages are very similar to those in ICMPv4.
+ However, the addition of ICMPv6 Neighbor Discovery Protocol (ND) makes
+ ICMPv6 a much more robust protocol, with new features and enhancements
+ not found in its ICMPv4 counterpart.
+ 
+\series bold
+Neighbor Discovery
+\series default
+ includes similar processes as in IPv4, such as address resolution, router
+ discovery, and redirect, but also with some significant differences; it
+ also includes new functionality such as prefix discovery, Duplicate Address
+ Detection (DAD), and Neighbor Unreachability Detection (NUD).
 \end_layout
 
 \begin_layout Subsection
-Dynamic IPv6 address allocation
+Default router and prefix determination
+\end_layout
+
+\begin_layout Standard
+A host sends a 
+\series bold
+Router Solicitation
+\series default
+ message when it needs to know how to dynamically obtain its addressing
+ information.
+ This typically occurs during startup and is the default on most host operating
+ systems.
+ RS messages are sent to the all-IPv6 routers multicast address, 
+\begin_inset Formula $\text{ff}02\text{::}2$
+\end_inset
+
+.
+ The source IPv6 address is either the device's link-local address or an
+ unspecified IPv6 address (
+\begin_inset Formula $::$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Routers send 
+\series bold
+Router Advertisement
+\series default
+ messages periodically, and they also send a RA message upon receiving a
+ Router Solicitation message from a device.
+ The RA message is a suggestion to devices on the link about how to obtain
+ their addressing information dynamically.
+ This information in the RA message includes prefix, default router, and
+ other configuration information.
+ The RA message is sent to the all-IPv6 devices multicast address, 
+\begin_inset Formula $\text{ff}02\text{::}\text{1}$
+\end_inset
+
+.
+ The router can also be configured to send a Router Advertisement message
+ as a unicast when it is in response to a Router Solicitation message.
+ 
+\end_layout
+
+\begin_layout Subsection
+Address resolution
+\end_layout
+
+\begin_layout Standard
+Neighbor Solicitation (NS) and Neighbor Advertisement (NA) are two more
+ ICMPv6 Neighbor Discovery messages.
+ These messages are used as follows
+\end_layout
+
+\begin_layout Itemize
+address resolution.
+ A device sends a 
+\series bold
+Neighbor Solicitation
+\series default
+ message when it knows the destination IPv6 address but needs to request
+ its Layer 2 address (typically an Ethernet address).
+ This is similar to an ARP Request in IPv4.
+ In response to the Neighbor Solicitation message, the target device sends
+ in a 
+\series bold
+Neighbor Advertisement
+\series default
+ message, similar to an ARP Reply.
+ Address resolution includes 
+\series bold
+Duplicate Address Detection
+\series default
+ (DAD), which verifies the uniqueness of an address on the link.
+ DAD is much like a gratuitous ARP.
+ The device sends a Neighbor Solicitation message for its own IPv6 address
+ to detect whether another device on the link is using the same address.
+ If a Neighbor Advertisement message is not received, the device knows its
+ address is unique on the link
+\end_layout
+
+\begin_layout Itemize
+neighbor Cache and Neighbor Unreachability Detection (NUD).
+ IPv6 devices use NS messages and their associated NA messages to build
+ a Neighbor Cache.
+ The Neighbor Cache contains a mapping of IPv6 to Ethernet MAC addresses,
+ similar to an IPv4 ARP cache.
+ Neighbor Unreachability Detection (NUD) uses NS and NA messages to detect
+ whether another device is reachable on the link.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+IPv6 Dynamic addressing
 \end_layout
 
 \begin_layout Standard
@@ -1413,7 +1730,7 @@ As with IPv4, IPv6 addresses can be statically assigned.
  it receives a Router Solicitation request from a device.
  The RA message is typically sent to the all-IPv6 devices multicast address,
  
-\begin_inset Formula $ff02::1$
+\begin_inset Formula $\text{ff}02\text{::}1$
 \end_inset
 
 , so every IPv6 device on the link (network) receives it (can also be sent
@@ -1500,56 +1817,8 @@ A device that is not a router maintains a Default Router List.
  
 \end_layout
 
-\begin_layout Subsubsection
-ICMPv6 Neighbor Discovery Protocol
-\end_layout
-
-\begin_layout Standard
-ICMPv6 Neighbor Discovery Protocol (
-\series bold
-NDP
-\series default
-) adds new functionality for ICMPv6.
- NDP is used for on-link (same subnet) device discovery and messaging.
- NDP includes five message types: Router Solicitation, Router Advertisement,
- Neighbor Solicitation, Neighbor Advertisement, and Redirect messages.
- The first four messages are new with ICMPv6.
- The Redirect message is also part of ICMPv4 but contains additional functionali
-ty
-\end_layout
-
-\begin_layout Itemize
-the 
-\series bold
-Neighbor Solicitation
-\series default
- and 
-\series bold
-Neighbor Advertisement
-\series default
- messages are used for messaging between any two devices on the same link
- (subnet)
-\end_layout
-
-\begin_layout Itemize
-the 
-\series bold
-Router Solicitation
-\series default
- and 
-\series bold
-Router Advertisement
-\series default
- messages are used for messaging between a device and a router on the same
- link (subnet).
- The former is sent by a router as a suggestion to devices about how to
- dynamically obtain their IPv6 addressing information.
- The latter is sent by a device to request a Router Advertisement message
- from the router
-\end_layout
-
-\begin_layout Subsubsection
-Stateless Address Autoconfiguration
+\begin_layout Subsection
+Stateless Address AutoConfiguration
 \end_layout
 
 \begin_layout Standard
@@ -1609,7 +1878,7 @@ After a device generates one or more addresses using SLAAC, it contacts
  a domain name.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Stateful DHCPv6 server 
 \end_layout
 
@@ -1710,7 +1979,7 @@ Internet firewalls
 \end_layout
 
 \begin_layout Standard
-As we've mentioned, firewalls are a very effective type of network security.
+As mentioned before, firewalls are a very effective type of network security.
  A firewall serves multiple purposes:
 \end_layout
 
@@ -2302,6 +2571,919 @@ Others use this architecture to provide administrative access to machines
  
 \end_layout
 
+\begin_layout Subsection
+Iptables
+\end_layout
+
+\begin_layout Standard
+When a packet first enters the firewall, it hits the hardware and then gets
+ passed on to the proper device driver in the kernel.
+ Then the packet starts to go through a series of steps in the kernel, before
+ it is either sent to the correct application (locally), or forwarded to
+ another host - or whatever happens to it.
+ 
+\end_layout
+
+\begin_layout Standard
+Iptables is the implementation of a packet filtering firewall for Linux
+ that runs in kernel space.
+ Rules are grouped in tables, each table has different 
+\series bold
+chains
+\series default
+ of rules, and packets fate depend on the 
+\series bold
+first matching rule
+\series default
+.
+ Iptables also comes with four built-in 
+\series bold
+targets
+\series default
+: ACCEPT, DROP, REJECT (block the packet and send an error message), and
+ LOG.
+\end_layout
+
+\begin_layout Subsubsection
+Stateful filtering
+\end_layout
+
+\begin_layout Standard
+A TCP connection is always initiated with the 3-way handshake, which establishes
+ and negotiates the actual connection over which data will be sent.
+ The whole session is begun with a SYN packet, then a SYN/ACK packet and
+ finally an ACK packet to acknowledge the whole session establishment.
+ At this point the connection is established and able to start sending data.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Conntrack
+\series default
+ is the module responsible for keeping track of connections state.
+ The connection tracking code does not really follow the flow of the TCP
+ connection, from the users viewpoint.
+ Once it has seen one packet (SYN), it considers the connection as NEW.
+ Once it sees the return packet (SYN/ACK), it considers the connection as
+ ESTABLISHED.
+\end_layout
+
+\begin_layout Subsubsection
+Destination local host
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+step
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+table
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+chain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+comment
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+raw
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PREROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+handle packets before connection tracking
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PREROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PREROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mainly for DNAT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+INPUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+filter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+INPUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+filtering incoming traffic destined for localhost
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Source local host
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+step
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+table
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+chain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+comment
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+raw
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OUTPUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+handle packets before connection tracking (for locally generated packets)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OUTPUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OUTPUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NAT outgoing packets
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+filter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OUTPUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POSTROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POSTROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SNAT outgoing packets
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Forwarded packets
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+step
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+table
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+chain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+comment
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+raw
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PREROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+set a connection to not be handled by the connection tracking
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PREROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PREROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mainly for DNAT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FORWARD
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+filter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FORWARD
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+filtering incoming traffic destined for localhost
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mangle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POSTROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POSTROUTING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SNAT outgoing packets
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -2552,7 +3734,7 @@ Forward proxy
 \end_layout
 
 \begin_layout Standard
-An ordinary 
+A 
 \series bold
 forward proxy
 \series default
@@ -2561,11 +3743,52 @@ forward proxy
  to the proxy naming the origin server as the target.
  The proxy then requests the content from the origin server and returns
  it to the client.
- The client must be specially configured to use the forward proxy to access
- other sites.
+ 
+\end_layout
+
+\begin_layout Standard
+In other words, a forward proxy operates on behalf of the client, specially
+ configured to use the forward proxy to access other sites.
  A typical usage of a forward proxy is to provide Internet access to internal
  clients that are otherwise restricted by a firewall.
  The forward proxy can also use caching to reduce network usage.
+\end_layout
+
+\begin_layout Subsubsection
+HTTP tunnel
+\end_layout
+
+\begin_layout Standard
+Enstablish a network link between two hosts in conditions of restricted
+ network connectivity including firewalls, NATs and ACLs, among other restrictio
+ns.
+ The tunnel is created by an intermediary proxy server, which is usually
+ located in a DMZ.
+ 
+\end_layout
+
+\begin_layout Standard
+The most common form of HTTP tunneling is the standardized 
+\series bold
+HTTP CONNECT
+\series default
+ method.
+ In this mechanism, the client asks a HTTP proxy server to forward the TCP
+ connection to the desired destination.
+ The server then proceeds to make the connection on behalf of the client.
+ Once the connection has been established by the server, the proxy server
+ continues to proxy the TCP stream to and from the client.
+ Only the initial connection request is HTTP - after that, the server simply
+ proxies the established TCP connection.
+\end_layout
+
+\begin_layout Standard
+This mechanism is how a client behind an HTTP proxy can access websites
+ using SSL/TLS.
+ Proxy servers may also limit connections by only allowing connections to
+ the default HTTPS port 443, whitelisting hosts, or blocking traffic which
+ doesn't appear to be SSL/TLS.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -2582,12 +3805,163 @@ reverse proxy
  No special configuration on the client is necessary.
  The client makes ordinary requests for content in the namespace of the
  reverse proxy.
- The reverse proxy then decides where to send those requests and returns
- the content as if it were itself the origin.
- A typical usage of a reverse proxy is to provide Internet users access
- to a server that is behind a firewall.
+ The reverse proxy operates on behalf of the server, and decides where to
+ send those requests and returns the content as if it were itself the origin.
+\end_layout
+
+\begin_layout Standard
+A typical usage of a reverse proxy is to provide Internet users access to
+ a server that is behind a firewall.
  Reverse proxies can also be used to balance load among several back-end
  servers or to provide caching for a slower back-end server.
+\end_layout
+
+\begin_layout Subsubsection
+TLS termination proxy
+\end_layout
+
+\begin_layout Standard
+A server that acts as an intermediary point between client and server applicatio
+ns, and is used to terminate and/or establish TLS (or DTLS) tunnels by decryptin
+g and/or encrypting communications.
+ TLS termination proxies can provide three connectivity patterns: offloading,
+ encryption, bridging.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+TLS offloading
+\series default
+: inbound encrypted TLS connections from clients are forwarded over a plain
+ text connection to the server.
+ This can be useful to provide support for HTTPS to (legacy) servers that
+ only support HTTP, or allow IDS or application firewall inspection.
+ No direct connection with the outside also means defense against DoS
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+TLS bridging
+\series default
+: inbound encrypted TLS connections from clients are re-encrypted with another
+ TLS connection to the server.
+ This allows inspection of encrypted data, before it reached the server,
+ to ensure it does not contain malicious code and prevent application layer
+ attacks
+\end_layout
+
+\begin_layout Subsubsection
+Web application firewall
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+web application firewall
+\series default
+ (WAF) is a specific form of application firewall that filters, monitors,
+ and blocks HTTP traffic to and from a web service.
+ By inspecting HTTP traffic, it can prevent attacks exploiting a web application
+'s known vulnerabilities, such as SQL injection, XSS, and improper system
+ configuration.
+\end_layout
+
+\begin_layout Standard
+A WAF can block application I/O from detected intrusions or malformed communicat
+ion, block contents that violate policies, and detect whether an unwanted
+ protocol is being provided through on a non-standard port, or whether a
+ protocol is being abused in any harmful way.
+\end_layout
+
+\begin_layout Subsection
+Anonymous proxy
+\end_layout
+
+\begin_layout Standard
+An 
+\series bold
+anonymizer
+\series default
+ or an anonymous proxy is a server which acts as an intermediary and privacy
+ shield between a client computer and the rest of the Internet.
+ It accesses the Internet on the user's behalf, protecting personal information
+ of the user by hiding the client computer's identifying information.
+ Anonymizers can be protocol-specific or protocol-independent (enstablishes
+ a tunnel with protocols such as SOCKS or OpenVPN).
+\end_layout
+
+\begin_layout Subsection
+SSL bump
+\end_layout
+
+\begin_layout Standard
+Since HTTPS traffic cannot be read, if we want to analyze it we have to
+ perfom a MITM attack, where a proxy pretends to be the real server and
+ be the 
+\series bold
+termination
+\series default
+ of the TLS connection.
+ 
+\series bold
+SSL bump
+\series default
+ consists in using the requested host name to dynamically generate a server
+ certificate and then impersonate the named server.
+\end_layout
+
+\begin_layout Standard
+If we do not know the host name we can rely on 
+\series bold
+Server Name Indication
+\series default
+ (SNI), an extension to TLS by which a client indicates which hostname it
+ is attempting to connect to at the start of the handshaking process, in
+ clear text.
+ This allows a server to present multiple certificates on the same IP address
+ and TCP port number and hence allows multiple secure (HTTPS) websites (or
+ any other service over TLS) to be served by the same IP address, without
+ requiring all those sites to use the same certificate.
+\end_layout
+
+\begin_layout Subsection
+ICAP
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ICAP
+\series default
+ is a protocol designed to off-load specific Internet-based content to dedicated
+ servers,thereby freeing up resources and standardizing the way in which
+ features are implemented.
+ These ICAP servers are focused on a specific function, for example virus
+ scanning, content translation, or content filtering.
+\end_layout
+
+\begin_layout Standard
+ICAP in its most basic form is a 
+\begin_inset Quotes eld
+\end_inset
+
+lightweight
+\begin_inset Quotes erd
+\end_inset
+
+ HTTP based remote procedure call protocol.
+ Inother words, ICAP allows its clients to pass HTTP based (HTML) messages
+ (Content) to ICAPservers for adaptation.
+ Adaptation refers to performing the particular value added service (content
+ manipulation) for the associated client request/response.
+\end_layout
+
+\begin_layout Standard
+Coupled with transparent proxy (acting as a ICAP client), it allows to transpare
+ntly provide additional functionalities, using a standardized interface
+ towards ICAP servers.
 \end_layout
 
 \begin_layout Standard
@@ -2846,8 +4220,11 @@ y, which is used to create vulnerability-based signatures.
 \end_layout
 
 \begin_layout Standard
-Signature-based systems take a look at the payload and identify whether
- it contains a matched signature.
+
+\series bold
+Signature-based systems
+\series default
+ take a look at the payload and identify whether it contains a matched signature.
  While this signature-based detection usually has a lower false positive
  rate, it may not detect zero-day and mutated attacks.
  For example, malware can be stealthy by embedding its communications into
@@ -2948,6 +4325,55 @@ The correlation engine on a SIEM can investigate and consider (correlate)
 
 \begin_layout Section
 Pentesting and vulnerability assessment
+\end_layout
+
+\begin_layout Subsection
+Vulnerability assessment
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+vulnerability scanner
+\series default
+ is a software designed to assess hosts, networks or applications for known
+ weaknesses.
+ A vulnerability scanner can check for thousands of potential problems quickly
+ in an automated way, can help identify rogue machines, provide a generic
+ risk level, explain why the item is a risk and provide detailed information
+ on how to apply remediation.
+ These tools rely on a database of vulnerability signatures, which searches
+ for on a target system, and is not able to find novel vulnerabilities.
+\end_layout
+
+\begin_layout Standard
+A vulnerability scanner can be categorized as agent (a monitoring software
+ runs on each end node and communicates with a central scanner) or agent-less,
+ passive (only monitors network traffic, transparent) or active (probes
+ specific services/protocols for weaknesses, more intrusive).
+\end_layout
+
+\begin_layout Subsubsection
+Common Vulnerabilities and Exposures
+\end_layout
+
+\begin_layout Standard
+A dictionary of common names, i.e.
+ 
+\series bold
+CVE
+\series default
+s, for publicly known information security vulnerabilities.
+ CVE is the industry standard for vulnerability and exposure identifiers.
+ 
+\end_layout
+
+\begin_layout Standard
+When a new cyber-vulnerability is discovered, a CVE number is publicly assigned
+ to it by an authority such as the MITRE Corporation.
+ The vulnerability is then analyzed by the NIST whose Common Vulnerability
+ Scoring System (CVSS) provides both a severity score and eight commonly
+ adopted security attributes of the vulnerability.
 \end_layout
 
 \end_body
