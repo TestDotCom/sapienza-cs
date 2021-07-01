@@ -149,7 +149,11 @@ broad network access
 \end_layout
 
 \begin_layout Itemize
-resource polling.
+
+\series bold
+resource polling
+\series default
+.
  The provider computing resources are pooled to serve multiple consumers
  using a multi-tenant model, with different physical and virtual resources
  dynamically assigned and reassigned according to consumer demand
@@ -166,16 +170,19 @@ rapid elasticity
 \end_layout
 
 \begin_layout Itemize
-measured service.
+
+\series bold
+measured service
+\series default
+s.
  Cloud systems automatically control and optimize resource use by leaveraging
  a metering capability at some level of abstraction appropriate to the type
  of service
 \end_layout
 
 \begin_layout Standard
-This definition describes cloud computing as aphenomenon touching on the
- entire stack: from the underlying hardware to the high-level software services
- and applications.
+Cloud computing is a phenomenon touching on the entire stack: from the underlyin
+g hardware to the high-level software services and applications.
  It introduces the concept of 
 \begin_inset Quotes eld
 \end_inset
@@ -371,35 +378,6 @@ cloud auditor
 .
  A party that can conduct independent assessment of cloud services, information
  system operations, performance and security of the cloud implementation
-\end_layout
-
-\begin_layout Subsubsection
-Scaling 
-\end_layout
-
-\begin_layout Standard
-From an IT resource perspective, represents the ability of the IT resource
- to handle increased or decreased usage demands.
- The allocation or release of IT resources that are of the same type is
- referred to as 
-\series bold
-horizontal scaling
-\series default
-.
- The horizontal allocation of resources is referred to as scaling out and
- the horizontal releasing of resources is referred to as scaling in.
- Horizontal scaling is a common form of scaling within cloud environments.
- Instead, when an existing IT resource is replaced by another with higher
- or lower capacity, we refer to 
-\series bold
-vertical scaling
-\series default
-.
- Specifically, the replacing of an IT resource with another that has a higher
- capacity is referred to as scaling up and the replacing an IT resource
- with another that has a lower capacity is considered scaling down.
- Vertical scaling is less common in cloud environments due to the downtime
- required while the replacement is taking place.
 \end_layout
 
 \begin_layout Subsubsection
@@ -653,7 +631,7 @@ Autonomic systems are commonly modeled as closed-loop control systems where
 elasticity
 \series default
 .
- Autonomic systems can monitor usage conditions and leverage cloudbased
+ Autonomic systems can monitor usage conditions and leverage cloud-based
  IT resources to automatically acquire and free IT resources as needed for
  the purpose of maintaining required service levels
 \end_layout
@@ -791,8 +769,12 @@ The
 \begin_inset Formula $x\text{-axis}$
 \end_inset
 
- of scale is very useful and easy to implement, you simply clone the activity
- among several participants.
+, or 
+\series bold
+vertical scaling
+\series default
+, is very useful and easy to implement: simply clone the activity among
+ several participants.
  Scaling along the 
 \begin_inset Formula $x\text{-axis}$
 \end_inset
@@ -809,7 +791,11 @@ The
 \begin_inset Formula $y\text{-axis}$
 \end_inset
 
- helps to solve that problem by isolating transaction type and speed to
+, or 
+\series bold
+horizontal scaling
+\series default
+, helps to solve that problem by isolating transaction type and speed to
  systems and people specializing in that area of data or service.
  Slower transactions are now bunched together, but because the data set
  has been reduced relative to the 
@@ -1924,6 +1910,359 @@ Emulation, as described, is different from hardware-level virtualization.
 \end_layout
 
 \begin_layout Section
+Process virtualization with Docker
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Docker
+\series default
+ provides the ability to package and run an application in a loosely isolated
+ environment called a 
+\series bold
+container
+\series default
+.
+ Unlike virtual machines, Docker containers do not use any hardware virtualizati
+on.
+ Instead, it builds on top of the container technology already provided
+ by the operating system kernel.
+ Programs running inside Docker containers interface directly with the host's
+ Linux kernel.
+ Many programs can run in isolation without running redundant operating
+ systems or suffering the delay of full boot sequences.
+\end_layout
+
+\begin_layout Standard
+Docker uses a client-server architecture.
+ The Docker client talks to the Docker daemon, which does the heavy lifting
+ of building, running, and distributing your Docker containers.
+ The Docker client and daemon can run on the same system, or you can connect
+ a Docker client to a remote Docker daemon.
+ Another Docker client is Docker Compose, that lets you work with applications
+ consisting of a set of containers.
+\end_layout
+
+\begin_layout Subsection
+Underlying technology
+\end_layout
+
+\begin_layout Subsubsection
+Namespaces
+\end_layout
+
+\begin_layout Standard
+Every running program - or process - on a Linux machine has a unique number
+ called a process identifier (PID).
+ A PID namespace is a set of unique numbers that identify processes.
+ Linux provides tools to create multiple PID namespaces.
+ Each namespace has a complete set of possible PIDs.
+ Most programs will not need access to other running processes or be able
+ to list the other running processes on the system.
+ And so Docker creates a new PID namespace for each container by default.
+ A container PID namespace isolates processes in that container from processes
+ in other containers.
+ 
+\end_layout
+
+\begin_layout Standard
+Without a PID namespace, the processes running inside a container would
+ share the same ID space as those in other containers or on the host.
+ A process in a container would be able to determine what other processes
+ were running on the host machine.
+ Worse, processes in one container might be able to control processes in
+ other containers.
+ A process that cannot reference any processes outside its namespace is
+ limited in its ability to perform targeted attacks.
+\end_layout
+
+\begin_layout Subsubsection
+Control groups
+\end_layout
+
+\begin_layout Standard
+Physical system resources such as memory and time on the CPU are scarce.
+ If the resource consumption of processes on a computer exceeds the available
+ physical resources, the processes will experience performance issues and
+ may stop running.
+ Part of building a system that creates strong isolation includes providing
+ resource allowances on individual containers.
+ Docker Engine on Linux relies on control groups (
+\series bold
+cgroups
+\series default
+) to organize processes into hierarchical groups, whose usage of various
+ types of resources can then be limited and monitored.
+\end_layout
+
+\begin_layout Subsubsection
+Images and layers
+\end_layout
+
+\begin_layout Standard
+Most of the time what we have been calling an image is actually a collection
+ of image layers.
+ A layer is set of files and file metadata that is packaged and distributed
+ as an atomic unit.
+ Images maintain parent/child relationships.
+ The files available to a container are the union of all layers in the lineage
+ of the image that the container was created from.
+ Images can have relationships with any other image, including images in
+ different repositories with different owners.
+\end_layout
+
+\begin_layout Subsubsection
+Union Filesystem
+\end_layout
+
+\begin_layout Standard
+Programs running inside containers know nothing about image layers.
+ From inside a container, the filesystem operates as though it's not running
+ in a container or operating on an image.
+ From the perspective of the container, it has exclusive copies of the files
+ provided by the image.
+ This is made possible with something called a union filesystem (
+\series bold
+UFS
+\series default
+).
+ 
+\end_layout
+
+\begin_layout Standard
+Docker uses a variety of union filesystems and can select the best fit for
+ the system.
+ The filesystem is used to create mount points on the host filesystem that
+ abstract the use of layers.
+ The layers created are bundled into Docker image layers.
+ Likewise, when a Docker image is installed, its layers are unpacked and
+ appropriately configured for use by the specific filesystem provider chosen
+ for the system.
+ Lastly, chroot is used to make the root of the image filesystem the root
+ in the container's context.
+ This prevents anything running inside the container from referencing any
+ other part of the host filesystem.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Container format
+\end_layout
+
+\begin_layout Standard
+Docker Engine combines the namespaces, control groups, and UnionFS into
+ a wrapper called a 
+\series bold
+container format
+\series default
+.
+ The default container format is libcontainer.
+\end_layout
+
+\begin_layout Subsection
+Storage
+\end_layout
+
+\begin_layout Standard
+By default all files created inside a container are stored on a writable
+ container layer.
+ This means that:
+\end_layout
+
+\begin_layout Itemize
+the data does not persist when that container no longer exists, and it can
+ be difficult to get the data out of the container if another process needs
+ it
+\end_layout
+
+\begin_layout Itemize
+a container writable layer is tightly coupled to the host machine where
+ the container is running.
+ You can not easily move the data somewhere else
+\end_layout
+
+\begin_layout Itemize
+writing into a container writable layer requires a storage driver to manage
+ the filesystem.
+ The storage driver provides a union filesystem, using the Linux kernel.
+ This extra abstraction reduces performance as compared to using data volumes,
+ which write directly to the host filesystem
+\end_layout
+
+\begin_layout Standard
+Docker has two options for containers to store files in the host machine,
+ so that the files are persisted even after the container stops: volumes,
+ and bind mounts.
+ If running Docker on Linux you can also use a tmpfs mount.
+ If running Docker on Windows you can also use a named pipe.
+\end_layout
+
+\begin_layout Subsubsection
+Volumes
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Volumes
+\series default
+ are the preferred way to persist data in Docker containers and services.
+ Some use cases for volumes include:
+\end_layout
+
+\begin_layout Itemize
+sharing data among multiple running containers.
+ Volumes persist after a container is removed/stopped, and multiple containers
+ can mount the same volume simultaneously
+\end_layout
+
+\begin_layout Itemize
+when the Docker host is not guaranteed to have a given directory or file
+ structure.
+ Volumes help you decouple the configuration of the Docker host from the
+ container runtime
+\end_layout
+
+\begin_layout Itemize
+store your container data on a remote host or a cloud provider
+\end_layout
+
+\begin_layout Itemize
+back up, restore, or migrate data from one Docker host to another
+\end_layout
+
+\begin_layout Itemize
+when an app requires high-performance I/O.
+ Volumes are stored in the Linux VM rather than the host, which means that
+ the reads and writes have much lower latency and higher throughput
+\end_layout
+
+\begin_layout Itemize
+when an app requires fully native file system behavior, e.g.
+ DBA requires precise control over disk flushing to guarantee transaction
+ durability
+\end_layout
+
+\begin_layout Subsubsection
+Bind mounts
+\end_layout
+
+\begin_layout Standard
+In general, you should use volumes where possible.
+ 
+\series bold
+Bind mounts
+\series default
+ are appropriate for the following types of use case:
+\end_layout
+
+\begin_layout Itemize
+sharing configuration files from the host machine to containers.
+ This is how Docker provides DNS resolution to containers by default
+\end_layout
+
+\begin_layout Itemize
+sharing source code or build artifacts between a development environment
+ on the Docker host and a container
+\end_layout
+
+\begin_layout Itemize
+if you use Docker for development this way, your production Dockerfile would
+ copy the production-ready artifacts directly into the image, rather than
+ relying on a bind mount
+\end_layout
+
+\begin_layout Itemize
+when the file or directory structure of the Docker host is guaranteed to
+ be consistent with the bind mounts the containers require
+\end_layout
+
+\begin_layout Subsubsection
+Tmpfs mounts
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Tmpfs mounts
+\series default
+ are best used for cases when you do not want the data to persist either
+ on the host machine or within the container.
+ This may be for security reasons or to protect the performance of the container
+ when your application needs to write a large volume of non-persistent state
+ data.
+\end_layout
+
+\begin_layout Subsection
+Networking
+\end_layout
+
+\begin_layout Standard
+Docker networking subsystem is pluggable, using drivers.
+ Several drivers exist by default, and provide core networking functionality:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+bridge
+\series default
+ its the default network driver.
+ Bridge networks are useful when you need multiple containers to communicate
+ on the same Docker host
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ is for standalone containers, removes network isolation between the container
+ and the Docker host, and use the host networking directly
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+overlay
+\series default
+ networks connect multiple Docker daemons together and enable swarm services
+ to communicate with each other
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+macvlan
+\series default
+ networks allow you to assign a MAC address to a container, making it appear
+ as a physical device on your network.
+ Using the macvlan driver is sometimes the best choice when dealing with
+ legacy applications that expect to be directly connected to the physical
+ network, rather than routed through the Docker host’s network stack, or
+ when you are migrating from a VM setup
+\end_layout
+
+\begin_layout Subsection
+Higher-level abstractions and orchestration 
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+swarm
+\series default
+ consists of multiple Docker hosts which run in swarm mode and act as managers
+ and/or workers, which run swarm services.
+ Any processes, functionality, or data that must be discoverable and available
+ over a network is called a service.
+ A service is defined by its optimal state (number of replicas, network
+ and storage resources available, exposed ports, and more).
+ Docker works to maintain that desired state.
+\end_layout
+
+\begin_layout Section
 Scaling mechanisms
 \end_layout
 
@@ -2021,12 +2360,13 @@ The automated scaling listener mechanism is a service agent that monitors
 \end_layout
 
 \begin_layout Itemize
-automatically scaling IT resources out or in based on parameters previously
- defined by the cloud consumer (commonly referred to as 
+
 \series bold
 autoscaling
 \series default
-)
+.
+ automatically scaling IT resources out or in based on parameters previously
+ defined by the cloud consumer
 \end_layout
 
 \begin_layout Itemize
@@ -2310,433 +2650,6 @@ dynamic scaling
 \end_layout
 
 \begin_layout Section
-Process virtualization with Docker
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Docker
-\series default
- is an open source project for building, shipping, and running programs.
- It is a command-line program, a background process, and a set of remote
- services to solve common software problems and simplifying your experience
- in installing, running, publishing, and removing software.
- Unlike virtual machines, Docker is not a hardware virtualization technology.
- Instead, it helps you use the container technology already built into your
- operating system kernel.
- While virtual machines provide hardware abstractions so you can run operating
- systems, containers are an operating system feature.
-\end_layout
-
-\begin_layout Standard
-Docker uses a client-server architecture.
- The Docker client talks to the Docker daemon, which does the heavy lifting
- of building, running, and distributing your Docker containers.
- The Docker client and daemon can run on the same system, or you can connect
- a Docker client to a remote Docker daemon.
- The Docker client and daemon communicate using a REST API, over UNIX sockets
- or a network interface.
- Another Docker client is 
-\series bold
-Docker Compose
-\series default
-, that lets you work with applications consisting of a set of containers.
-\end_layout
-
-\begin_layout Subsection
-Underlying technology
-\end_layout
-
-\begin_layout Subsubsection
-Namespaces
-\end_layout
-
-\begin_layout Standard
-Every running program - or process - on a Linux machine has a unique number
- called a process identifier (PID).
- A PID namespace is a set of unique numbers that identify processes.
- Linux provides tools to create multiple PID namespaces.
- Each namespace has a complete set of possible PIDs.
- Most programs will not need access to other running processes or be able
- to list the other running processes on the system.
- And so Docker creates a new PID namespace for each container by default.
- A container PID namespace isolates processes in that container from processes
- in other containers.
- 
-\end_layout
-
-\begin_layout Standard
-Without a PID namespace, the processes running inside a container would
- share the same ID space as those in other containers or on the host.
- A process in a container would be able to determine what other processes
- were running on the host machine.
- Worse, processes in one container might be able to control processes in
- other containers.
- A process that cannot reference any processes outside its namespace is
- limited in its ability to perform targeted attacks.
- Like most Docker isolation features, you can optionally create containers
- without their own PID namespace.
-\end_layout
-
-\begin_layout Subsubsection
-Control groups
-\end_layout
-
-\begin_layout Standard
-Physical system resources such as memory and time on the CPU are scarce.
- If the resource consumption of processes on a computer exceeds the available
- physical resources, the processes will experience performance issues and
- may stop running.
- Part of building a system that creates strong isolation includes providing
- resource allowances on individual containers.
- If you want to make sure that a program won’t overwhelm other programs
- on your computer, the easiest thing to do is set limits on the resources
- that it can use.
- Docker Engine on Linux relies on control groups (
-\series bold
-cgroups
-\series default
-) to organize processes into hierarchical groups, whose usage of various
- types of resources can then be limited and monitored.
-\end_layout
-
-\begin_layout Subsubsection
-Images and layers
-\end_layout
-
-\begin_layout Standard
-Most of the time what we have been calling an image is actually a collection
- of image layers.
- A layer is set of files and file metadata that is packaged and distributed
- as an atomic unit.
- Internally, Docker treats each layer like an image, and layers are often
- called intermediate images.
- Images maintain parent/child relationships.
- In these relationships, they build from their parents and form layers.
- The files available to a container are the union of all lay- ers in the
- lineage of the image that the container was created from.
- Images can have relationships with any other image, including images in
- different repositories with dif- ferent owners.
-\end_layout
-
-\begin_layout Subsubsection
-Union Filesystem
-\end_layout
-
-\begin_layout Standard
-Programs running inside containers know nothing about image layers.
- From inside a container, the filesystem operates as though it’s not running
- in a container or operating on an image.
- From the perspective of the container, it has exclusive copies of the files
- provided by the image.
- This is made possible with something called a union filesystem (
-\series bold
-UFS
-\series default
-).
- 
-\end_layout
-
-\begin_layout Standard
-Docker uses a variety of union filesystems and can select the best fit for
- the system.
- The filesystem is used to create mount points on the host filesystem that
- abstract the use of layers.
- The layers created are bundled into Docker image layers.
- Likewise, when a Docker image is installed, its layers are unpacked and
- appropriately configured for use by the specific filesystem provider chosen
- for the system.
- Lastly, chroot is used to make the root of the image filesystem the root
- in the container's context.
- This prevents anything running inside the container from referencing any
- other part of the host filesystem.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Container format
-\end_layout
-
-\begin_layout Standard
-Docker Engine combines the namespaces, control groups, and UnionFS into
- a wrapper called a 
-\series bold
-container format
-\series default
-.
- The default container format is libcontainer.
-\end_layout
-
-\begin_layout Subsection
-Storage
-\end_layout
-
-\begin_layout Standard
-By default all files created inside a container are stored on a writable
- container layer.
- This means that:
-\end_layout
-
-\begin_layout Itemize
-the data does not persist when that container no longer exists, and it can
- be difficult to get the data out of the container if another process needs
- it
-\end_layout
-
-\begin_layout Itemize
-a container writable layer is tightly coupled to the host machine where
- the container is running.
- You can not easily move the data somewhere else
-\end_layout
-
-\begin_layout Itemize
-writing into a container writable layer requires a storage driver to manage
- the filesystem.
- The storage driver provides a union filesystem, using the Linux kernel.
- This extra abstraction reduces performance as compared to using data volumes,
- which write directly to the host filesystem
-\end_layout
-
-\begin_layout Standard
-Docker has two options for containers to store files in the host machine,
- so that the files are persisted even after the container stops: volumes,
- and bind mounts.
- If running Docker on Linux you can also use a tmpfs mount.
- If running Docker on Windows you can also use a named pipe.
-\end_layout
-
-\begin_layout Subsubsection
-Volumes
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Volumes
-\series default
- are the preferred way to persist data in Docker containers and services.
- Some use cases for volumes include:
-\end_layout
-
-\begin_layout Itemize
-sharing data among multiple running containers.
- Volumes persist after a container is removed/stopped, and multiple containers
- can mount the same volume simultaneously
-\end_layout
-
-\begin_layout Itemize
-when the Docker host is not guaranteed to have a given directory or file
- structure.
- Volumes help you decouple the configuration of the Docker host from the
- container runtime
-\end_layout
-
-\begin_layout Itemize
-store your container data on a remote host or a cloud provider
-\end_layout
-
-\begin_layout Itemize
-back up, restore, or migrate data from one Docker host to another
-\end_layout
-
-\begin_layout Itemize
-when an app requires high-performance I/O.
- Volumes are stored in the Linux VM rather than the host, which means that
- the reads and writes have much lower latency and higher throughput
-\end_layout
-
-\begin_layout Itemize
-when an app requires fully native file system behavior, e.g.
- DBA requires precise control over disk flushing to guarantee transaction
- durability
-\end_layout
-
-\begin_layout Subsubsection
-Bind mounts
-\end_layout
-
-\begin_layout Standard
-In general, you should use volumes where possible.
- 
-\series bold
-Bind mounts
-\series default
- are appropriate for the following types of use case:
-\end_layout
-
-\begin_layout Itemize
-sharing configuration files from the host machine to containers.
- This is how Docker provides DNS resolution to containers by default
-\end_layout
-
-\begin_layout Itemize
-sharing source code or build artifacts between a development environment
- on the Docker host and a container
-\end_layout
-
-\begin_layout Itemize
-if you use Docker for development this way, your production Dockerfile would
- copy the production-ready artifacts directly into the image, rather than
- relying on a bind mount
-\end_layout
-
-\begin_layout Itemize
-when the file or directory structure of the Docker host is guaranteed to
- be consistent with the bind mounts the containers require
-\end_layout
-
-\begin_layout Subsubsection
-Tmpfs mounts
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Tmpfs mounts
-\series default
- are best used for cases when you do not want the data to persist either
- on the host machine or within the container.
- This may be for security reasons or to protect the performance of the container
- when your application needs to write a large volume of non-persistent state
- data.
-\end_layout
-
-\begin_layout Subsection
-Networking
-\end_layout
-
-\begin_layout Standard
-Docker networking subsystem is pluggable, using drivers.
- Several drivers exist by default, and provide core networking functionality:
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-bridge
-\series default
- its the default network driver.
- Bridge networks are useful when you need multiple containers to communicate
- on the same Docker host
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-host
-\series default
- is for standalone containers, removes network isolation between the container
- and the Docker host, and use the host networking directly
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-overlay
-\series default
- networks connect multiple Docker daemons together and enable swarm services
- to communicate with each other
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-macvlan
-\series default
- networks allow you to assign a MAC address to a container, making it appear
- as a physical device on your network.
- Using the macvlan driver is sometimes the best choice when dealing with
- legacy applications that expect to be directly connected to the physical
- network, rather than routed through the Docker host’s network stack, or
- when you are migrating from a VM setup
-\end_layout
-
-\begin_layout Subsection
-Higher-level abstractions and orchestration 
-\end_layout
-
-\begin_layout Standard
-Any processes, functionality, or data that must be discoverable and available
- over a network is called a 
-\series bold
-service
-\series default
-.
- Containers are described as processes that start using specific Linux namespace
-s, with specific filesystem views, and resource allotments.
- We do not have to describe those specifics each time we talk about a container,
- nor do we have to do the work of creating those namespaces ourselves.
- Docker does this for us.
- Docker provides tooling for other abstractions as well, including service.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Declarative service environments with Compose
-\end_layout
-
-\begin_layout Standard
-Docker services are declarative abstractions: when we create a service,
- we declare that we want a certain number of replicas of that service, and
- Docker takes care of the individual commands required to maintain them.
- Declarative tools enable users to describe the new state of a system, rather
- than the steps required to change from the current state to the new state.
- The Swarm orchestration system is a state reconciliation loop that continuously
- compares the declared state of the system that the user desires with the
- current state of the system.
- When it detects a difference, it uses a simple set of rules to change the
- system so that it matches the desired state.
- Orchestrators automate service replication, resurrection, deployments,
- health checking, and rollback.
- Compose files use Yet Another Markup Language (YAML).
-\end_layout
-
-\begin_layout Subsubsection
-Orchestrating services on a cluster
-\end_layout
-
-\begin_layout Standard
-Application developers and operators frequently deploy services onto multiple
- hosts to achieve greater availability and scalability.
- When an application is deployed across multiple hosts, the redundancy in
- the application’s deployment provides capacity that can serve requests
- when a host fails or is removed from service.
- Deploying across multiple hosts also permits the application to use more
- compute resources than any single host can provide.
- 
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Docker Swarm
-\series default
- is a clustering technology that connects a set of hosts running Docker
- and lets you run applications built using Docker services across those
- machines.
- Swarm orchestrates the deployment and operation of Docker services across
- this collection of machines.
- Swarm schedules tasks according to the application's resource requirements
- and machine capabilities.
- When you join a Docker Engine to a Swarm cluster, you specify whether that
- machine should be a manager or a worker.
- 
-\series bold
-Managers
-\series default
- listen for instructions to create, change, or remove definitions for entities
- such as Docker services, configuration, and secrets.
- Managers instruct 
-\series bold
-worker
-\series default
- nodes to create containers and volumes that implement Docker service instances.
- Managers continuously converge the cluster to the state you have declared
- it should be in.
-\end_layout
-
-\begin_layout Section
 Kubernetes
 \end_layout
 
@@ -2749,6 +2662,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename kubernetes_components.png
+	lyxscale 40
 	width 90col%
 
 \end_inset
@@ -2760,7 +2674,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Kubernetes cluster with all the components tied together.
+Kubernetes cluster with all its components tied together.
 \end_layout
 
 \end_inset
@@ -2860,9 +2774,6 @@ Kubernetes operates at the container level rather than at the hardware level,
  logging, monitoring, and alerting solutions.
  However, Kubernetes is not monolithic, and these default solutions are
  optional and pluggable.
- Kubernetes provides the building blocks far building developer platfarms,
- but preserves user choice and flexibility where it is important.
- 
 \end_layout
 
 \begin_layout Subsection
@@ -2911,93 +2822,44 @@ The control plane components make global decisions about the cluster, e.g.
  
 \end_layout
 
-\begin_layout Subsubsection
-Kube-apiserver 
+\begin_layout Itemize
+
+\series bold
+kube-apiserver
+\series default
+.
+ This is the fronted for the Kubernetes control plane, designed to scale
+ horizontally - that is, it scales by deploying more instances - and balance
+ traffic between those instances
 \end_layout
 
-\begin_layout Standard
-The API server is a component of the Kubernetes control plane that exposes
- the Kubernetes API.
- The API server is the front end for the Kubernetes control plane.
- The main implementation of a Kubernetes API server is kube-apiserver, designed
- to scale horizontally - that is, it scales by deploying more instances.
- You can run several instances of kube-apiserver and balance traffic between
- those instances.
- 
+\begin_layout Itemize
+
+\series bold
+kube-scheduler
+\series default
+.
+ Watches for newly created pods with no assigned node, and selects a node
+ for them to run on
 \end_layout
 
-\begin_layout Subsubsection
-Kube-scheduler 
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Standard
-Control plane component that watches for newly created pods with no assigned
- node, and selects a node for them to run on.
- Factors taken into account for scheduling decisions include: individual
- and collective resource requirements, hardware/software/policy constraints,
- affinity and anti-affinity specifications, data locality, inter-workload
- interference, and deadlines.
-\end_layout
-
-\begin_layout Subsubsection
-kube-controller-manager 
-\end_layout
-
-\begin_layout Standard
-Control Plane component that runs controller processes.
+\series bold
+kube-controller-manager
+\series default
+.
+ Runs the controller processes.
  Logically, each controller is a separate process, but to reduce complexity,
- they are all compiled into a single binary and run in a single process.
- Some types of these controllers are:
+ they are all compiled into a single binary and run in a single process
 \end_layout
 
 \begin_layout Itemize
-node controller, responsible for noticing and responding when nodes go down
-\end_layout
-
-\begin_layout Itemize
-job controller, watches for job objects that represent one-off tasks, then
- creates Pods to run those tasks to completion.
-\end_layout
-
-\begin_layout Itemize
-endpoints controller, populates the endpoints object
-\end_layout
-
-\begin_layout Itemize
-service account & token controllers, create default accounts and API access
- tokens for new namespaces
-\end_layout
-
-\begin_layout Subsubsection
-cloud-controller-manager 
-\end_layout
-
-\begin_layout Standard
-A Kubernetes control plane component that embeds cloud-specific control
- logic.
- The cloud controller manager lets you link your cluster into your cloud
- provider's API, and separates out the components that interact with that
- cloud platfarm from components that only interact with your cluster.
- As with the kube-controller-manager, the cloud-controller-manager combines
- several logically independent control loops into a single binary that you
- run as a single process.
- You can scale horizontally - run more than one copy - to improve performance
- or to help tolerate failures.
- The following controllers can have cloud provider dependencies:
-\end_layout
-
-\begin_layout Itemize
-node controller, for checking the cloud provider to determine if a node
- has been deleted in the cloud after it stops responding
-\end_layout
-
-\begin_layout Itemize
-route controller, for setting up routes in the underlying cloud infrastructure
-\end_layout
-
-\begin_layout Itemize
-service controller, for creating, updating and deleting cloud provider load
- balancers 
+cloud-controller-manager.
+ Combines several logically independent control loops into a single binary
+ running as a single process, and links between cluster and cloud provider's
+ API.
+ It can scale horizontally to improve performance or to help tolerate failures
 \end_layout
 
 \begin_layout Subsection
@@ -3010,31 +2872,18 @@ Node components run on every node, maintaining running pods and providing
  
 \end_layout
 
-\begin_layout Subsubsection
-Kube-proxy 
+\begin_layout Itemize
+kube-proxy.
+ Network proxy that runs on each node in the cluster.
+ Maintains network rules on nodes and manages communications to pods from
+ inside or outside of the cluster
 \end_layout
 
-\begin_layout Standard
-Kube-proxy is a network proxy that runs on each node in your cluster, implementi
-ng part of the Kubernetes Service concept.
- Kube-proxy maintains network rules on nodes.
- These network rules allow network communication to your pods from network
- sessions inside or outside of your cluster.
- Kube-proxy uses the operating system packet filtering layer if there is
- one and it is available.
- Otherwise, kube-proxy forwards the traffic itself.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Container runtime 
-\end_layout
-
-\begin_layout Standard
-The container runtime is the software that is responsible for running containers.
- Kubernetes supports several container runtimes: Docker, Containerd, and
- any implementation of the Kubernetes CRI (Container Runtime lnterface).
- 
+\begin_layout Itemize
+container runtime.
+ Responsible for running containers.
+ Kubernetes supports several container runtimes such as Docker, Containerd,
+ and any implementation of the Kubernetes Container Runtime lnterface
 \end_layout
 
 \begin_layout Subsection
@@ -3042,7 +2891,7 @@ Addons: resource monitoring
 \end_layout
 
 \begin_layout Standard
-You can examine application performance in a Kubernetes cluster by examining
+Application performance in a Kubernetes cluster can be monitored by examining
  the containers, pods, services, and the characteristics of the overall
  cluster.
  Kubernetes provides detailed information about an application resource
@@ -3180,119 +3029,86 @@ ng atomicity.
 \end_layout
 
 \begin_layout Subsection
-Google filesystem
+Google File System 
 \end_layout
 
 \begin_layout Standard
-The GFS uses thousands of storage systems built from inexpensive commodity
- components to provide petabytes of storage to a large user community with
- diverse needs.
- The system was designed after a careful analysis of the file characteristics
- and of the access models.
- Some of the most important aspects of this analysis reflected in the GFS
- design are: 
-\end_layout
-
-\begin_layout Itemize
-
+The 
 \series bold
-scalability
+GFS
 \series default
- and 
-\series bold
-reliability
-\series default
- are critical features of the system
+ was designed after a careful analysis of the file characteristics and of
+ the access models.
+ First, components failure are the norm rather than the exception.
+ The file system consists of hundred or even thousand of commodity storage
+ machines, accessed by a comparable number of clients.
+ Therefore, scalability and reliability are critical features of the system.
+ Second, files size range from a few GB to hundreds of TB.
+ Third, random writes are extremely infrequent, and the most common operation
+ is to append to an existing file.
+ Once written, files are only read, and often only sequentially.
+ Finally, users often process data in bulk and are less concerned with the
+ response time, and the consistency model should be relaxed to simplify
+ the system implementation.
 \end_layout
 
-\begin_layout Itemize
-the vast majority of files range in size from a few GB to hundreds of TB
-\end_layout
-
-\begin_layout Itemize
-the most common operation is to 
-\series bold
-append
-\series default
- to an existing file; random write operations to a file are extremely infrequent
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-sequential read
-\series default
- operations are the norm
-\end_layout
-
-\begin_layout Itemize
-the users process the data in bulk and are less concerned with the response
- time
-\end_layout
-
-\begin_layout Itemize
-the consistency model should be relaxed to simplify the system implementation
+\begin_layout Subsubsection
+Architecture
 \end_layout
 
 \begin_layout Standard
 A GFS cluster consists of a single 
 \series bold
-Master
+master
 \series default
  and multiple 
 \series bold
-ChunkServers
+chunkServers
 \series default
- and is accessed by multiple clients.
+, and is accessed by multiple clients.
  Files are divided into fixed-size 
+\begin_inset Formula $64\text{-MB}$
+\end_inset
+
+ 
 \series bold
 chunks
 \series default
-.
- Each chunk is identified by an immutable and globally unique handle assigned
- by the Master at the time of chunk creation.
- For reliability, each chunk is replicated on multiple ChunkServers.
- By default, three replicas are stored, though users can designate different
- replication levels.
+ and stored on chunkServers' local disks as Linux files.
+ For reliability, each chunk is replicated by default on three chunkServers.
+ A large chunk size reduces clients' interactions with the master, and can
+ reduce network overhead, since a client is more likely to perform many
+ operations on the same chunk.
 \end_layout
 
 \begin_layout Standard
-The Master maintains all file system metadata and also controls system-wide
- activities such as chunk lease management, garbage collection of orphaned
- chunks, and chunk migration between ChunkServers.
- 
+The master maintains all file system metadata such as the namespace, access
+ control informations, mapping from files to chunks, and current locations
+ of chunks.
+ Neither clients nor chunkServers cache file data, since most clients' applicati
+on stream through huge files or have datasets too large to be cached.
+ However, clients do cache metadata.
 \end_layout
 
 \begin_layout Standard
-Having a single Master its involvement in reads and writes must be minimized,
- so that it does not become a bottleneck.
- Clients never read and write file data through the Master.
- Instead, a client asks the Master which ChunkServers it should contact.
- It caches this information for a limited time and interacts with the ChunkServe
-rs directly for many subsequent operations.
- 
+Having a single master vastly simplifies the overal system design, but its
+ involvement must be minimized in order to avoid possible bottlenecks.
+ Files creation is handled directly by the master, while clients never read
+ and write file data through the master.
+ Instead, clients ask the master which chunkServer it should contact and
+ caches this information.
 \end_layout
 
 \begin_layout Standard
-A chunk size of 
-\series bold
-64 MB
-\series default
- is one of the key design parameters, which is much larger than typical
- file system block sizes.
- A large chunk size is motivated by the desire to optimize performance for
- large files and to reduce the amount of metadata maintained by the system.
- 
-\end_layout
-
-\begin_layout Standard
-System reliability is a major concern, and the operation log maintains a
- historical record of metadata changes, enabling the Master to recover in
- case of a failure.
- To recover from a failure, the Master replays the operation log.
- To minimize the recovery time, the Master periodically checkpoints its
- state and at recovery time replays only the log records after the last
- checkpoint.
+The master does not keep a persistent record of which chunkServers have
+ a replica of a given chunk.
+ It simply polls chunkServers for that information at startup.
+ Furthermore, the master keeps in stable memory an operational log of critical
+ metadata changes.
+ Given its nature, log changes are not visible to clients until metadata
+ changes are made persistent.
+ The master recovers its file system state by replaying the operation log,
+ and checkpoints its state whenever the log grows beyond a certain size.
 \end_layout
 
 \begin_layout Subsection
@@ -3300,35 +3116,29 @@ Apache Hadoop filesystem
 \end_layout
 
 \begin_layout Standard
-As in other distributed file systems, like GFS, 
-\series bold
-HDFS
-\series default
- stores metadata on a dedicated Master server, called the 
+Hadoop provides a distributed file system and a framework for the analysis
+ and transformation of very large datasets using the MapReduce paradigm.
+ HDFS stores metadata on a dedicated server, called the 
 \series bold
 NameNode
 \series default
 .
- Application data is stored on other slave servers called 
+ Application data are stored on other servers called 
 \series bold
 DataNodes
 \series default
 .
- Typically each block of the file is independently replicated over three
- DataNodes, but this is user selectable file-by-file.
- 
 \end_layout
 
 \begin_layout Standard
-The NameNode maintains the namespace tree and the mapping of file blocks
+File content is split into large blocks, typically 
+\begin_inset Formula $128\text{-MB}$
+\end_inset
+
+, and each block is independently replicated at multiple DataNodes for reliabili
+ty.
+ The NameNode maintains the namespace tree and the mapping of file blocks
  to DataNodes.
- An HDFS client wanting to read a file first contacts the NameNode for the
- locations of data blocks comprising the file and then reads block contents
- from the DataNode closest to the client.
- When writing data, the cli- ent requests the NameNode to nominate a suite
- of three DataNodes to host the block replicas.
- The client then writes data to the DataNodes in a pipeline fashion.
- The current design has a single NameNode for each cluster.
 \end_layout
 
 \begin_layout Subsubsection
@@ -3377,13 +3187,16 @@ BigTable
 \end_layout
 
 \begin_layout Standard
-Bigtable is built upon GFS, employes the Google SSTable file format to store
- internal data, and relies on a highly-available and persistent distributed
- lock service called Chubby.
+
+\series bold
+Bigtable
+\series default
+ is built upon GFS to store log and data files, it employes the Google SSTable
+ file format to store internal data, and relies on a highly-available and
+ persistent distributed lock service called Chubby.
  A Bigtable is a sparse, distributed, persistent multi-dimensional sorted
  map.
- The map is indexed by a row key, column key, and a timestamp; each value
- in the map is an uninterpreted array of bytes.
+ The map is indexed by a row key, column key, and a timestamp.
  
 \begin_inset Formula 
 \[
@@ -3408,16 +3221,12 @@ row keys
  a single row key is atomic, a design decision that makes it easier for
  clients to reason about the system's behavior in the presence of concurrent
  updates to the same row.
- Bigtable maintains data in lexicographic order by row key.
  The row range for a table is dynamically partitioned.
  Each row range is called a 
 \series bold
 tablet
 \series default
 , which is the unit of distribution and load balancing.
- Clients can exploit this property by selecting their row keys so that they
- get good locality for their data accesses.
- 
 \end_layout
 
 \begin_layout Standard
@@ -3430,10 +3239,9 @@ Column keys
  All data stored in a column family is usually of the same type and compressed
  together.
  A column family must be created before data can be stored under any column
- key in that family; after a family has been created, any column key within
- the family can be used.
- The number of distinct column families in a table is small (in the hundreds
- at most), and that families rarely change during operation.
+ key in that family.
+ The number of distinct column families in a table is kept small, and families
+ rarely change during operation.
  In contrast, a table may have an unbounded number of columns.
 \end_layout
 
@@ -3444,7 +3252,7 @@ Each cell in a Bigtable can contain multiple versions of the same data;
 timestamp
 \series default
 .
- Different versions of a cell are stored in decreasing timestamp or- der,
+ Different versions of a cell are stored in decreasing timestamp order,
  so that the most recent versions can be read first.
  To make the management of versioned data less onerous, Bigtable garbage-collect
 s cell versions automatically.
@@ -3460,36 +3268,40 @@ Implementation
 \end_layout
 
 \begin_layout Standard
+A Bigtable cluster stores a number of tables.
+ Each table consists of a set of tablets, and each tablet contains all data
+ associated with a row range.
+ Initially, each table consists of just one tablet.
+ As a table grows, it is automatically split into multiple tablets.
+\end_layout
+
+\begin_layout Standard
 The 
 \series bold
 master
 \series default
- is responsible for assigning tablets to TabletServers, detecting the addition
- and expiration of TabletServers, balancing tablet-server load, and garbage
- collection of files in GFS.
+ is responsible for assigning tablets to TabletServers, balancing tablet-server
+ load, and garbage collection of files in GFS.
  In addition, it handles schema changes such as table and column family
  creations.
  Each 
 \series bold
-TabletServer
+tabletServer
 \series default
- manages a set of tablets.
- The tablet server handles read and write requests to the tablets that it
- has loaded, and also splits tablets that have grown too large.
+ manages a set of tablets, and can be dynamically added (or removed) from
+ a cluster to accomodate changes in workloads.
+ A tabletServer handles read and write requests to the tablets that it has
+ loaded, and also splits tablets that have grown too large.
  
 \end_layout
 
 \begin_layout Standard
 As with many single-master distributed storage systems, client data does
- not move through the mas- ter: clients communicate directly with TabletServers
+ not move through the master: clients communicate directly with tabletServers
  for reads and writes.
  Because Bigtable clients do not rely on the master for tablet location
  information, most clients never communicate with the master.
- A Bigtable cluster stores a number of tables.
- Each table consists of a set of tablets, and each tablet contains all data
- associated with a row range.
- Initially, each table consists of just one tablet.
- As a table grows, it is automatically split into multiple tablets.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -3572,10 +3384,7 @@ query model
  Simple read and write operations to a data item that is uniquely identified
  by a key.
  No operations span multiple data items and there is no need for relational
- schema.
- This requirement is based on the observation that a significant portion
- of Amazon's services can work with this simple query model and do not need
- any relational schema
+ schema
 \end_layout
 
 \begin_layout Itemize
@@ -3587,9 +3396,7 @@ ACID properties
  Experience at Amazon has shown that data stores that provide ACID guarantees
  tend to have poor availability.
  Dynamo targets applications that operate with weaker consistency (the “C”
- in ACID) if this results in high availability.
- Dynamo does not provide any isolation guarantees and permits only single
- key updates
+ in ACID) if this results in high availability
 \end_layout
 
 \begin_layout Itemize
@@ -3759,7 +3566,7 @@ To achieve high availability and durability, Dynamo replicates its data
 \begin_inset Formula $N$
 \end_inset
 
- is a parameter configured “per-instance”.
+ is a parameter configured per-instance.
  Each key, 
 \begin_inset Formula $k$
 \end_inset
@@ -3839,11 +3646,11 @@ MapReduce
 The MapReduce is a programming model conceived for processing and generating
  large data sets on computing clusters.
  As a result of the computation, a set of input 
-\begin_inset Formula $\left\langle key,value\right\rangle $
+\begin_inset Formula $\left\langle \text{key},\text{value}\right\rangle $
 \end_inset
 
  pairs is transformed into a set of output 
-\begin_inset Formula $\left\langle key',value'\right\rangle $
+\begin_inset Formula $\left\langle \text{key}',\text{value}'\right\rangle $
 \end_inset
 
  pairs.
@@ -3865,59 +3672,60 @@ The MapReduce is a programming model conceived for processing and generating
 \end_layout
 
 \begin_layout Enumerate
-the run-time library splits the input files into 
+the MapReduce library first splits the input files into 
 \begin_inset Formula $M$
 \end_inset
 
- splits of 
-\begin_inset Formula $16$
+ pieces of typically 
+\begin_inset Formula $16\text{-MB}$
 \end_inset
 
  to 
-\begin_inset Formula $64$
+\begin_inset Formula $64\text{-MB}$
 \end_inset
 
- MB each, identifies a number 
-\begin_inset Formula $N$
-\end_inset
-
- of systems to run, and starts multiple copies of the program, one of the
- system being a master and the others workers.
- The Master assigns to each idle system either a Map or a Reduce task
+ per piece.
+ It then starts up many copies of the program on a cluster of machines.
+ One of the copies of the program is the master, which picks idle workers
+ and assigns each one a map task or a reduce task
 \end_layout
 
 \begin_layout Enumerate
-a worker being assigned a Map task reads the corresponding input split,
- parses 
-\begin_inset Formula $\left\langle key,value\right\rangle $
+a worker who is assigned a map task parses 
+\begin_inset Formula $\left\langle \text{key},\text{value}\right\rangle $
 \end_inset
 
- pairs, and passes each pair to a user-defined Map function.
+ pairs out of the input data and passes each pair to the user-defined Map
+ function.
  The intermediate 
-\begin_inset Formula $\left\langle key,value\right\rangle $
+\begin_inset Formula $\left\langle \text{key},\text{value}\right\rangle $
 \end_inset
 
- pairs produced by the Map function are buffered in memory before being
- written to a local disk and partitioned into 
+ pairs produced by the Map function are buffered in memory
+\end_layout
+
+\begin_layout Enumerate
+periodically, the buffered pairs are written to local disk and partitioned
+ into 
 \begin_inset Formula $R$
 \end_inset
 
- regions by the partitioning function
+ regions.
+ The locations of these buffered pairs on the local disk are passed back
+ to the master, who is responsible for forwarding these locations to the
+ reduce workers
 \end_layout
 
 \begin_layout Enumerate
-the locations of these buffered pairs on the local disk are passed back
- to the Master, who is responsible for forwarding these locations to the
- Reduce workers.
- A Reduce worker uses RPCs to read the buffered data from the local disks
- of the Map workers; after reading all the intermediate data, it sorts it
- by the intermediate keys.
- The output of the Reduce function is appended to a final output file
-\end_layout
-
-\begin_layout Enumerate
-when all Map and Reduce tasks have been completed, the Master wakes up the
- user program
+when a reduce worker has read all intermediate data, it sorts it by the
+ intermediate keys so that all occurrences of the same key are grouped together.
+ The sorting is needed because typically many different keys map to the
+ same reduce task.
+ The reduce worker iterates over the sorted intermediate data and for each
+ unique intermediate key encountered, it passes the key and the corresponding
+ set of intermediate values to the user's Reduce function.
+ The output of the Reduce function is appended to a final output file for
+ this reduce partition
 \end_layout
 
 \begin_layout Subsubsection
@@ -4032,145 +3840,83 @@ Apache Hadoop YARN
 \end_layout
 
 \begin_layout Standard
-Yet Another Resource Negotiator is the next generation of Hadoop compute
- platform, which departs from its familiar, monolithic architecture.
- By separating resource management functions from the programming model,
- 
-\series bold
-YARN
-\series default
- delegates many scheduling-related functions to per-job components.
- In this new context, MapReduce is just one of the applications running
- on top of YARN.
- This separation provides a great deal of flexibility in the choice of programmi
-ng framework.
- Programming frameworks running on YARN coordinate intra-application communicati
-on, execution flow, and dynamic optimizations as they see fit.
-\end_layout
-
-\begin_layout Subsubsection
-Architecture
+The fundamental idea of YARN is to split up the functionalities of resource
+ management and job scheduling/monitoring into separate daemons.
+ An application is either a single job or a DAG of jobs.
 \end_layout
 
 \begin_layout Standard
-YARN lifts some functions into a platform layer responsible for resource
- management, leaving coordination of logical execution plans to a host of
- framework implementations.
- Specifically, a per-cluster 
+The ResourceManager and the NodeManager form the data-computation framework.
+ The 
 \series bold
 ResourceManager
 \series default
- (RM) tracks resource usage and node liveness, enforces allocation invariants,
- and arbitrates contention among tenants.
- By separating these duties in the JobTracker's charter, the central allocator
- can use an abstract description of tenants requirements, but remain ignorant
- of the semantics of each allocation.
- That responsibility is delegated to an 
+ is the ultimate authority that arbitrates resources among all the applications
+ in the system.
+ The 
 \series bold
-ApplicationMaster
-\series default
- (AM), which coordinates the logical plan of a single job by requesting
- resources from the RM, generating a physical plan from the resources it
- receives, and coordinating the execution of that plan around faults.
-\end_layout
-
-\begin_layout Subsubsection
-ResourceManager
-\end_layout
-
-\begin_layout Standard
-The ResourceManager exposes two public interfaces towards clients submitting
- applications, ApplicationMaster(s) dynamically negotiating access to resources,
- and one internal interface towards NodeManagers for cluster monitoring
- and resource access management.
- The RM matches a global model of the cluster state against the digest of
- resource requirements reported by running applications.
- This makes it possible to tightly enforce global scheduling properties
- fairness, but it requires the scheduler to obtain an accurate understanding
- of applications resource requirements.
- ApplicationMasters codify their need for resources in terms of one or more
- ResourceRequests, each of which tracks:
-\end_layout
-
-\begin_layout Enumerate
-number of containers
-\end_layout
-
-\begin_layout Enumerate
-resources per container 
-\end_layout
-
-\begin_layout Enumerate
-locality preferences
-\end_layout
-
-\begin_layout Enumerate
-priority of requests within the application
-\end_layout
-
-\begin_layout Standard
-The scheduler tracks, updates, and satisfies these requests with available
- resources, as advertised on NM heartbeats.
- In response to AM requests, the RM generates containers together with tokens
- that grant access to resources.
- The RM forwards the exit status of finished containers, as reported by
- the NMs, to the responsible AMs.
- AMs are also notified when a new NM joins the cluster so that they can
- start requesting resources on the new nodes.The RM is not responsible for
- coordinating application execution or task fault-tolerance, but neither
- is is charged with providing status or metrics for running applications
- (now part of the ApplicationMaster), nor serving framework specific reports
- of completed jobs (now delegated to a per-framework daemon).
- This is consistent with the view that the ResourceManager should only handle
- live resource scheduling.
-\end_layout
-
-\begin_layout Subsubsection
-ApplicationMaster
-\end_layout
-
-\begin_layout Standard
-An application may be a static set of processes, a logical description of
- work, or even a long-running service.
- The ApplicationMaster is the process that coordinates the application’s
- execution in the cluster, but it itself is run in the cluster just like
- any other container.
- A component of the RM negotiates for the container to spawn this bootstrap
- process.
-\end_layout
-
-\begin_layout Standard
-The AM periodically heartbeats to the RM to affirm its liveness and to update
- the record of its demand.
- After building a model of its requirements, the AM encodes its preferences
- and constraints in a heartbeat message to the RM.
- In response to subsequent heartbeats, the AM will receive a container lease
- on bundles of resources bound to a particular node in the cluster.
-\end_layout
-
-\begin_layout Standard
-Since the RM does not interpret the container status, the AM determines
- the semantics of the success or failure of the container exit status reported
- by NMs through the RM.
- Being a container running in a cluster of unreliable hardware, the AM itself
- should be resilient to failure.
- YARN provides some support for recovery, but because fault tolerance and
- application semantics are so closely intertwined, much of the burden falls
- on the AM.
-\end_layout
-
-\begin_layout Subsubsection
 NodeManager
+\series default
+ is the per-machine framework agent who is responsible for containers, monitorin
+g their resource usage (cpu, memory, disk, network) and reporting the same
+ to the ResourceManager/Scheduler.
 \end_layout
 
 \begin_layout Standard
-The NodeManager is the “worker” daemon in YARN.
- It authenticates container leases, manages containers dependencies, monitors
- their execution, and provides a set of services to containers.
- Operators configure it to report memory, CPU, and other resources available
- at this node and allocated for YARN.
- After registering with the RM, the NM heartbeats its status and receives
- instructions.
+The ResourceManager has two main components: Scheduler and ApplicationsManager.
+ The 
+\series bold
+Scheduler
+\series default
+ is responsible for allocating resources to the various running applications.
+ The Scheduler is pure scheduler in the sense that it performs no monitoring
+ or tracking of status for the application.
+ Also, it offers no guarantees about restarting failed tasks either due
+ to application failure or hardware failures.
+ The Scheduler performs its scheduling function based on the resource requiremen
+ts of the applications; it does so based on the abstract notion of a resource
+ Container which incorporates elements such as memory, cpu, disk, network
+ etc.
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+ApplicationsManager
+\series default
+ is responsible for accepting job-submissions, negotiating the first container
+ for executing the application specific ApplicationMaster and provides the
+ service for restarting the ApplicationMaster container on failure.
+ Furthermore, it negotiates appropriate resource containers from the Scheduler,
+ tracking their status and monitoring for progress.
+ The ApplicationMaster works with the NodeManager(s) to execute and monitor
+ the tasks.
+\end_layout
+
+\begin_layout Standard
+YARN supports the notion of resource reservation via the 
+\series bold
+ReservationSystem
+\series default
+, a component that allows users to specify a profile of resources over-time
+ and temporal constraints, e.g.
+ deadlines, and reserve resources to ensure the predictable execution of
+ important jobs.
+ The ReservationSystem tracks resources over-time, performs admission control
+ for reservations, and dynamically instruct the underlying scheduler to
+ ensure that the reservation is fullfilled.
+\end_layout
+
+\begin_layout Standard
+In order to scale YARN beyond few thousands nodes, YARN supports the notion
+ of 
+\series bold
+Federation
+\series default
+: it allows to transparently wire together multiple YARN (sub-)clusters,
+ and make them appear as a single massive cluster.
+ This can be used to achieve larger scale, and/or to allow multiple independent
+ clusters to be used together for very large jobs.
 \end_layout
 
 \begin_layout Subsection
@@ -4228,8 +3974,14 @@ executors
 \series default
  on nodes in the cluster, which are processes that run computations and
  store data for your application.
- Next, it sends your application code to the executors.
+ Next, it sends application code to the executors.
  Finally, SparkContext sends tasks to the executors to run.
+\end_layout
+
+\begin_layout Standard
+Applications are isolated in term of scheduling and executors, since tasks
+ from different applications runs on different JVMs, but this also means
+ that no sharing of data across different applications is possible.
 \end_layout
 
 \begin_layout Subsubsection
@@ -4296,16 +4048,10 @@ RDDs are best suited for batch applications that apply the same operation
  traditional update logging and data checkpointing.
 \end_layout
 
-\begin_layout Subsubsection
-RDD Operations
-\end_layout
-
 \begin_layout Standard
-Recall that 
-\series bold
-transformations
-\series default
- are lazy operations that define a new RDD, some examples are 
+RDDs support two kind of operations, transformations - lazy operations that
+ define a new RDD, e.g.
+ 
 \begin_inset Formula $map(\,)$
 \end_inset
 
@@ -4321,13 +4067,9 @@ transformations
 \begin_inset Formula $sort(\,)$
 \end_inset
 
-.
+ - and actions - execute a computation to return a value to the program
+ or write data to external storage, e.g.
  
-\series bold
-Actions
-\series default
- instead launch a computation to return a value to the program or write
- data to external storage, some examples are 
 \begin_inset Formula $count(\,)$
 \end_inset
 
@@ -4359,12 +4101,11 @@ The RDD programming model provides only distributed collections of objects
 \end_layout
 
 \begin_layout Standard
-One of the most common data processing paradigms is relational queries.
- 
+
 \series bold
 Spark SQL
 \series default
- implement such queries on Spark, using techniques similar to analytical
+ supports relational queries on Spark, using techniques similar to analytical
  databases (compressed columnar storage).
  Furthermore, Spark provides a higher-level abstraction for basic data transform
 ations called 
