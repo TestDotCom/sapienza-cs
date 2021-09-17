@@ -155,8 +155,14 @@ resource polling
 \series default
 .
  The provider computing resources are pooled to serve multiple consumers
- using a multi-tenant model, with different physical and virtual resources
- dynamically assigned and reassigned according to consumer demand
+ using a 
+\series bold
+multi-tenant model
+\series default
+, with different physical and virtual resources dynamically assigned and
+ reassigned according to consumer demand.
+ Multi-tenancy enables an instance of a program to serve different consumers,
+ whereby each is isolated from the other
 \end_layout
 
 \begin_layout Itemize
@@ -2849,9 +2855,7 @@ kube-scheduler
 kube-controller-manager
 \series default
 .
- Runs the controller processes.
- Logically, each controller is a separate process, but to reduce complexity,
- they are all compiled into a single binary and run in a single process
+ Takes scaling decisions
 \end_layout
 
 \begin_layout Itemize
@@ -3169,7 +3173,7 @@ pipeline
  to the last DataNode.
  Bytes are pushed to the pipeline as a sequence of packets.
  The client is then reponsible for sending an acknowledgement message to
- the DataNode.
+ the NameNode.
 \end_layout
 
 \begin_layout Standard
