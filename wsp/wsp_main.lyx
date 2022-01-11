@@ -1,0 +1,1566 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Web Security
+\end_layout
+
+\begin_layout Section
+Email
+\end_layout
+
+\begin_layout Subsection
+Architecture
+\end_layout
+
+\begin_layout Standard
+The email architecture is based on several components:
+\end_layout
+
+\begin_layout Itemize
+Message User Agent (
+\series bold
+MUA
+\series default
+)
+\end_layout
+
+\begin_layout Itemize
+Message Submission Agent (
+\series bold
+MSA
+\series default
+)
+\end_layout
+
+\begin_layout Itemize
+Message Transfer Agent (
+\series bold
+MTA
+\series default
+)
+\end_layout
+
+\begin_layout Itemize
+Message Delivery Agent (
+\series bold
+MDA
+\series default
+)
+\end_layout
+
+\begin_layout Standard
+In practice software implementations often merge MSA/MTA and MTA/MDA into
+ the same component.
+ Instead of a MUA, users tend to retrieve emails through web clients, e.g.
+ Gmail.
+ Emails are delivered through the 
+\series bold
+SMTP
+\series default
+ protocol, while clients can retrieve emails in two ways:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+POP
+\series default
+, where the connection is enstablished only when fetching messages, which
+ are stored locally and then deleted from the server
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+IMAP
+\series default
+, where the connection is kept on while the user is browsing emails, which
+ can be cloned locally (and optionally deleted from the server).
+ Multiple clients can access the same mailbox
+\end_layout
+
+\begin_layout Subsubsection
+Message format
+\end_layout
+
+\begin_layout Standard
+An email is made of three parts:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+envelop
+\series default
+.
+ Contains minimal info about sender/receiver that can be quickly processed
+ by SMTP servers along the route.
+ Its main fields are MAIL FROM, i.e.
+ where to send back the message in case of failure, and RCPT TO, which is
+ the receiver address
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+header
+\series default
+.
+ Contains meta information.
+ It is structured into fields such as FROM, TO, CONTENT-TYPE, and RETURN-PATH;
+ may contain extra fields for security checks
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+body
+\series default
+.
+ Text of the message
+\end_layout
+
+\begin_layout Subsubsection
+MIME
+\end_layout
+
+\begin_layout Standard
+By default, SMTP supports only ASCII content.
+ The 
+\series bold
+MIME
+\series default
+ standard allows text in character sets other than ASCII, non-text attachments,
+ and message bodies with multiple parts.
+ MIME is completely transparent to the email system, since it provides a
+ way to encode and decode this content at the endpoint.
+\end_layout
+
+\begin_layout Subsection
+Privacy and security risks
+\end_layout
+
+\begin_layout Standard
+There are three main risks associated with emails: 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+spamming
+\series default
+.
+ Unwanted or undesirable email messages
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+tracking
+\series default
+.
+ The user reading an email may reveal sensitive informations, e.g.
+ if the address is valid, IP of victim, or browser and devices used
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+phishing
+\series default
+.
+ A social engineering technique where an attacker sends a 
+\begin_inset Quotes eld
+\end_inset
+
+spoofed
+\begin_inset Quotes erd
+\end_inset
+
+ message designed to trick a victim into revealing sensitive information.
+ General phishing is easy to automatically detect, while spear phishing
+ is targeted to a category of users or even a single user, making it harder
+ to detect
+\end_layout
+
+\begin_layout Subsection
+Validation systems
+\end_layout
+
+\begin_layout Subsubsection
+SPF
+\end_layout
+
+\begin_layout Standard
+One big problem with emails is that the body and the envelope of the email
+ are somewhat separated entities.
+ The body is built by the client that creates the email, while the envelope
+ is made on the server through the interaction between client and server.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+SPF
+\series default
+ can detect email spam through verification of the sender IP addresses.
+ The domain publishes a DNS (TXT) record containing a list of IPs allowed
+ to send messages, while the SMTP server validates the sender IP inside
+ the RETURN PATH field.
+ However it does not validate the FROM field, which can be easily spoofed,
+ and may break when a message is forwarded.
+ Furthermore, SPF does not validate the email content, which may be tampered.
+\end_layout
+
+\begin_layout Subsubsection
+DKIM
+\end_layout
+
+\begin_layout Standard
+Given that SPF only works on the email envelope, 
+\series bold
+DKIM
+\series default
+ was introduced to specify how some parts of the message can be cryptographicall
+y signed in order to avoid their content to be tampered.
+\end_layout
+
+\begin_layout Standard
+Domain administrators define from which domains users are allowed to receive
+ emails.
+ The sender's server signs the message using his private key, while the
+ domain published a DNS (TXT) record with info regarding his public key.
+ Selectors can define different keys for multiple purposes/subdomains, and
+ the receiver is then able to validate the message.
+ However messages may be modified between server exchanges, and does not
+ provide confidentiality.
+\end_layout
+
+\begin_layout Subsubsection
+DMARC
+\end_layout
+
+\begin_layout Standard
+DMARC extends SPF/DKIM through policies, which define a domain email authenticat
+ion practices and provide instructions on how to receive emails.
+ In other words, domain administrator publish DNS (TXT) records with rules
+ on what to do when a message fails DKIM/SPF and how to report abuses.
+\end_layout
+
+\begin_layout Standard
+DMARC checks if the message header has proper 
+\series bold
+domain alignment
+\series default
+, expanding what SPF and DKIM already do.
+ In particular, for SPF it checks if the domain in the From field correspond
+ to the domain in the return-path field; for DKIM it checks if the domain
+ in the From field correspond to the domain in the DKIM header field.
+\end_layout
+
+\begin_layout Subsubsection
+ARC
+\end_layout
+
+\begin_layout Standard
+DKIM and SPF may break when a message is forwarded or altered by other SMTP
+ servers.
+ 
+\series bold
+ARC
+\series default
+ provides a way to authenticate the entire chain traversed by the message,
+ while SPF and DKIM authenticate only the original sender.
+ This can be done using three additional headers:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+ARC-Authentication-Results
+\series default
+: a combination of an instance number and the results of the SPF, DKIM,
+ and DMARC validation
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+ARC-Seal
+\series default
+: A combination of an instance number, a DKIM-like signature of the previous
+ ARC-Seal headers, and the validity of the prior ARC entries
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+ARC-Message-Signature
+\series default
+: A combination of an instance number and a DKIM-like signature of the entire
+ message except for the ARC-Seal headers
+\end_layout
+
+\begin_layout Standard
+Each hop in the chain signs the message.
+ 
+\end_layout
+
+\begin_layout Subsection
+Security for end users
+\end_layout
+
+\begin_layout Subsubsection
+PGP
+\end_layout
+
+\begin_layout Standard
+PGP is a software which provides cryptographic privacy and authentication
+ for data communication.
+ It is used for signing, encrypting/decrypting texts, e-mails, and files.
+ PGP and similar software follow the OpenPGP standard.
+ Each public key is bound to a username or an e-mail address.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+confidentiality
+\series default
+.
+ A symmetric (session) key is generated by the sender and used to encrypt
+ the message.
+ This session key is encrypted with the receiver's pubblic key and is sent
+ along with the encrypted message
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+authentication
+\series default
+ and 
+\series bold
+integrity
+\series default
+.
+ The sender computes the hash from the plaintext and then creates a digital
+ signature using his private key.
+ This proves that the message was not tampered and sent by the same person
+ 
+\end_layout
+
+\begin_layout Standard
+There are several RFCs defining how to embed the signature and encrypted
+ content inside a message: it can be appended as an attachment or at the
+ end of the message.
+ However, different clients behave in different ways.
+ The MIME/PGP subtype mitigates this issue, but it is still kind of a mess.
+\end_layout
+
+\begin_layout Standard
+Both when encrypting messages and when verifying signatures, it is critical
+ that the public key used to send messages to someone actually does belong
+ to the intended recipient.
+ From its first version, PGP expands on the concept of 
+\series bold
+web of trust
+\series default
+.
+ Each client maintains two 
+\series bold
+keyring
+\series default
+: the public keyring contains all the public keys of other trusted (signed)
+ PGP users, while the private keyring contains the public/private key pairs
+ of the current user.
+ Other users may also trust these keys if they trust who signed them, or
+ if they are trusted by 
+\begin_inset Formula $K$
+\end_inset
+
+ users.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+S/MIME
+\end_layout
+
+\begin_layout Standard
+Extending on MIME, it provides the same security properties of PGP: authenticati
+on, message integrity, non-repudiation of origin, confidentiality.
+ However, its trust model is based on X.509 certificates and CAs.
+ Several RFC define new MIME subtypes, and the sender may include several
+ certificate (other than itself) to correctly enforce the trust.
+\end_layout
+
+\begin_layout Section
+Web vulnerabilities
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+OWASP
+\series default
+ initiative provides some best practices to be adapted in order to make
+ systems more secure.
+\end_layout
+
+\begin_layout Subsection
+Broken Access Control 
+\end_layout
+
+\begin_layout Standard
+Access control enforces policy such that users cannot act outside of their
+ intended permissions.
+ Failures typically lead to unauthorized information disclosure, modification,
+ or destruction of all data or performing a business function outside the
+ user's limits.
+ Common access control vulnerabilities include:
+\end_layout
+
+\begin_layout Itemize
+bypassing access control checks by modifying the URL, internal application
+ state, or the HTML page
+\end_layout
+
+\begin_layout Itemize
+permitting viewing or editing someone else's account, by providing its unique
+ identifier
+\end_layout
+
+\begin_layout Itemize
+accessing API with missing access controls for POST, PUT and DELETE
+\end_layout
+
+\begin_layout Itemize
+elevation of privilege.
+ Acting as a user without being logged in or acting as an admin when logged
+ in as a user
+\end_layout
+
+\begin_layout Itemize
+CORS misconfiguration allows API access from unauthorized/untrusted origins
+\end_layout
+
+\begin_layout Itemize
+force browsing to authenticated pages as an unauthenticated user or to privilege
+d pages as a standard user
+\end_layout
+
+\begin_layout Standard
+Access control is only effective in trusted server-side code or server-less
+ API, where the attacker cannot modify the access control check or metadata.
+\end_layout
+
+\begin_layout Itemize
+except for public resources, deny by default
+\end_layout
+
+\begin_layout Itemize
+minimize CORS usage
+\end_layout
+
+\begin_layout Itemize
+disable web server directory listing and ensure file metadata, e.g.
+ .git, and backup files are not present within web roots
+\end_layout
+
+\begin_layout Itemize
+log access control failures, alert admins when appropriate
+\end_layout
+
+\begin_layout Itemize
+rate limit API access to minimize the harm from automated attack tooling
+\end_layout
+
+\begin_layout Subsection
+Injection
+\end_layout
+
+\begin_layout Standard
+An application is vulnerable to attack when user-supplied data is not validated,
+ filtered, or sanitized by the application, and hostile data is directly
+ used or concatenated.
+ Source code review is the best method of detecting if applications are
+ vulnerable to injections.
+ Automated testing of parameter such as headers, URL, cookies, and input
+ fields is strongly encouraged.
+ Preventing injection requires keeping data separate from commands and queries:
+\end_layout
+
+\begin_layout Itemize
+use server-side input validation.
+ This is not a complete defense as many applications require special characters,
+ such as text areas or APIs for mobile applications
+\end_layout
+
+\begin_layout Itemize
+for any residual dynamic queries, escape special characters using the specific
+ escape syntax for that interpreter
+\end_layout
+
+\begin_layout Itemize
+use LIMIT and other SQL controls within queries to prevent mass disclosure
+ of records in case of SQL injection
+\end_layout
+
+\begin_layout Subsubsection
+XSS
+\end_layout
+
+\begin_layout Standard
+The attacker manages to inject JavaScript code, which is executed in the
+ browser of the victim, inside a web application.
+ As always it stems from improper sanitization of user inputs.
+ Once users visit a comprosimed web app, they will rececive the malicious
+ payload.
+ A typical way to perform a XSS attack is to embed some kind of script into
+ a snippet of html.
+ There are three common variants of XSS attacks:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+reflected
+\series default
+: the website includes data from the incoming HTTP request into the web
+ page (without proper sanitization).
+ Users are tricked into visiting an honest website with an URL prepared
+ by the attacker 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+stored
+\series default
+: the payload is permanently stored server-side, e.g.
+ inside the database of the web application.
+ Whena user loads the page, his web browser executes the script
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+DOM-based
+\series default
+: the payload is embedded into the web page on browser-side.
+ This means that server-side detection techniques do not work
+\end_layout
+
+\begin_layout Standard
+Any user input must be preprocessed before it is used inside the page: HTML
+ special characters must be properly encoded before being inserted into
+ the page.
+ Against DOM-based XSS, developers can use Trusted Types.
+\end_layout
+
+\begin_layout Subsubsection
+CSRF 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+CSRF
+\series default
+ is similar to XSS, but the attacker abuse the automatic attachment of cookies
+ to requests done by browsers, in order to perform arbitrary actions within
+ the session established by the victim.
+ Assuming that the victim is authenticated on the target website:
+\end_layout
+
+\begin_layout Enumerate
+the victim visits the attacker's website
+\end_layout
+
+\begin_layout Enumerate
+this page triggers a request towards the victim website, e.g.
+ forms automatically submitted via JavaScript 
+\end_layout
+
+\begin_layout Enumerate
+the cookie identifying this session is automatically attached by the browser
+\end_layout
+
+\begin_layout Standard
+Websites can guard against CSRF by generating a token per user session,
+ embedded inside forms (as hidden field) or as a cookie, and requiring a
+ matching value when performing sensitive operations.
+ This token may be generated at every page load (limiting the validity timeframe
+ of leaked values) or once on session start (improves usability when navigating
+ the same site).
+\end_layout
+
+\begin_layout Subsection
+CSP
+\end_layout
+
+\begin_layout Standard
+Originally developed to mitigate content injection vulnerabilities like
+ XSS, 
+\series bold
+CSP
+\series default
+ can be used to restrict which resources can be loaded by a web page, and
+ limit their origin.
+ 
+\end_layout
+
+\begin_layout Subsection
+SSRF
+\end_layout
+
+\begin_layout Standard
+SSRF flaws occur whenever a web application is fetching a remote resource
+ without validating the user-supplied URL.
+ It allows an attacker to coerce the application to send a crafted request
+ to an unexpected destination, even when protected by a firewall, VPN, or
+ another type of network access control list (ACL).
+ Developers can prevent SSRF by implementing some or all the following defense
+ in depth controls:
+\end_layout
+
+\begin_layout Itemize
+segment remote resource access functionality in separate networks, to reduce
+ the impact of SSRF
+\end_layout
+
+\begin_layout Itemize
+enforce 
+\begin_inset Quotes eld
+\end_inset
+
+deny by default” firewall policies or network access control rules to block
+ all but essential intranet traffic
+\end_layout
+
+\begin_layout Itemize
+sanitize and validate all client-supplied input data
+\end_layout
+
+\begin_layout Itemize
+enforce the URL schema, port, and destination with a positive allow list
+\end_layout
+
+\begin_layout Itemize
+disable HTTP redirections 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Privacy
+\end_layout
+
+\begin_layout Section
+Blockchain technologies
+\end_layout
+
+\begin_layout Standard
+A blockchains is said to be 
+\series bold
+permitionless
+\series default
+ if a user can join or leave the network whenever he wants, without having
+ to be pre-approved by any central entity.
+ There is no central owner of the network and software, and identical copies
+ of the ledger are distributed to all the nodes in the network.
+ 
+\end_layout
+
+\begin_layout Standard
+Instead a 
+\series bold
+permissioned
+\series default
+ blockchain, transaction validators, i.e.
+ nodes, have to be pre-selected by a network administrator (who sets the
+ rules for the ledger) to be able to join the network.
+ This allows to easily verify the identity of the network participants,
+ but at the same time its participants have to put trust in the central
+ authority to select reliable network nodes.
+ Furthermore, there can be 
+\series bold
+open permitioned
+\series default
+ blockchains, which can be viewed by anyone but only authorized participants
+ can generate transactions, and 
+\series bold
+closed permitioned
+\series default
+ blockchains, where access is restricted and only the administrator can
+ generate transactions.
+ 
+\end_layout
+
+\begin_layout Subsection
+Bitcoin
+\end_layout
+
+\begin_layout Standard
+The Bitcoin network is based on a 
+\series bold
+decentralized identity management
+\series default
+.
+ Rather than having a central authority which registers users, anyone can
+ generate a new 
+\series bold
+pseudo-identity
+\series default
+ (i.e.
+ an address) at any time.
+ Wallets are softwares which can generate public/private key pairs, with
+ a corresponding address.
+ Bitcoins are sent to an address, by registering the transaction on the
+ blockchain.
+ Identities based on addresses can guarantee 
+\series bold
+pseudonymity
+\series default
+.
+ In this context we can define anonymity as a combination of pseudonynity
+ and 
+\series bold
+unlikability
+\series default
+.
+ We can reach unlikability if the following properties hold:
+\end_layout
+
+\begin_layout Itemize
+it should be hard to link together different addresses of the same user
+\end_layout
+
+\begin_layout Itemize
+it should be hard to link together different transactions made by the same
+ user
+\end_layout
+
+\begin_layout Itemize
+it should be hard to link the sender of a payment to its recipient
+\end_layout
+
+\begin_layout Standard
+The main idea is that we do not know who really is behind a given address.
+ However, in practice, it's possible to deanonymize the Bitcoin network.
+ There are services that requires a real identity, and the blockchain is
+ public, so that any user can trace all the transactions of any other user.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+taint
+\begin_inset Quotes erd
+\end_inset
+
+ of a Bitcoin transaction evaluates the association between an address and
+ earlier transaction addresses.
+ A possible approach to anonymize Bitcoin transactions is to use the 
+\series bold
+mixing
+\series default
+ technique: users send their money to an anonymous service and it will send
+ back someone else coins.
+ However, in case of failure or if access to funds is denied, there is no
+ recourse.
+ An alternative solution is to have a decentralized mixing service, where
+ different peers self-organizes in order to create the transaction, but
+ it may not be easy to find other participants.
+\end_layout
+
+\begin_layout Subsection
+Zerocoin and Zerocash
+\end_layout
+
+\begin_layout Standard
+Designed as an extension to the Bitcoin protocol, 
+\series bold
+Zerocoin
+\series default
+ improves transactions anonymity by having coin-mixing capabilities natively
+ built into the protocol.
+ However, it is not currently compatible with Bitcoin.
+ The underlying crypto relies on zero-knowledge proofs.
+ In order to spend a Zerocoin, a user needs to prove that he owns that coin
+ and it has not been already spent.
+ Meanwhile 
+\series bold
+Zerocash
+\series default
+ can provide additional anonymity by 
+\begin_inset Quotes eld
+\end_inset
+
+shielding
+\begin_inset Quotes erd
+\end_inset
+
+ the amount transacted.
+ Unlike Zerocoin, Zerocash requires an initial setup by a trusted entity.
+\end_layout
+
+\begin_layout Subsection
+Other cryptocurrencies
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Bitcoin
+\series default
+ cash and 
+\series bold
+Litecoin
+\series default
+ are based on the original SHA-256 PoW algorithm with small adjustements.
+ The foremost increased the bock size limit to 
+\begin_inset Formula $8MB$
+\end_inset
+
+ to reduce transaction fees and improve confirmation times, while the latter
+ offers a faster transaction speed than Bitcoin.
+\end_layout
+
+\begin_layout Standard
+Instead 
+\series bold
+Algorand
+\series default
+ achieves consensus with another kind of algorithm named Proof-of-Stakes,
+ where a 
+\begin_inset Quotes eld
+\end_inset
+
+committee
+\begin_inset Quotes erd
+\end_inset
+
+ is choosen at random and its participants have to vote for a new block.
+\end_layout
+
+\begin_layout Section
+Privacy Preserving Data Mining
+\end_layout
+
+\begin_layout Standard
+Data and knowledge extracted by data mining techniques represents a key
+ asset to the society.
+ Laws and regulations require that some collected data must be made public,
+ which leads to the problem of 
+\series bold
+inference control
+\series default
+: protecting private data while publishing useful information
+\end_layout
+
+\begin_layout Itemize
+access control: protecting information from unauthorized access and use
+\end_layout
+
+\begin_layout Itemize
+disclosure control: modify data in order to prevent third-parties working
+ with these data to recognize individuals (in the data)
+\end_layout
+
+\begin_layout Standard
+In order to anonymize the data we must first remove every 
+\series bold
+Personally Identifying Information
+\series default
+ (PII).
+ However, an attacker may be able to join other fields with additional sources
+ and de-anonymize the dataset.
+ 
+\series bold
+PPDM
+\series default
+ aims to reduce unauthorized access of private information, while retaining
+ the same functions as a normal data mining method for discovering useful
+ knowledge.
+\end_layout
+
+\begin_layout Subsection
+Microdata and macrodata
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Microdata
+\series default
+ represents a series of records, containing information on an individual
+ unit such as a person or an institution.
+ Macrodata instead contains computed data, e.g statistics.
+ Quasi-identifiers such as 5-digit ZIP code or gender can be used for linking
+ anonymized dataset with other datasets, while sensitive attributes, e.g.
+ medical records or salaries, are always released directly.
+\end_layout
+
+\begin_layout Subsection
+K-anonymity
+\end_layout
+
+\begin_layout Standard
+Privacy risks appear when you can reidentify a record.
+ A database is 
+\begin_inset Formula $k\text{-anonymous}$
+\end_inset
+
+ with respect to quasi-identifier attributes if there exist at least 
+\begin_inset Formula $k$
+\end_inset
+
+ records in the database having the same values.
+ This means that individuals cannot be distinguished from 
+\begin_inset Formula $k-1$
+\end_inset
+
+ others.
+ This can be achieved through two techniques:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+generalization
+\series default
+: replace quasi-identifiers with less specific, but semantically consistent
+ values
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+suppression
+\series default
+: do not release a value at all in some sensitive tuple.
+ Useful when generalization causes too much information loss, common with
+ outliers
+\end_layout
+
+\begin_layout Standard
+The objective is to generalize or to suppress data in a given database until
+ it becomes 
+\begin_inset Formula $k\text{-anonymized}$
+\end_inset
+
+, while incurring a minimal loss of information.
+ The cost incurred is considerably low compared to other anonymity methods
+ such as cryptographic solutions.
+ However, 
+\begin_inset Formula $k\text{-anonymity}$
+\end_inset
+
+ this is an operational definition of a privacy mechanism rather than a
+ mathematical definition of a privacy property; it is not much help if 
+\begin_inset Formula $k$
+\end_inset
+
+ individuals all possess the same sensitive attribute.
+ It is susceptible to common attacks (unsorted matching, complementary release,
+ homogeneity) and can cause high utility loss if it is employed in high-dimensio
+nal data and/or if the released data has already undergone anonymization
+ more than once.
+\end_layout
+
+\begin_layout Subsubsection
+L-diversity and T-Completeness
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\text{L-}diversity$
+\end_inset
+
+ builds upon k-anonymity and fix one of its most obvious flaws.
+ Let's say that all records with the same quasi-identifier tuple are in
+ the same bucket.
+ If all sensitive values are the same within a bucket, we might leak private
+ information.
+ 
+\begin_inset Formula $\text{L-}diversity$
+\end_inset
+
+ states that each bucket must have at least 
+\begin_inset Formula $l$
+\end_inset
+
+ distinct sensitive values.
+ Of course, each bucket should contain at least 
+\begin_inset Formula $l$
+\end_inset
+
+ records, since it implies 
+\begin_inset Formula $\text{l-}anonymity$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Even with the new added uncertainty, an attacker might have a strong suspicion
+ about his victim sensitive information.
+ Requiring that sensitive attributes are diverse is not enough.
+ We need to also require that their distribution is roughly the same as
+ the rest of the data, leading to the core idea behind 
+\begin_inset Formula $\text{t-}closeness$
+\end_inset
+
+.
+ This way, the attacker's knowledge can't change too much from the baseline.
+\end_layout
+
+\begin_layout Standard
+However, it is hard to quantify the 
+\begin_inset Quotes eld
+\end_inset
+
+amount of privacy
+\begin_inset Quotes erd
+\end_inset
+
+ obtained with a given choice of parameter, and the utility loss is significant.
+ 
+\begin_inset Formula $\text{K-}anonymity$
+\end_inset
+
+ and its variants are based on the concept of Personally Identifiable Informatio
+n (
+\series bold
+PII
+\series default
+), which has no guarantee and has no precise definition.
+ These approach can still leak sensitive information, since it is assumed
+ that attackers do not know other information about their target.
+\end_layout
+
+\begin_layout Subsection
+Differential privacy
+\end_layout
+
+\begin_layout Standard
+In cryptography, 
+\series bold
+differential privacy
+\series default
+ aims to provide means to maximize the accuracy of queries from statistical
+ databases while minimizing the chances of identifying its records.
+ Since this is a probabilistic concept, any differentially private mechanism
+ is necessarily random.
+ For a given value of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, i.e.
+ the amount of noise introduced, there will be many differentially private
+ algorithms for achieving the task, some with better accuracy than others.
+ 
+\end_layout
+
+\begin_layout Standard
+In terms of dataset, if the effect of an arbitrary single substitution in
+ the database is small enough, the query result cannot be used to infer
+ much about any single individual, and therefore provides privacy.
+ In other words, differential privacy gives each individual roughly the
+ same privacy that would result from having their data removed.
+\end_layout
+
+\begin_layout Section
+Social networks
+\end_layout
+
+\begin_layout Subsection
+The Netflix deanonymization
+\end_layout
+
+\begin_layout Standard
+Netflix, in October 
+\begin_inset Formula $2006$
+\end_inset
+
+, offered a 
+\begin_inset Formula $\$1\text{m}$
+\end_inset
+
+ prize for a better recommender algorithm and published the viewer ratings
+ of 
+\begin_inset Formula $500,000$
+\end_inset
+
+ subscribers with their names removed.
+ Two researchers at the time showed that many subscribers could be reidentified
+ by comparing the anonymous records with preferences publicly expressed
+ in the IMDB.
+ This is partly due to the 
+\begin_inset Quotes eld
+\end_inset
+
+long tail
+\begin_inset Quotes erd
+\end_inset
+
+ effect: once you disregard the top 
+\begin_inset Formula $100$
+\end_inset
+
+ or so movies everyone watches, people's viewing preferences are pretty
+ unique.
+\end_layout
+
+\begin_layout Subsection
+Social network deanonymization
+\end_layout
+
+\begin_layout Standard
+A network can be partially or totally deanonymized when the attacker, starting
+ from a re-identication of a subset of the nodes from an auxiliary network
+ that partially overlaps with the original network, gains knowledge about
+ the edges of the graph (representing the network).
+ For instance, we can consider the partial deanonymization of the Twitter
+ graph using the Flickr graph.
+\end_layout
+
+\begin_layout Subsection
+Privacy concerns in social medias
+\end_layout
+
+\begin_layout Standard
+People posting information by themselves on social networks increase the
+ probability to be subject to threats such as malwares and stalking, leading
+ to several privacy issues.
+ All of this information about an user can be combined with social engineering
+ techniques and lead to identity theft, be used in phishing, and other type
+ of attacks.
+ Often a user is not aware of the amount of information that is shared in
+ social networks.
+ Another problem is that creating a fake account is often easy, and can
+ be used to lure other users in doing something wrong in order to compromise
+ their privacy.
+\end_layout
+
+\begin_layout Standard
+Furthermore users accept people as 
+\begin_inset Quotes eld
+\end_inset
+
+friends
+\begin_inset Quotes erd
+\end_inset
+
+ that do not know at all just to enlarge their group, but at the same time
+ allows such people to access their personal information and pictures.
+ Privacy controls are within the hand of users, but the majority of users
+ think that the information about themselves do not represent a privacy
+ risk at all.
+\end_layout
+
+\begin_layout Section
+Privacy legislation
+\end_layout
+
+\begin_layout Subsection
+Privacy By Design
+\end_layout
+
+\begin_layout Standard
+Privacy by Design (
+\series bold
+PbD
+\series default
+) is an approach to system engineering which promotes privacy through the
+ whole engineering process.
+ This means designing data so it does not need protection.
+ According to PbD supporters 
+\series bold
+data minimization
+\series default
+ is the most important safeguard in protecting personally identiable information
+ and the use of cryptography, de-identication techniques and data aggregation
+ are absolutely critical.
+ However PbD is similar to voluntary compliance, and its concept does not
+ focus on the role of the actual data holder, but on that of the system
+ designer.
+ This role is not known in privacy law, so the concept of Privacy by Design
+ is not based in law.
+\end_layout
+
+\begin_layout Subsection
+GDPR
+\end_layout
+
+\begin_layout Standard
+The European Commission presented a proposal to ensure a coherent framework
+ and a harmonized system in EU matters, which goes under the name of General
+ Data Protection Regulations (
+\series bold
+GDPR
+\series default
+).
+ Here, two roles can be distinguished: the 
+\series bold
+data controller
+\series default
+, which is the person or body that, alone or jointly with others, determines
+ the purpose and means of the processing of personal data; the 
+\series bold
+data processor
+\series default
+, which is a legal person or body which processes personal data on behalf
+ of the controller.
+\end_layout
+
+\begin_layout Standard
+An important aspect is that GDPR applies only for pseudonymized data.
+ In this context, 
+\series bold
+pseudonymization
+\series default
+ means the processing of personal data in such a way that the personal data
+ can no longer be attributed to a specic data subject without the use of
+ additional information, provided that such additional information is kept
+ separately and is subject to technical and organizational measure to ensure
+ that it can not be attributed to an identifiable natural person.
+ The GDPR defines the following characteristics of the regulations for privacy
+ for individuals:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+easier access to your own data
+\series default
+: users will have more information on how their data is processed, available
+ in a clear and understandable way
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+right to data portability
+\series default
+: it will be easier to transfer your personal data between service providers
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+right to be forgotten
+\series default
+: when you no longer want your data to be processed, and provided that there
+ are no legitimate grounds for retaining it, the data will be deleted
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+right to know when your data has been hacked
+\series default
+: companies and organizations must notify the national supervisory authority
+ of serious data breaches as soon as possible so that users can take appropriate
+ measures
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+data protection by design and by default
+\series default
+: data protection is designed into the development of business processes
+ for products and services, and the default settings should be those that
+ provide the most privacy
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+stronger enforcement of the rules
+\series default
+: data protection authorities will be able to fine companies who do not
+ comply with EU rules up to 4% of their global annual turnover
+\end_layout
+
+\begin_layout Standard
+While the characteristics of the regulations for privacy for business defined
+ by the GDPR are the following:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+one continent, one law
+\series default
+: the regulation will establish one single set of rules which will make
+ easier and cheaper for companies to do business in the EU
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+one-stop-shop
+\series default
+: business will only have to deal with one single supervisory authority.
+ It will favor the cooperation between the data protection authorities on
+ issues of interest for all of Europe
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+european rules on european soil
+\series default
+: the companies outside of Europe will have to apply the same rules when
+ offering services in EU
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+risk-based approach
+\series default
+: the rules will avoid a 
+\begin_inset Quotes eld
+\end_inset
+
+one-size-fits-all
+\begin_inset Quotes erd
+\end_inset
+
+ obligation and rather tailor them to the respective risks
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+rules fit for innovation
+\series default
+: data protection by design will guarantee that data protection safeguards
+ are built into products and services from the earliest stage of development.
+ Furthermore, privacy-friendly techniques such as pseudonymization, anonymizatio
+n, and encryption will be encouraged
+\end_layout
+
+\begin_layout Subsubsection
+Data Protection Officer
+\end_layout
+
+\begin_layout Standard
+The Data Protection Officer (
+\series bold
+DPO
+\series default
+) is a designed person within an organization that collects the personal
+ data of Union citizens, who is responsible for making sure that the organizatio
+n follows the new regulations.
+\end_layout
+
+\begin_layout Itemize
+inform and advise the owner of the treatment about their obligations under
+ the European regulations
+\end_layout
+
+\begin_layout Itemize
+check the implementation and application of the regulations and provide
+ opinions on the assessment of the impact on data protection
+\end_layout
+
+\begin_layout Itemize
+acts as a contact point about any issue related to the processing of their
+ data or the exercise of their rights
+\end_layout
+
+\begin_layout Standard
+A DPO must be compulsorily appointed by government departments and agencies
+ (with the exception of judicial authorities), all person whose main business
+ consists of treatments which require regular and systematic monitoring
+ of those concerned, and all persons whose main business is processing sensitive
+ data concerning health or sex life, genetic, judicial and biometrics.
+\end_layout
+
+\begin_layout Subsection
+Italy regulations
+\end_layout
+
+\begin_layout Standard
+In Italy with the legislative decree of June 30th 2003 established the regulatio
+ns and laws for protecting sensitive data according to the fast spreading
+ of application technologies in the world.
+ In particular, the data considered sensible by the regulations are the
+ following:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+sensitive data
+\series default
+: personal data revealing ethic origin, religious beliefs, philosophical
+ or other beliefs, political opinions, health and sex life, etc
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+judicial data
+\series default
+: personal data relating to criminal records, the register of offense-related
+ administrative sanctions and the relevant current charges, or as an accused
+ or suspected person of the criminal procedure code
+\end_layout
+
+\begin_layout Standard
+Such data needs to be processed according to the following rules: 
+\end_layout
+
+\begin_layout Itemize
+anyone has the right to protection of personal data concerning him
+\end_layout
+
+\begin_layout Itemize
+the processing of personal data will be respect for human rights and fundamental
+ freedoms and dignity
+\end_layout
+
+\begin_layout Itemize
+the information systems and programs are congured to minimize the use of
+ personal data and identication data
+\end_layout
+
+\begin_layout Standard
+The rights of individuals data are the following:
+\end_layout
+
+\begin_layout Itemize
+the right of access to personal data, including the right to obtain conrmation
+ of the existence of data concerning him, the right to have their communication
+ in intelligible form
+\end_layout
+
+\begin_layout Itemize
+the right of cancellation, anonymization or blocking of data processed in
+ violation of the law
+\end_layout
+
+\begin_layout Itemize
+the right to oppose, for legitimate and documented reasons to the treatment
+\end_layout
+
+\begin_layout Standard
+In Italy there is a collegian body composed of four members elected by Parliamen
+t called 
+\series bold
+Garante
+\series default
+.
+ Such entity must communicate data processing and preliminary consent of
+ specic actions such as the usage of detection systems of biometric, data
+ processed with the help of electronic instruments to dene the prole or
+ personality, etc.
+ The major problems for companies and administrations are that they have
+ to follow a well dened and strict set of rules regarding non disclosure
+ of information and must have an explicit consent from the users in order
+ to process the data for a specic and explicit purpose.
+ Another complications may come from 
+\series bold
+Bring your own device
+\series default
+ approach, where companies monitors their employees together with their
+ devices for security reasons, but this must always be done in accordance
+ with the law.
+\end_layout
+
+\end_body
+\end_document
