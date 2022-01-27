@@ -325,8 +325,12 @@ DMARC
 \end_layout
 
 \begin_layout Standard
-DMARC extends SPF/DKIM through policies, which define a domain email authenticat
-ion practices and provide instructions on how to receive emails.
+
+\series bold
+DMARC
+\series default
+ extends SPF/DKIM through policies, which define a domain email authentication
+ practices and provides instructions on how to receive emails.
  In other words, domain administrator publish DNS (TXT) records with rules
  on what to do when a message fails DKIM/SPF and how to report abuses.
 \end_layout
@@ -337,9 +341,9 @@ DMARC checks if the message header has proper
 domain alignment
 \series default
 , expanding what SPF and DKIM already do.
- In particular, for SPF it checks if the domain in the From field correspond
- to the domain in the return-path field; for DKIM it checks if the domain
- in the From field correspond to the domain in the DKIM header field.
+ In particular, for SPF it checks if the domain in the FROM field correspond
+ to the domain in the RETURN PATH field; for DKIM it checks if the domain
+ in the FROM field correspond to the domain in the DKIM header field.
 \end_layout
 
 \begin_layout Subsubsection
@@ -399,8 +403,12 @@ PGP
 \end_layout
 
 \begin_layout Standard
-PGP is a software which provides cryptographic privacy and authentication
- for data communication.
+
+\series bold
+PGP
+\series default
+ is a software which provides cryptographic privacy and authentication for
+ data communication.
  It is used for signing, encrypting/decrypting texts, e-mails, and files.
  PGP and similar software follow the OpenPGP standard.
  Each public key is bound to a username or an e-mail address.
@@ -460,7 +468,7 @@ keyring
  of the current user.
  Other users may also trust these keys if they trust who signed them, or
  if they are trusted by 
-\begin_inset Formula $K$
+\begin_inset Formula $n$
 \end_inset
 
  users.
@@ -474,7 +482,11 @@ S/MIME
 \begin_layout Standard
 Extending on MIME, it provides the same security properties of PGP: authenticati
 on, message integrity, non-repudiation of origin, confidentiality.
- However, its trust model is based on X.509 certificates and CAs.
+ However, its trust model is based on 
+\begin_inset Formula $\text{X}.509$
+\end_inset
+
+ certificates and CAs.
  Several RFC define new MIME subtypes, and the sender may include several
  certificate (other than itself) to correctly enforce the trust.
 \end_layout
@@ -493,26 +505,24 @@ OWASP
 \end_layout
 
 \begin_layout Subsection
-Broken Access Control 
+Broken access control
 \end_layout
 
 \begin_layout Standard
 Access control enforces policy such that users cannot act outside of their
  intended permissions.
- Failures typically lead to unauthorized information disclosure, modification,
- or destruction of all data or performing a business function outside the
- user's limits.
+ Failures typically lead to unauthorized information disclosure, modification
+ of data or performing a business function outside the user's limits.
  Common access control vulnerabilities include:
 \end_layout
 
 \begin_layout Itemize
-bypassing access control checks by modifying the URL, internal application
- state, or the HTML page
+bypassing access control checks by modifying the URL or internal application
+ state
 \end_layout
 
 \begin_layout Itemize
-permitting viewing or editing someone else's account, by providing its unique
- identifier
+viewing or editing someone else's account
 \end_layout
 
 \begin_layout Itemize
@@ -520,13 +530,7 @@ accessing API with missing access controls for POST, PUT and DELETE
 \end_layout
 
 \begin_layout Itemize
-elevation of privilege.
- Acting as a user without being logged in or acting as an admin when logged
- in as a user
-\end_layout
-
-\begin_layout Itemize
-CORS misconfiguration allows API access from unauthorized/untrusted origins
+privilege escalation
 \end_layout
 
 \begin_layout Itemize
@@ -535,20 +539,21 @@ d pages as a standard user
 \end_layout
 
 \begin_layout Standard
-Access control is only effective in trusted server-side code or server-less
+Access control is only effective in trusted server-side code or serverless
  API, where the attacker cannot modify the access control check or metadata.
 \end_layout
 
 \begin_layout Itemize
-except for public resources, deny by default
+except for public resources, deny by default.
 \end_layout
 
 \begin_layout Itemize
-minimize CORS usage
+implement access control mechanisms once and re-use them throughout the
+ application, including minimizing CORS usage
 \end_layout
 
 \begin_layout Itemize
-disable web server directory listing and ensure file metadata, e.g.
+disable webserver directory listing and ensure file metadata, e.g.
  .git, and backup files are not present within web roots
 \end_layout
 
@@ -557,38 +562,40 @@ log access control failures, alert admins when appropriate
 \end_layout
 
 \begin_layout Itemize
-rate limit API access to minimize the harm from automated attack tooling
+rate limit API and controller access to minimize the harm from automated
+ attack tooling
+\end_layout
+
+\begin_layout Subsubsection
+CSRF
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+CSRF
+\series default
+ is possible when a malicious webapp causes a user's web browser to perform
+ an unwanted action on a trusted site when the user is authenticated.
+ A CSRF attack works because browser requests automatically include all
+ cookies, even the session cookies.
+ Therefore, if the user is authenticated to the site, the site cannot distinguis
+h between legitimate authorized requests and forged authenticated requests.
+ Its impact is limited to the capabilities exposed by the vulnerable webapp
+ and privileges of the user.
+\end_layout
+
+\begin_layout Standard
+Websites can guard against CSRF by generating a token per user session,
+ embedded inside forms (as hidden field) or as a cookie, and requiring a
+ matching value when performing sensitive operations.
+ This token may be generated at every page load (limiting the validity timeframe
+ of leaked values) or once on session start (improves usability when navigating
+ the same site).
 \end_layout
 
 \begin_layout Subsection
 Injection
-\end_layout
-
-\begin_layout Standard
-An application is vulnerable to attack when user-supplied data is not validated,
- filtered, or sanitized by the application, and hostile data is directly
- used or concatenated.
- Source code review is the best method of detecting if applications are
- vulnerable to injections.
- Automated testing of parameter such as headers, URL, cookies, and input
- fields is strongly encouraged.
- Preventing injection requires keeping data separate from commands and queries:
-\end_layout
-
-\begin_layout Itemize
-use server-side input validation.
- This is not a complete defense as many applications require special characters,
- such as text areas or APIs for mobile applications
-\end_layout
-
-\begin_layout Itemize
-for any residual dynamic queries, escape special characters using the specific
- escape syntax for that interpreter
-\end_layout
-
-\begin_layout Itemize
-use LIMIT and other SQL controls within queries to prevent mass disclosure
- of records in case of SQL injection
 \end_layout
 
 \begin_layout Subsubsection
@@ -596,13 +603,15 @@ XSS
 \end_layout
 
 \begin_layout Standard
-The attacker manages to inject JavaScript code, which is executed in the
- browser of the victim, inside a web application.
+
+\series bold
+XSS
+\series default
+ works by manipulating a vulnerable website so that it returns malicious
+ code to its users.
+ When the payload executes inside a victim's browser, the attacker can fully
+ compromise their interaction with the webapp.
  As always it stems from improper sanitization of user inputs.
- Once users visit a comprosimed web app, they will rececive the malicious
- payload.
- A typical way to perform a XSS attack is to embed some kind of script into
- a snippet of html.
  There are three common variants of XSS attacks:
 \end_layout
 
@@ -624,7 +633,7 @@ stored
 \series default
 : the payload is permanently stored server-side, e.g.
  inside the database of the web application.
- Whena user loads the page, his web browser executes the script
+ When a user loads the page, his web browser executes the script
 \end_layout
 
 \begin_layout Itemize
@@ -637,62 +646,13 @@ DOM-based
 \end_layout
 
 \begin_layout Standard
-Any user input must be preprocessed before it is used inside the page: HTML
- special characters must be properly encoded before being inserted into
- the page.
- Against DOM-based XSS, developers can use Trusted Types.
-\end_layout
-
-\begin_layout Subsubsection
-CSRF 
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-CSRF
-\series default
- is similar to XSS, but the attacker abuse the automatic attachment of cookies
- to requests done by browsers, in order to perform arbitrary actions within
- the session established by the victim.
- Assuming that the victim is authenticated on the target website:
-\end_layout
-
-\begin_layout Enumerate
-the victim visits the attacker's website
-\end_layout
-
-\begin_layout Enumerate
-this page triggers a request towards the victim website, e.g.
- forms automatically submitted via JavaScript 
-\end_layout
-
-\begin_layout Enumerate
-the cookie identifying this session is automatically attached by the browser
-\end_layout
-
-\begin_layout Standard
-Websites can guard against CSRF by generating a token per user session,
- embedded inside forms (as hidden field) or as a cookie, and requiring a
- matching value when performing sensitive operations.
- This token may be generated at every page load (limiting the validity timeframe
- of leaked values) or once on session start (improves usability when navigating
- the same site).
-\end_layout
-
-\begin_layout Subsection
-CSP
-\end_layout
-
-\begin_layout Standard
-Originally developed to mitigate content injection vulnerabilities like
- XSS, 
-\series bold
-CSP
-\series default
- can be used to restrict which resources can be loaded by a web page, and
- limit their origin.
+In the first two cases input validation is need.
  
+\series bold
+CSP
+\series default
+ can mitigate content injection vulnerabilities like XSS.
+ It is used to control which resources a website can load and/or access.
 \end_layout
 
 \begin_layout Subsection
@@ -700,39 +660,158 @@ SSRF
 \end_layout
 
 \begin_layout Standard
-SSRF flaws occur whenever a web application is fetching a remote resource
- without validating the user-supplied URL.
- It allows an attacker to coerce the application to send a crafted request
- to an unexpected destination, even when protected by a firewall, VPN, or
- another type of network access control list (ACL).
- Developers can prevent SSRF by implementing some or all the following defense
- in depth controls:
+
+\series bold
+SSRF
+\series default
+ is an attack vector that abuses a webapp to interact with the internal/external
+ network or the host itself.
+ One of the enablers for this vector is the mishandling of URLs.
+ There are two basic cases:
 \end_layout
 
 \begin_layout Itemize
-segment remote resource access functionality in separate networks, to reduce
- the impact of SSRF
+the webapp can send requests to another (trusted) app, often located on
+ another network, to perform a specific task.
+ Depending on the business case, user input is required for the functionality
+ to work.
+ In this case, input has to be validated with an allow list approach
 \end_layout
 
 \begin_layout Itemize
-enforce 
+a user can supply an URL to an external resource and the webapp makes a
+ request to it, going over the public Internet.
+ In this case an allow list approach does not work, since the target IP/domain
+ is often unknown upfront.
+ There needs to be a validation flow, i.e.
+ if one step fails reject the request
+\end_layout
+
+\begin_layout Standard
+In both cases, firewall rules can mitigate the impact of a successful attack.
+\end_layout
+
+\begin_layout Section
+Web tracking
+\end_layout
+
+\begin_layout Standard
+There exist several ways of uniquely identify users.
+ Web tracking can be used to determine users interests and/or model their
+ behavior, enabling the most appropriate advertisements.
+ However, this often violates users privacy and might be used for unhetical
+ purposes.
+\end_layout
+
+\begin_layout Subsection
+Cookies across websites
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Cookies
+\series default
+ are simple pieces of information that a website can store on a visitor
+ web browser.
+ Since HTTP is a stateless protocol, cookies can be used to track user sessions.
+ Inside every response a webserver may include a cookie header.
+ Every time a web browser requests a webpage, it will include the respective
+ cookies, if any.
+ There are two kinds of cookie: session, removed when the browser quits,
+ or persistent, with an expiry date and stored on disk.
+ Furthermore, cookies can be also categorized in: 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+first-party
+\series default
+.
+ The requested website can set them and are only accessible through their
+ origin domain.
+ Supported by all web browser, these cookies can be blocked and deleted
+ by the user (may degrade UX)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+third-party
+\series default
+.
+ The requested website can load content from external domains, which in
+ turn can set their cookies.
+ These can be accessed by any website which loads the same content.
+ Supported by all web browser, but many are now blocking third-party cookies
+ by default, and can be deleted by users on a regular basis
+\end_layout
+
+\begin_layout Standard
+With third-party cookies companies can analyze cativity patterns drawing
+ from a huge pool of users, discovering sensitive data such as location,
+ interests, purchases, medical conditions and much more.
+ 
+\end_layout
+
+\begin_layout Subsection
+Client fingerprinting
+\end_layout
+
+\begin_layout Standard
+Initially developed for security purposes, 
+\series bold
+fingerprinting
+\series default
+ is a tracking technique capable of identifying individual users based on
+ their browser and device settings.
+ In order for websites to display correctly, the browser makes certain informati
+on available about its device such as screen resolution, OS, location, and
+ much more.
+ Trackers can assemble this data into a recognizable 
 \begin_inset Quotes eld
 \end_inset
 
-deny by default” firewall policies or network access control rules to block
- all but essential intranet traffic
+fingerprint
+\begin_inset Quotes erd
+\end_inset
+
+ and then use this identifier to trace user activity across the web.
+ Once it has been assembled, a digital fingerprint is persistently accurate.
+ 
 \end_layout
 
-\begin_layout Itemize
-sanitize and validate all client-supplied input data
+\begin_layout Standard
+Increased public concern for internet privacy has made precautionary methods
+ more accessible and easier for users to implement, making traditional cookie-ba
+sed tracking relatively untenable.
+ This decline in cookie efficacy has led trackers to seek out more advanced
+ ways of monitoring their users.
+ Fingerprinting is just one of many other tracking techniques used by companies
+ known as “data brokers”.
+ 
 \end_layout
 
-\begin_layout Itemize
-enforce the URL schema, port, and destination with a positive allow list
+\begin_layout Standard
+While trackers will not necessarily match a user activity with a face or
+ a name, the data they derive from websites he visit, social platforms used,
+ and searches performed, can be considered personally identifiable.
+ With this data, brokers build a general profile (age range, location, language,
+ interests, etc.) and sell this insight to advertisers and marketers who
+ use it to serve personalized ads and content recommendations across the
+ web.
 \end_layout
 
-\begin_layout Itemize
-disable HTTP redirections 
+\begin_layout Standard
+However, browser fingerprinting technologies are still used for the security
+ and authentication purposes they were initially developed for: prevent
+ software piracy, identity theft, and credit card fraud among other security
+ risks.
+\end_layout
+
+\begin_layout Subsection
+Network tracking
 \end_layout
 
 \begin_layout Standard
@@ -863,6 +942,26 @@ mixing
  it may not be easy to find other participants.
 \end_layout
 
+\begin_layout Subsubsection
+Irreversible Transactions
+\end_layout
+
+\begin_layout Standard
+When used correctly, Bitcoin's base layer transactions on the blockchain
+ are irreversible and final.
+ The surrounding system made of blockchain, mining, PoW, etc.
+ exist to produce this history of transactions that is computationally impractic
+al to modify.
+ This property is often referred to as solving the 
+\series bold
+double spending
+\series default
+ problem, i.e.
+ successfully spending some coin more than once.
+ Bitcoin users protect themselves from double spending fraud by waiting
+ for confirmations when receiving payments on the blockchain.
+\end_layout
+
 \begin_layout Subsection
 Zerocoin and Zerocash
 \end_layout
@@ -901,9 +1000,9 @@ Other cryptocurrencies
 \begin_layout Standard
 
 \series bold
-Bitcoin
+Bitcoin cash
 \series default
- cash and 
+ and 
 \series bold
 Litecoin
 \series default
@@ -958,14 +1057,7 @@ disclosure control: modify data in order to prevent third-parties working
 \end_layout
 
 \begin_layout Standard
-In order to anonymize the data we must first remove every 
-\series bold
-Personally Identifying Information
-\series default
- (PII).
- However, an attacker may be able to join other fields with additional sources
- and de-anonymize the dataset.
- 
+
 \series bold
 PPDM
 \series default
@@ -996,7 +1088,16 @@ K-anonymity
 \end_layout
 
 \begin_layout Standard
-Privacy risks appear when you can reidentify a record.
+In order to anonymize a dataset we must first remove every 
+\series bold
+Personally Identifying Information
+\series default
+ (PII).
+ However, an attacker might be able to link its 
+\series bold
+quasi-identifiers
+\series default
+ to additional sources and deanonymize the dataset.
  A database is 
 \begin_inset Formula $k\text{-anonymous}$
 \end_inset
@@ -1046,16 +1147,14 @@ The objective is to generalize or to suppress data in a given database until
 \begin_inset Formula $k\text{-anonymity}$
 \end_inset
 
- this is an operational definition of a privacy mechanism rather than a
- mathematical definition of a privacy property; it is not much help if 
+ is an operational definition of a privacy mechanism rather than a mathematical
+ definition of a privacy property; it is not much help if 
 \begin_inset Formula $k$
 \end_inset
 
  individuals all possess the same sensitive attribute.
- It is susceptible to common attacks (unsorted matching, complementary release,
- homogeneity) and can cause high utility loss if it is employed in high-dimensio
-nal data and/or if the released data has already undergone anonymization
- more than once.
+ It is susceptible to common attacks such as unsorted matching, complementary
+ release, and homogeneity.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1118,14 +1217,131 @@ amount of privacy
 \begin_inset Formula $\text{K-}anonymity$
 \end_inset
 
- and its variants are based on the concept of Personally Identifiable Informatio
-n (
+ and its variants are based on the concept of 
 \series bold
 PII
 \series default
-), which has no guarantee and has no precise definition.
+, which has no guarantee and has no precise definition.
  These approach can still leak sensitive information, since it is assumed
  that attackers do not know other information about their target.
+\end_layout
+
+\begin_layout Subsection
+HIPAA privacy rules
+\end_layout
+
+\begin_layout Standard
+Adopted in the US, the 
+\series bold
+HIPAA
+\series default
+ rules state that 
+\begin_inset Quotes eld
+\end_inset
+
+Under the safe harbor method, covered entities must remove all of a list
+ of 
+\begin_inset Formula $18$
+\end_inset
+
+ enumerated identifiers and have no actual knowledge that the information
+ remaining could be used, alone or in combination, to identify a subject
+ of the information.
+ The identifiers that must be removed include direct identifiers, such as
+ name, street address, social security number, as well as other identifiers,
+ such as birth date, or five-digit zip code.
+ The safe harbor is intended to provide covered entities with a simple,
+ definitive method that does not require much judgment by the covered entity
+ to determine if the information is adequately de-identified.
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+In practice any remaining attributes can be used for re-identification,
+ as long as they differ from individual to individual.
+ The PII concepts has no meaning even in this context, it does only increase
+ the complexity of the attack.
+\end_layout
+
+\begin_layout Subsection
+UK confidentiality guidance
+\end_layout
+
+\begin_layout Standard
+The UK adopted a different approach wrt HIPAA privacy rules.
+ We can identify two 
+\series bold
+risk categories
+\series default
+, in terms of the likelihood of an attempt to identify individuals, and
+ the impact of any identification:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+medium risk
+\series default
+, it is sufficient to consider all cells of size 
+\begin_inset Formula $1$
+\end_inset
+
+ or 
+\begin_inset Formula $2$
+\end_inset
+
+ as unsafe.
+ Take care also of rows or columns dominated by zeros
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+high risk
+\series default
+, higher likelihood of re-identification and greater impact if successful.
+ All cells of size 
+\begin_inset Formula $1$
+\end_inset
+
+ to 
+\begin_inset Formula $4$
+\end_inset
+
+ are unsafe.
+ Take care also of rows or columns dominated by zeros.
+ Higher levels of protection might be required for small geographical levels
+ or for particular variables with an extremely high level of interest and
+ impact
+\end_layout
+
+\begin_layout Standard
+A possible approach to minimize the number of unsafe cells and preserve
+ the original count is 
+\series bold
+table redesign
+\series default
+, which consists of grouping categories and aggregating tables.
+ Cell values can be modified, through 
+\series bold
+suppression
+\series default
+, 
+\series bold
+rounding
+\series default
+ or 
+\series bold
+Barnardisation
+\series default
+.
+ Another approach is to adjust the data, by swapping pairs of record within
+ a micro-dataset that are partially matched to alter the geographical locations
+ attached to the record, but at the same time leave all the other aspects
+ unchanged.
 \end_layout
 
 \begin_layout Subsection
@@ -1274,8 +1490,8 @@ data minimization
  However PbD is similar to voluntary compliance, and its concept does not
  focus on the role of the actual data holder, but on that of the system
  designer.
- This role is not known in privacy law, so the concept of Privacy by Design
- is not based in law.
+ This role is not known in privacy law, so the concept of PbD is not based
+ in law.
 \end_layout
 
 \begin_layout Subsection
@@ -1283,39 +1499,65 @@ GDPR
 \end_layout
 
 \begin_layout Standard
-The European Commission presented a proposal to ensure a coherent framework
- and a harmonized system in EU matters, which goes under the name of General
- Data Protection Regulations (
+The 
 \series bold
 GDPR
 \series default
-).
- Here, two roles can be distinguished: the 
+ is a new set of EU rules aimed at giving users more control over their
+ personal data online, and gives its member states the power to hold businesses
+ and organizations accountable for how they collect and handle personal
+ data.
+ The regulation applies if the data controller, or processor, or the data
+ subject is based in the EU.
+ 
+\end_layout
+
+\begin_layout Itemize
+
 \series bold
 data controller
 \series default
-, which is the person or body that, alone or jointly with others, determines
- the purpose and means of the processing of personal data; the 
+: the person or body that, alone or jointly with others, determines the
+ purpose and means of the processing of personal data
+\end_layout
+
+\begin_layout Itemize
+
 \series bold
 data processor
 \series default
-, which is a legal person or body which processes personal data on behalf
- of the controller.
+: a natural/legal person or body which processes personal data on behalf
+ of the controller
 \end_layout
 
 \begin_layout Standard
-An important aspect is that GDPR applies only for pseudonymized data.
+According to the European commision, 
+\series bold
+personal data
+\series default
+ is information that relates to an identified or identifiable individual,
+ which includes more obvious identifiers (e.g.
+ name or address) and less obvious identifiers such as physical, psycological,
+ economic, location data, or online IDs.
+ 
+\series bold
+Sensitive personal data
+\series default
+ requires explicit consent or another specific legal basis, and includes
+ racial origin, political opinion, health, etc.
+ 
+\end_layout
+
+\begin_layout Standard
+If data is pseudonymised, GDPR does apply.
  In this context, 
 \series bold
 pseudonymization
 \series default
- means the processing of personal data in such a way that the personal data
- can no longer be attributed to a specic data subject without the use of
- additional information, provided that such additional information is kept
- separately and is subject to technical and organizational measure to ensure
- that it can not be attributed to an identifiable natural person.
- The GDPR defines the following characteristics of the regulations for privacy
- for individuals:
+ is defined as the processing of personal data in such a manner that it
+ can no longer be attributed to a specific subject without the use of additional
+ information.
+ The GDPR defines the following key aspects for individuals:
 \end_layout
 
 \begin_layout Itemize
@@ -1374,8 +1616,9 @@ stronger enforcement of the rules
 \end_layout
 
 \begin_layout Standard
-While the characteristics of the regulations for privacy for business defined
- by the GDPR are the following:
+Businesses have to implement technical and organizational measures to provide
+ appropriate protection to the personal data they hold.
+ The regulation requires the following key aspects:
 \end_layout
 
 \begin_layout Itemize
